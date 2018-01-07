@@ -1,0 +1,16 @@
+{
+  "name": "Ververg",
+  "version": "1.0.0",
+  "description": "Lazy",
+  "main": "bot.js",
+  "author": "VLV",
+  "scripts": {
+    "start": "node bot.js" 
+  },
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "discord.js": "^11.2.1",
+    "edit-google-spreadsheet": "^0.3.0",
+    "winston": "^2.4.0"
+  }
+}
