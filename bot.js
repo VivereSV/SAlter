@@ -158,6 +158,11 @@ client.on("message", async message => {
     message.channel.send("No");
     return;
   }
+  
+  if(command === "hi") {
+    message.channel.send("<:yayumi:370005010668453890>");
+    return;
+  }
 
   if (command === "search") {
     message.channel.send("I said it was under construction...");
