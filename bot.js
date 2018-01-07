@@ -145,15 +145,23 @@ client.on("message", async message => {
     message.channel.send("+log: log a match in the database. Please provide proper parameters");
     message.channel.send("+search: search the database for a deck matchup. Currently under construction");*/
     message.channel.send(helpful);
+    return;
   }
 
   if (command === "update") {
     //console.log(message.author.id);
     update();
+    return;
+  }
+  
+  if(command === "fuck") {
+    message.channel.send("No");
+    return;
   }
 
   if (command === "search") {
     message.channel.send("I said it was under construction...");
+    return;
   }
 
   if (command === "format") {
@@ -161,6 +169,7 @@ client.on("message", async message => {
     //const example = "example: +log|Portalcraft|Paragon|Rotation|10/5/15|Artifact|sv.bagoum/idontknow^Wallet Haven|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
     message.channel.send(sayMessage);
     //message.channel.send(example);
+    return;
   }
 
   if (command === "log") {
