@@ -6,10 +6,10 @@ var Spreadsheet = require('edit-google-spreadsheet');
 
 //Globals
 var updated = false;
-var paragonInfo;
-var secondaryInfo;
-var guestInfo;
-var tournamentInfo;
+var paragonInfo = [0, 0, 0, 0, 0, 0, 0, 0];
+var secondaryInfo = [0, 0, 0, 0, 0, 0, 0, 0];
+var guestInfo = [0, 0, 0, 0, 0, 0, 0, 0];
+var tournamentInfo = [0, 0, 0, 0, 0, 0, 0, 0];
 
 //Workaround for VLV's stupidity
 var craftMap = {
@@ -114,41 +114,22 @@ client.on("message", async message => {
         if (err) throw err;
         spreadsheet.receive({ getValues: true }, function (err, rows, info) {
           if (err) throw err;
-          //console.log("Found rows:", rows);
-          var spag = JSON.stringify(rows);
-          var arr = spag.split("BREAK");
-          for (var i = 0; i < arr.length; i++) {
-            var first = arr[i].indexOf(":") + 1;
-            arr[i] = arr[i].substring(first);
-            //lmao I don't know how to do JSON
-            arr[i] = arr[i].replace(/\"/g, "");
-            arr[i] = arr[i].replace(/9:/g, "");
-            arr[i] = arr[i].replace(/{/g, "");
-            arr[i] = arr[i].replace(/}/g, "");
-            if (i != 3) {
-              arr[i] = arr[i].substring(0, arr[i].length - 1);
-            }
+          for (var r = 1; r <= 4; r++) {
+              for (var c = 1; c <= 8; c++) {
+                 if (r === 1) {
+                    paragonInfo[c - 1] = rows[[r]][[c]];
+                 }
+                 else if (r === 2) {
+                    secondaryInfo[c - 1] = rows[[r]][[c]];
+                 }
+                 else if (r === 3) {
+                    guestInfo[c - 1] = rows[[r]][[c]];
+                 }
+                 else {
+                    tournamentInfo[c - 1] = rows[[r]][[c]];
+                 }
+              }
           }
-          paragonInfo = arr[0].split(",");
-          secondaryInfo = arr[1].split(",");
-          guestInfo = arr[2].split(",");
-          tournamentInfo = arr[3].split(",");
-          for (var i = 0; i < paragonInfo.length; i++) {
-            paragonInfo[i] = paragonInfo[i].substring(2);
-          }
-          for (var i = 0; i < secondaryInfo.length; i++) {
-            secondaryInfo[i] = secondaryInfo[i].substring(2);
-          }
-          for (var i = 0; i < guestInfo.length; i++) {
-            guestInfo[i] = guestInfo[i].substring(2);
-          }
-          for (var i = 0; i < tournamentInfo.length; i++) {
-            tournamentInfo[i] = tournamentInfo[i].substring(2);
-          }
-          /*console.log(paragonInfo);
-          console.log(secondaryInfo);
-          console.log(guestInfo);
-          console.log(tournamentInfo);*/
           updated = true;
           message.channel.send("Finished updating!");
         });
