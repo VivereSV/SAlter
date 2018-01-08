@@ -134,9 +134,9 @@ client.on("message", async message => {
 
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
-            "+update: update the valid cells. Please note that you must update before logging\n" +
             "+log: log a match in the database. Please provide proper parameters\n" +
-            "+search: search the database for a deck matchup. Currently under construction";
+            "+search: search the database for a deck matchup. Currently under construction" + 
+            "+hi: greet SAlter";
         message.channel.send(helpful);
         return;
     }
@@ -291,11 +291,11 @@ client.on("message", async message => {
             return;
         }
         //Check that deck name includes craft name
-        /*var hasCraft = false;
+        var hasCraft = false;
         for (var i = 0; i < craftList.length; i++) {
             //Chop off the craft
             var craftName = craftList[i].substring(0, craftList[i].length - 5);
-            if (deckTitle.toLowerCase().contains(craftName.toLowerCase())) {
+            if (deckTitle.toLowerCase().indexOf(craftName.toLowerCase()) !== -1) {
                 hasCraft = true;
             }
         }
@@ -308,14 +308,14 @@ client.on("message", async message => {
         for (var i = 0; i < craftList.length; i++) {
             //Chop off the craft
             var oppName = craftList[i].substring(0, craftList[i].length - 5);
-            if (opponentDeck.toLowerCase().contains(craftName.toLowerCase())) {
+            if (opponentDeck.toLowerCase().indexOf(craftName.toLowerCase()) !== -1) {
                 oppCraft = true;
             }
         }
         if (!oppCraft) {
             message.channel.send("ERROR! Opponent deck does not contain Haven, Shadow, Rune, Forest, Sword, Dragon, Blood, or Portal!");
             return;
-        }*/
+        }
         //Member permissions
         if (role === "Paragon") {
             if (message.author.id !== paragons[craft]) {
