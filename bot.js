@@ -243,11 +243,6 @@ client.on("message", async message => {
     }
 
     else if (command === "log") {
-        //Make sure it's updated
-        if (!updated) {
-            message.channel.send("Please call +update first.");
-            return;
-        }
         //Make sure they gave 13 arguments cause they can't count
         if (args.length != 13) {
             message.channel.send("ERROR! Expected 13 arguments, got: " + args.length);
