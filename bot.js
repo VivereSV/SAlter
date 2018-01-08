@@ -103,28 +103,28 @@ client.on("message", async message => {
     function findCraft(lower) {
         lower = lower.toLowerCase();
         var deckCraft = "ERROR";
-        if (lower.contains("haven")) {
+        if (lower.indexOf("haven") !== -1) {
             deckCraft = "Havencraft";
         }
-        else if (lower.contains("shadow")) {
+        else if (lower.indexOf("shadow") !== -1) {
             deckCraft = "Shadowcraft";
         }
-        else if (lower.contains("rune")) {
+        else if (lower.indexOf("rune") !== -1) {
             deckCraft = "Runecraft";
         }
-        else if (lower.contains("forest")) {
+        else if (lower.indexOf("forest") !== -1) {
             deckCraft = "Forestcraft";
         }
-        else if (lower.contains("sword")) {
+        else if (lower.indexOf("sword") !== -1) {
             deckCraft = "swordcraft";
         }
-        else if (lower.contains("dragon")) {
+        else if (lower.indexOf("dragon") !== -1) {
             deckCraft = "Dragoncraft";
         }
-        else if (lower.contains("blood")) {
+        else if (lower.indexOf("blood") !== -1) {
             deckCraft = "Bloodcraft";
         }
-        else if (lower.contains("portal")) {
+        else if (lower.indexOf("portal") !== -1) {
             deckCraft = "Portalcraft";
         }
         return deckCraft;
@@ -135,7 +135,7 @@ client.on("message", async message => {
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
             "+log: log a match in the database. Please provide proper parameters\n" +
-            "+search: search the database for a deck matchup. Currently under construction\n" + 
+            "+search: search the database for a deck matchup. Currently under construction\n" +
             "+hi: greet SAlter";
         message.channel.send(helpful);
         return;
@@ -171,6 +171,10 @@ client.on("message", async message => {
             return;
         }
         var craftSheet = findCraft(args[0]);
+        if(craftSheet === "ERROR") {
+            message.channel.send("IT'S NOT WORKING BITCH");
+            return;
+        }
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'Dawnbreakers Deck Data Log',
