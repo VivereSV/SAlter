@@ -295,7 +295,7 @@ client.on("message", async message => {
         for (var i = 0; i < craftList.length; i++) {
             //Chop off the craft
             var craftName = craftList[i].substring(0, craftList[i].length - 5);
-            if (deckTitle.toLowerCase.contains(craftName.toLowerCase())) {
+            if (deckTitle.toLowerCase().contains(craftName.toLowerCase())) {
                 hasCraft = true;
             }
         }
@@ -308,7 +308,7 @@ client.on("message", async message => {
         for (var i = 0; i < craftList.length; i++) {
             //Chop off the craft
             var oppName = craftList[i].substring(0, craftList[i].length - 5);
-            if (opponentDeck.toLowerCase.contains(craftName.toLowerCase())) {
+            if (opponentDeck.toLowerCase().contains(craftName.toLowerCase())) {
                 oppCraft = true;
             }
         }
