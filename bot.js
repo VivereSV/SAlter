@@ -135,7 +135,7 @@ client.on("message", async message => {
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
             "+log: log a match in the database. Please provide proper parameters\n" +
-            "+search: search the database for a deck matchup. Currently under construction" + 
+            "+search: search the database for a deck matchup. Currently under construction\n" + 
             "+hi: greet SAlter";
         message.channel.send(helpful);
         return;
@@ -308,7 +308,7 @@ client.on("message", async message => {
         for (var i = 0; i < craftList.length; i++) {
             //Chop off the craft
             var oppName = craftList[i].substring(0, craftList[i].length - 5);
-            if (opponentDeck.toLowerCase().indexOf(craftName.toLowerCase()) !== -1) {
+            if (opponentDeck.toLowerCase().indexOf(oppName.toLowerCase()) !== -1) {
                 oppCraft = true;
             }
         }
