@@ -148,28 +148,28 @@ client.on("message", async message => {
     return;
   }
 
-  if (command === "update") {
+  else if (command === "update") {
     //console.log(message.author.id);
     update();
     return;
   }
   
-  if(command === "fuck") {
+  else if(command === "fuck") {
     message.channel.send("<:packagegasm:397350321459953686>");
     return;
   }
   
-  if(command === "hi") {
+  else if(command === "hi") {
     message.channel.send("<:yayumi:370005010668453890>");
     return;
   }
 
-  if (command === "search") {
+  else if (command === "search") {
     message.channel.send("I said it was under construction...");
     return;
   }
 
-  if (command === "format") {
+  else if (command === "format") {
     const sayMessage = "+log|<class>|<role>|<format>|<date>|<deck title>|<link to decklist>^<deck name>|<opponent deck>|<Win/Loss>|<First/Second>|<Justification>|<Changes made from previous decks>|<Insight/Reflection>|<Link to video (if any)>\nexample: +log|Portalcraft|Paragon|Rotation|10/5/15|Artifact|sv.bagoum/idontknow^MRPortal|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
     //const example = "example: +log|Portalcraft|Paragon|Rotation|10/5/15|Artifact|sv.bagoum/idontknow^Wallet Haven|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
     message.channel.send(sayMessage);
@@ -177,7 +177,7 @@ client.on("message", async message => {
     return;
   }
 
-  if (command === "log") {
+  else if (command === "log") {
     //Make sure it's updated
     if (!updated) {
       message.channel.send("Please call +update first.");
@@ -320,6 +320,11 @@ client.on("message", async message => {
         });
       })
     updated = false;
+  }
+  
+  else {
+    message.channel.send("I'm not a chat bot");
+    return;
   }
 });
 
