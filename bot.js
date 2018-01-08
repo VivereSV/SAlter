@@ -201,25 +201,25 @@ client.on("message", async message => {
                         var guestLength = Object.keys(guestDecks).length;
                         var tournamentLength = Object.keys(tournamentDecks).length;
                         for (var c = 2; c <= paragonLength; c++) {
-                            var currDeck = paragonDecks[[c]];
+                            var currDeck = rows[titleRows.Paragon + 2][[c]];
                             if (matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= secondaryLength; c++) {
-                            var currDeck = secondaryDecks[[c]];
+                            var currDeck = rows[titleRows.Secondary + 2][[c]];
                             if (matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= guestLength; c++) {
-                            var currDeck = guestDecks[[c]];
+                            var currDeck = rows[titleRows.Guest + 2][[c]];
                             if (matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= tournamentLength; c++) {
-                            var currDeck = tournamentDecks[[c]];
+                            var currDeck = rows[titleRows.Tournament + 2][[c]];
                             if (matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
