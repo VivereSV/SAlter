@@ -84,7 +84,7 @@ client.on("message", async message => {
     if (message.author.bot) return;
 
     //bot_and_salt only
-    if (message.channel.name != "bot_and_salt") return;
+    if (message.channel.name != "salt_and_salter") return;
 
     // Also good practice to ignore any message that does not start with our prefix, 
     // which is set in the configuration file.
