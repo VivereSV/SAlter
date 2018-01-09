@@ -145,6 +145,11 @@ client.on("message", async message => {
         message.channel.send("<:packagegasm:397350321459953686>");
         return;
     }
+    
+    else if(command === "kick") {
+        message.channel.send("I don't know, I kind of like that guy...");
+        return;
+    }
 
     else if (command === "hi") {
         message.channel.send("<:yayumi:370005010668453890>");
