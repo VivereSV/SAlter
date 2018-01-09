@@ -300,7 +300,7 @@ client.on("message", async message => {
             return;
         }
         //Check that deck name includes craft name
-        var hasCraft = false;
+        /*var hasCraft = false;
         for (var i = 0; i < craftList.length; i++) {
             //Chop off the craft
             var craftName = craftList[i].substring(0, craftList[i].length - 5);
@@ -324,7 +324,7 @@ client.on("message", async message => {
         if (!oppCraft) {
             message.channel.send("ERROR! Opponent deck does not contain Haven, Shadow, Rune, Forest, Sword, Dragon, Blood, or Portal!");
             return;
-        }
+        }*/
         //Member permissions
         if (role === "Paragon") {
             if (message.author.id !== paragons[craft]) {
