@@ -67,6 +67,34 @@ client.on("ready", () => {
     // Example of changing the bot's playing game to something useful. `client.user` is what the
     // docs refer to as the "ClientUser".
     client.user.setGame(`Saltverse`);
+    Spreadsheet.load({
+        debug: true,
+        spreadsheetName: 'Dawnbreakers Deck Data Log',
+        worksheetName: 'SAlter Cache',
+        oauth2: {
+          client_id: process.env.client_id,
+          client_secret: process.env.client_secret,
+          refresh_token: process.env.refresh_token
+        }
+      },
+        function sheetReady(err, spreadsheet) {
+          if (err) throw err;
+          spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+            if (err) throw err;
+            var mapped = {
+      
+            }
+            //console.log(rows);
+            //console.log(Object.keys(rows));
+            for(var i = 1; i <= Object.keys(rows).length; i++) {
+              var obj = rows[i];
+              //console.log(obj);
+              mapped[obj['1']] = obj['2'];
+              
+            }
+            //console.log(mapped);
+          });
+        });
 });
 
 client.on("guildCreate", guild => {
