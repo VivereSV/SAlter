@@ -81,15 +81,12 @@ client.on("ready", () => {
           if (err) throw err;
           spreadsheet.receive({ getValues: true }, function (err, rows, info) {
             if (err) throw err;
-            var mapped = {
-      
-            }
             //console.log(rows);
             //console.log(Object.keys(rows));
             for(var i = 1; i <= Object.keys(rows).length; i++) {
               var obj = rows[i];
               //console.log(obj);
-              mapped[obj['1']] = obj['2'];
+              mappedItems[obj['1']] = obj['2'];
               
             }
             //console.log(mapped);
