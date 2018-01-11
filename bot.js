@@ -16,6 +16,10 @@ var craftMap = {
     Portalcraft: 7
 };
 
+var mappedItems = {
+
+}
+
 var paragons = {
     Havencraft: "204741410442706944",
     Runecraft: "261610099699744769",
@@ -50,6 +54,8 @@ var titleRows = {
 // this is what we're refering to. Your client.
 const client = new Discord.Client();
 
+//REMEMBER TO READ FROM SALTER CACHE ON STARTUP
+
 // Here we load the config.json file that contains our token and our prefix values. 
 //const config = require("./config.json");
 // config.token contains the bot's token
@@ -75,6 +81,45 @@ client.on("guildDelete", guild => {
     client.user.setGame(`on ${client.guilds.size} servers`);
 });
 
+function checkMap(name) {
+    var mapKeys = Object.keys(mappedItems);
+    var trueName = name;
+    if(mapKeys.indexOf(name) !== -1) {
+        trueName = mappedItems[name];
+    }
+    return trueName;
+}
+
+//lmao im drunk
+function findCraft(lower) {
+    lower = lower.toLowerCase();
+    var deckCraft = "ERROR";
+    if (lower.indexOf("haven") !== -1) {
+        deckCraft = "Havencraft";
+    }
+    else if (lower.indexOf("shadow") !== -1) {
+        deckCraft = "Shadowcraft";
+    }
+    else if (lower.indexOf("rune") !== -1) {
+        deckCraft = "Runecraft";
+    }
+    else if (lower.indexOf("forest") !== -1) {
+        deckCraft = "Forestcraft";
+    }
+    else if (lower.indexOf("sword") !== -1) {
+        deckCraft = "swordcraft";
+    }
+    else if (lower.indexOf("dragon") !== -1) {
+        deckCraft = "Dragoncraft";
+    }
+    else if (lower.indexOf("blood") !== -1) {
+        deckCraft = "Bloodcraft";
+    }
+    else if (lower.indexOf("portal") !== -1) {
+        deckCraft = "Portalcraft";
+    }
+    return deckCraft;
+}
 
 client.on("message", async message => {
     // This event will run on every single message received, from any channel or DM.
@@ -99,37 +144,6 @@ client.on("message", async message => {
     console.log(command);
     console.log(args);
 
-    //lmao im drunk
-    function findCraft(lower) {
-        lower = lower.toLowerCase();
-        var deckCraft = "ERROR";
-        if (lower.indexOf("haven") !== -1) {
-            deckCraft = "Havencraft";
-        }
-        else if (lower.indexOf("shadow") !== -1) {
-            deckCraft = "Shadowcraft";
-        }
-        else if (lower.indexOf("rune") !== -1) {
-            deckCraft = "Runecraft";
-        }
-        else if (lower.indexOf("forest") !== -1) {
-            deckCraft = "Forestcraft";
-        }
-        else if (lower.indexOf("sword") !== -1) {
-            deckCraft = "swordcraft";
-        }
-        else if (lower.indexOf("dragon") !== -1) {
-            deckCraft = "Dragoncraft";
-        }
-        else if (lower.indexOf("blood") !== -1) {
-            deckCraft = "Bloodcraft";
-        }
-        else if (lower.indexOf("portal") !== -1) {
-            deckCraft = "Portalcraft";
-        }
-        return deckCraft;
-    }
-
     // Let's go with a few common example commands! Feel free to delete or change those.
 
     if (command === "help") {
@@ -145,7 +159,7 @@ client.on("message", async message => {
         message.channel.send("<:NotLikeCare:386714814543822859>");
         return;
     }
-    
+
     else if(command === "kick") {
         message.channel.send("I don't know, I kind of like that guy...");
         return;
@@ -153,6 +167,36 @@ client.on("message", async message => {
 
     else if (command === "hi") {
         message.channel.send("<:yayumi:370005010668453890>");
+        return;
+    }
+
+    else if(command === "map") {
+        //REMEMBER TO WRITE TO SALTER CACHE AFTER MAPPING
+        if(args.length !== 2) {
+            message.channel.send("ERROR! Expected 2 args, got " + args.length);
+            return;
+        }
+        var mapFrom = args[0];
+        var mapTo = args[1];
+        var mapKeys = Object.keys(mappedItems);
+        if(mapKeys.indexOf(mapFrom) !== -1) {
+            message.channel.send("ERROR! " + mapFrom + " is already mapped to " + mappedItems[mapFrom]);
+            return;
+        }
+        if(mapKeys.indexOf(mapTo) !== -1) {
+            if(mappedItems[mapTo] === mapFrom) {
+                message.channel.send("ERROR! " + mapTo + " already maps to " + mapFrom);
+                return;
+            }
+            else {
+                var trueMapTo = checkMap(mapTo);
+                mappedItems[mapFrom] = trueMapTo;
+                message.channel.send(mapTo + " was already mapped to " + trueMapTo + ". " + mapFrom + " has been mapped to " + trueMapTo);
+                return;
+            }
+        }
+        mappedItems[mapFrom] = mapTo;
+        message.channel.send(mapFrom + " has been mapped to " + mapTo);
         return;
     }
 
@@ -175,7 +219,7 @@ client.on("message", async message => {
             message.channel.send(argsMessage);
             return;
         }
-        var craftSheet = findCraft(args[0]);
+        var craftSheet = findCraft(checkMap(args[0]));
         if(craftSheet === "ERROR") {
             message.channel.send("IT'S NOT WORKING BITCH");
             return;
@@ -206,25 +250,25 @@ client.on("message", async message => {
                         var guestLength = Object.keys(guestDecks).length;
                         var tournamentLength = Object.keys(tournamentDecks).length;
                         for (var c = 2; c <= paragonLength; c++) {
-                            var currDeck = rows[titleRows.Paragon + 2][[c]];
+                            var currDeck = craftMap(rows[titleRows.Paragon + 2][[c]]);
                             if (matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= secondaryLength; c++) {
-                            var currDeck = rows[titleRows.Secondary + 2][[c]];
+                            var currDeck = craftMap(rows[titleRows.Secondary + 2][[c]]);
                             if (matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= guestLength; c++) {
-                            var currDeck = rows[titleRows.Guest + 2][[c]];
+                            var currDeck = craftMap(rows[titleRows.Guest + 2][[c]]);
                             if (matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= tournamentLength; c++) {
-                            var currDeck = rows[titleRows.Tournament + 2][[c]];
+                            var currDeck = craftMap(rows[titleRows.Tournament + 2][[c]]);
                             if (matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
@@ -256,6 +300,9 @@ client.on("message", async message => {
         if (args.length != 13) {
             message.channel.send("ERROR! Expected 13 arguments, got: " + args.length);
             return;
+        }
+        for(var i = 0; i < args.length; i++) {
+            args[i] = craftMap(args[i]);
         }
         var craft = args[0];
         var role = args[1];
@@ -300,7 +347,7 @@ client.on("message", async message => {
             return;
         }
         //Check that deck name includes craft name
-        /*var hasCraft = false;
+        var hasCraft = false;
         for (var i = 0; i < craftList.length; i++) {
             //Chop off the craft
             var craftName = craftList[i].substring(0, craftList[i].length - 5);
@@ -324,7 +371,7 @@ client.on("message", async message => {
         if (!oppCraft) {
             message.channel.send("ERROR! Opponent deck does not contain Haven, Shadow, Rune, Forest, Sword, Dragon, Blood, or Portal!");
             return;
-        }*/
+        }
         //Member permissions
         if (role === "Paragon") {
             if (message.author.id !== paragons[craft]) {
