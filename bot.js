@@ -420,6 +420,7 @@ client.on("message", async message => {
                         titleRow = titleRows.Tournament;
                         col = Object.keys(rows[titleRows.Tournament]).length + 1;
                     }
+                    console.log("COL: " + col);
                     var formatRow = titleRow - 2;
                     var dateRow = titleRow - 1;
                     var linkRow = titleRow + 1;
