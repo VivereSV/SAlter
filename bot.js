@@ -224,8 +224,9 @@ client.on("message", async message => {
                 return;
             }
             else {
-                mapTo = checkMap(mapTo);
+                var trueMapTo = checkMap(mapTo);
                 succMessage = (mapTo + " was already mapped to " + trueMapTo + ". " + mapFrom + " has been mapped to " + trueMapTo);
+                mapTo = trueMapTo;
             }
         }
         mappedItems[mapFrom] = mapTo;
@@ -247,6 +248,7 @@ client.on("message", async message => {
             spreadsheet.send(function (err) {
                 if (err) throw err;
             });
+            message.channel.send(succMessage);
         })
     }
 
