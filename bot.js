@@ -233,7 +233,7 @@ client.on("message", async message => {
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'Dawnbreakers Deck Data Log',
-            worksheetName: craftSheet,
+            worksheetName: 'SAlter Cache',
             oauth2: {
                 client_id: process.env.client_id,
                 client_secret: process.env.client_secret,
