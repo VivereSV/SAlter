@@ -72,25 +72,25 @@ client.on("ready", () => {
         spreadsheetName: 'Dawnbreakers Deck Data Log',
         worksheetName: 'SAlter Cache',
         oauth2: {
-          client_id: process.env.client_id,
-          client_secret: process.env.client_secret,
-          refresh_token: process.env.refresh_token
+            client_id: process.env.client_id,
+            client_secret: process.env.client_secret,
+            refresh_token: process.env.refresh_token
         }
-      },
+    },
         function sheetReady(err, spreadsheet) {
-          if (err) throw err;
-          spreadsheet.receive({ getValues: true }, function (err, rows, info) {
             if (err) throw err;
-            //console.log(rows);
-            //console.log(Object.keys(rows));
-            for(var i = 1; i <= Object.keys(rows).length; i++) {
-              var obj = rows[i];
-              //console.log(obj);
-              mappedItems[obj['1']] = obj['2'];
-              
-            }
-            //console.log(mapped);
-          });
+            spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                if (err) throw err;
+                //console.log(rows);
+                //console.log(Object.keys(rows));
+                for (var i = 1; i <= Object.keys(rows).length; i++) {
+                    var obj = rows[i];
+                    //console.log(obj);
+                    mappedItems[obj['1']] = obj['2'];
+
+                }
+                //console.log(mapped);
+            });
         });
 });
 
@@ -107,9 +107,17 @@ client.on("guildDelete", guild => {
 });
 
 function checkMap(name) {
+    while(name !== checkHelper(name)) {
+        name = checkHelper(name);
+    }
+    return name;
+}
+
+//lmao fuck the users
+function checkHelper(name) {
     var mapKeys = Object.keys(mappedItems);
     var trueName = name;
-    if(mapKeys.indexOf(name) !== -1) {
+    if (mapKeys.indexOf(name) !== -1) {
         trueName = mappedItems[name];
     }
     return trueName;
@@ -185,7 +193,7 @@ client.on("message", async message => {
         return;
     }
 
-    else if(command === "kick") {
+    else if (command === "kick") {
         message.channel.send("I don't know, I kind of like that guy...");
         return;
     }
@@ -195,34 +203,51 @@ client.on("message", async message => {
         return;
     }
 
-    else if(command === "map") {
+    else if (command === "map") {
         //REMEMBER TO WRITE TO SALTER CACHE AFTER MAPPING
-        if(args.length !== 2) {
+        if (args.length !== 2) {
             message.channel.send("ERROR! Expected 2 args, got " + args.length);
             return;
         }
         var mapFrom = args[0];
         var mapTo = args[1];
         var mapKeys = Object.keys(mappedItems);
-        if(mapKeys.indexOf(mapFrom) !== -1) {
+        var nextRow = mapKeys.length + 1;
+        var succMessage = mapFrom + " has been mapped to " + mapTo;
+        if (mapKeys.indexOf(mapFrom) !== -1) {
             message.channel.send("ERROR! " + mapFrom + " is already mapped to " + mappedItems[mapFrom]);
             return;
         }
-        if(mapKeys.indexOf(mapTo) !== -1) {
-            if(mappedItems[mapTo] === mapFrom) {
+        if (mapKeys.indexOf(mapTo) !== -1) {
+            if (mappedItems[mapTo] === mapFrom) {
                 message.channel.send("ERROR! " + mapTo + " already maps to " + mapFrom);
                 return;
             }
             else {
-                var trueMapTo = checkMap(mapTo);
-                mappedItems[mapFrom] = trueMapTo;
-                message.channel.send(mapTo + " was already mapped to " + trueMapTo + ". " + mapFrom + " has been mapped to " + trueMapTo);
-                return;
+                mapTo = checkMap(mapTo);
+                succMessage = (mapTo + " was already mapped to " + trueMapTo + ". " + mapFrom + " has been mapped to " + trueMapTo);
             }
         }
         mappedItems[mapFrom] = mapTo;
-        message.channel.send(mapFrom + " has been mapped to " + mapTo);
-        return;
+        Spreadsheet.load({
+            debug: true,
+            spreadsheetName: 'Dawnbreakers Deck Data Log',
+            worksheetName: craftSheet,
+            oauth2: {
+                client_id: process.env.client_id,
+                client_secret: process.env.client_secret,
+                refresh_token: process.env.refresh_token
+            }
+        }, function sheetReady(err, spreadsheet) {
+            if (err) throw err;
+
+            spreadsheet.add({ [nextRow]: { 1: [mapFrom] } });
+            spreadsheet.add({ [nextRow]: { 2: [mapTo] } });
+
+            spreadsheet.send(function (err) {
+                if (err) throw err;
+            });
+        })
     }
 
     else if (command === "search") {
@@ -245,7 +270,7 @@ client.on("message", async message => {
             return;
         }
         var craftSheet = findCraft(checkMap(args[0]));
-        if(craftSheet === "ERROR") {
+        if (craftSheet === "ERROR") {
             message.channel.send("IT'S NOT WORKING BITCH");
             return;
         }
@@ -326,7 +351,7 @@ client.on("message", async message => {
             message.channel.send("ERROR! Expected 13 arguments, got: " + args.length);
             return;
         }
-        for(var i = 0; i < args.length; i++) {
+        for (var i = 0; i < args.length; i++) {
             args[i] = checkMap(args[i]);
         }
         var craft = args[0];
