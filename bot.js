@@ -271,7 +271,8 @@ client.on("message", async message => {
             message.channel.send(argsMessage);
             return;
         }
-        var craftSheet = findCraft(checkMap(args[0]));
+        var userDeck = checkMap(args[0]);
+        var craftSheet = findCraft(userDeck);
         if (craftSheet === "ERROR") {
             message.channel.send("IT'S NOT WORKING BITCH");
             return;
@@ -303,25 +304,25 @@ client.on("message", async message => {
                         var tournamentLength = Object.keys(tournamentDecks).length;
                         for (var c = 2; c <= paragonLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Paragon + 2][[c]]);
-                            if (matchupList.indexOf(currDeck) === -1) {
+                            if (checkMap(paragonRows[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= secondaryLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Secondary + 2][[c]]);
-                            if (matchupList.indexOf(currDeck) === -1) {
+                            if (checkMap(paragonRows[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= guestLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Guest + 2][[c]]);
-                            if (matchupList.indexOf(currDeck) === -1) {
+                            if (checkMap(paragonRows[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= tournamentLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Tournament + 2][[c]]);
-                            if (matchupList.indexOf(currDeck) === -1) {
+                            if (checkMap(paragonRows[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
