@@ -306,25 +306,25 @@ client.on("message", async message => {
                         var tournamentLength = Object.keys(tournamentDecks).length;
                         for (var c = 2; c <= paragonLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Paragon + 2][[c]]);
-                            if (checkMap(paragonRows[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
+                            if (checkMap(paragonDecks[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= secondaryLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Secondary + 2][[c]]);
-                            if (checkMap(secondaryRows[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
+                            if (checkMap(secondaryDecks[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= guestLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Guest + 2][[c]]);
-                            if (checkMap(guestRows[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
+                            if (checkMap(guestDecks[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
                         for (var c = 2; c <= tournamentLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Tournament + 2][[c]]);
-                            if (checkMap(tournamentRows[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
+                            if (checkMap(tournamentDecks[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
                                 matchupList.push(currDeck);
                             }
                         }
