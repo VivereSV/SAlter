@@ -191,7 +191,7 @@ client.on("message", async message => {
     }
 
     else if (command === "fuck") {
-        message.channel.send("<:NotLikeCare:386714814543822859>");
+        message.channel.send("<:packagegasm:403389192035500054>");
         return;
     }
 
