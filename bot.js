@@ -107,7 +107,7 @@ client.on("guildDelete", guild => {
 });
 
 function checkMap(name) {
-    while(name !== checkHelper(name)) {
+    while (name !== checkHelper(name)) {
         name = checkHelper(name);
     }
     return name;
@@ -203,6 +203,59 @@ client.on("message", async message => {
     else if (command === "hi") {
         message.channel.send("<:yayumi:370005010668453890>");
         return;
+    }
+
+    else if (command === "unmap") {
+        //If valid unmap
+        //Remove mapping from object
+        //Write object to SAlter cache + 1 extra blank
+        //No need to read!
+        if (args.length !== 2) {
+            message.channel.send("ERROR! Expected 2 arguments, got " + args.length);
+            return;
+        }
+        var p = args[0];
+        var v = args[1];
+        var mapKeys = Object.keys(mappedItems);
+        if (mapKeys.indexOf(p) === -1) {
+            message.channel.send("ERROR! " + p + " is not mapped to anything");
+            return;
+        }
+        else {
+            if (mappedItems[[p]] !== v) {
+                message.channel.send("ERROR! " + p + " does not map to " + v);
+                return;
+            }
+            delete mappedItems[[p]];
+            var succMessage = p + "has been unmapped from " + v;
+            //I really should make a function for this but I'd have to actually learn how the module works so fuck that
+            Spreadsheet.load({
+                debug: true,
+                spreadsheetName: 'Dawnbreakers Deck Data Log',
+                worksheetName: 'SAlter Cache',
+                oauth2: {
+                    client_id: process.env.client_id,
+                    client_secret: process.env.client_secret,
+                    refresh_token: process.env.refresh_token
+                }
+            }, function sheetReady(err, spreadsheet) {
+                if (err) throw err;
+                //Add everything in mappedItems to SAlter cache to avoid reading the cache lmao
+                mapKeys = Object.keys(mappedItems); //Update cause removed a mapping
+                for (var i = 0; i < mapKeys.length; i++) {
+                    var nextRow = i + 1;
+                    spreadsheet.add({ [nextRow]: { 1: [mapKeys[i]] } });
+                    spreadsheet.add({ [nextRow]: { 2: [mappedItems[mapkeys[i]]] } });
+                }
+                spreadsheet.add({ [mapKeys.length + 1]: { 1: ""}});
+                spreadsheet.add({ [mapKeys.length + 1]: { 2: ""}});
+
+                spreadsheet.send(function (err) {
+                    if (err) throw err;
+                });
+                message.channel.send(succMessage);
+            })
+        }
     }
 
     else if (command === "map") {
