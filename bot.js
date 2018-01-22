@@ -184,7 +184,7 @@ client.on("message", async message => {
             "+log: log a match in the database. Please provide proper parameters\n" +
             "+search: search the database for a deck matchup. Currently under construction\n" +
             "+map|mapFrom|mapTo: map mapFrom to mapTo. SAlter will treat them as the same deck\n" +
-            "+unmap|mapFrom|mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck. Under construction\n" +
+            "+unmap|mapFrom|mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck.\n" +
             "+hi: greet SAlter";
         message.channel.send(helpful);
         return;
