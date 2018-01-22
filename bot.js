@@ -253,7 +253,7 @@ client.on("message", async message => {
                 spreadsheet.send(function (err) {
                     if (err) throw err;
                 });
-                var succMessage = p + "has been unmapped from " + v;
+                var succMessage = p + " has been unmapped from " + v;
                 message.channel.send(succMessage);
             })
         }
