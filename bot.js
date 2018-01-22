@@ -226,8 +226,8 @@ client.on("message", async message => {
                 message.channel.send("ERROR! " + p + " does not map to " + v);
                 return;
             }
-            delete mappedItems[[p]];
-            var succMessage = p + "has been unmapped from " + v;
+            delete mappedItems[p];
+            
             //I really should make a function for this but I'd have to actually learn how the module works so fuck that
             Spreadsheet.load({
                 debug: true,
@@ -253,6 +253,7 @@ client.on("message", async message => {
                 spreadsheet.send(function (err) {
                     if (err) throw err;
                 });
+                var succMessage = p + "has been unmapped from " + v;
                 message.channel.send(succMessage);
             })
         }
