@@ -245,7 +245,7 @@ client.on("message", async message => {
                 for (var i = 0; i < mapKeys.length; i++) {
                     var nextRow = i + 1;
                     spreadsheet.add({ [nextRow]: { 1: [mapKeys[i]] } });
-                    spreadsheet.add({ [nextRow]: { 2: [mappedItems[mapkeys[i]]] } });
+                    spreadsheet.add({ [nextRow]: { 2: [mappedItems[mapKeys[i]]] } });
                 }
                 spreadsheet.add({ [mapKeys.length + 1]: { 1: ""}});
                 spreadsheet.add({ [mapKeys.length + 1]: { 2: ""}});
