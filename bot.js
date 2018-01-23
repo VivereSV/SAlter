@@ -182,7 +182,7 @@ client.on("message", async message => {
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
             "+log: log a match in the database. Please provide proper parameters\n" +
-            "+search: search the database for a deck matchup. Currently under construction\n" +
+            "+search: search the database for a deck matchup. Type +search for more info\n" +
             "+map|mapFrom|mapTo: map mapFrom to mapTo. SAlter will treat them as the same deck\n" +
             "+unmap|mapFrom|mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck.\n" +
             "+hi: greet SAlter";
@@ -227,7 +227,7 @@ client.on("message", async message => {
                 return;
             }
             delete mappedItems[p];
-            
+
             //I really should make a function for this but I'd have to actually learn how the module works so fuck that
             Spreadsheet.load({
                 debug: true,
@@ -247,8 +247,8 @@ client.on("message", async message => {
                     spreadsheet.add({ [nextRow]: { 1: [mapKeys[i]] } });
                     spreadsheet.add({ [nextRow]: { 2: [mappedItems[mapKeys[i]]] } });
                 }
-                spreadsheet.add({ [mapKeys.length + 1]: { 1: ""}});
-                spreadsheet.add({ [mapKeys.length + 1]: { 2: ""}});
+                spreadsheet.add({ [mapKeys.length + 1]: { 1: "" } });
+                spreadsheet.add({ [mapKeys.length + 1]: { 2: "" } });
 
                 spreadsheet.send(function (err) {
                     if (err) throw err;
@@ -324,7 +324,7 @@ client.on("message", async message => {
             return;
         }
         else if (args.length > 3) {
-            message.channel.send(argsMessage);
+            message.channel.send(usageMessage);
             return;
         }
         var userDeck = checkMap(args[0]);
@@ -347,17 +347,17 @@ client.on("message", async message => {
                 if (err) throw err;
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
+                    var paragonDecks = rows[titleRows.Paragon];
+                    var secondaryDecks = rows[titleRows.Secondary];
+                    var guestDecks = rows[titleRows.Guest];
+                    var tournamentDecks = rows[titleRows.Tournament];
+                    var paragonLength = Object.keys(paragonDecks).length;
+                    var secondaryLength = Object.keys(secondaryDecks).length;
+                    var guestLength = Object.keys(guestDecks).length;
+                    var tournamentLength = Object.keys(tournamentDecks).length;
                     if (args.length === 1) {
                         //List all the matchups for that deck
                         var matchupList = [];
-                        var paragonDecks = rows[titleRows.Paragon];
-                        var secondaryDecks = rows[titleRows.Secondary];
-                        var guestDecks = rows[titleRows.Guest];
-                        var tournamentDecks = rows[titleRows.Tournament];
-                        var paragonLength = Object.keys(paragonDecks).length;
-                        var secondaryLength = Object.keys(secondaryDecks).length;
-                        var guestLength = Object.keys(guestDecks).length;
-                        var tournamentLength = Object.keys(tournamentDecks).length;
                         for (var c = 2; c <= paragonLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Paragon + 2][[c]]);
                             if (checkMap(paragonDecks[[c]]) === userDeck && matchupList.indexOf(currDeck) === -1) {
@@ -383,6 +383,9 @@ client.on("message", async message => {
                             }
                         }
                         var dMessage = "Here are the matchups I found for " + args[0] + ": ";
+                        if (matchupList.length === 0) {
+                            dMessage += "None";
+                        }
                         for (var i = 0; i < matchupList.length; i++) {
                             dMessage += matchupList[i];
                             if (i != matchupList.length - 1) {
@@ -392,13 +395,27 @@ client.on("message", async message => {
                         dMessage += ".";
                         message.channel.send(dMessage);
                     }
+                    else if (args.length === 2) {
+                        var winFirst = 0;
+                        var lossFirst = 0;
+                        var winSecond = 0;
+                        var lossSecond = 0;
+                        for (var c = 2; c < paragonLength; c++) {
+                            var currDeck = checkMap(rows[titleRows.Paragon + 2][[c]]);
+
+                        }
+                    }
+                    else if (args.length === 3) {
+                        message.channel.send("Under construction");
+                        return;
+                    }
                 });
             });
     }
 
     else if (command === "format") {
-        const sayMessage = "+log|<class>|<role>|<format>|<date>|<deck title>|<link to decklist>^<deck name>|<opponent deck>|<Win/Loss>|<First/Second>|<Justification>|<Changes made from previous decks>|<Insight/Reflection>|<Link to video (if any)>\nexample: +log|Portalcraft|Paragon|Rotation|10/5/15|Artifact|sv.bagoum/idontknow^MRPortal|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
-        //const example = "example: +log|Portalcraft|Paragon|Rotation|10/5/15|Artifact|sv.bagoum/idontknow^Wallet Haven|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
+        const sayMessage = "+log|<class>|<role>|<format>|<deck title>|<link to decklist>|<opponent deck>|<Win/Loss>|<First/Second>|<Justification>|<Changes made from previous decks>|<Insight/Reflection>|<Link to video (if any)>\nexample: +log|Portalcraft|Paragon|Rotation|Artifact|sv.bagoum/idontknow|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
+        //const example = "example: +log|Portalcraft|Paragon|Rotation|10/5/15|Artifact|sv.bagoum/idontknow|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
         message.channel.send(sayMessage);
         //message.channel.send(example);
         return;
@@ -406,26 +423,30 @@ client.on("message", async message => {
 
     else if (command === "log") {
         //Make sure they gave 13 arguments cause they can't count
-        if (args.length != 13) {
-            message.channel.send("ERROR! Expected 13 arguments, got: " + args.length);
+        if (args.length != 12) {
+            message.channel.send("ERROR! Expected 12 arguments, got: " + args.length);
             return;
         }
         for (var i = 0; i < args.length; i++) {
             args[i] = checkMap(args[i]);
         }
+        var d = new Date();
+        var day = d.getDate();
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
         var craft = args[0];
         var role = args[1];
         var format = args[2];
-        var date = args[3];
-        var deckTitle = args[4];
-        var deckLink = args[5];
-        var opponentDeck = args[6];
-        var result = args[7];
-        var turn = args[8];
-        var justification = args[9];
-        var changes = args[10];
-        var insight = args[11];
-        var videoLink = args[12];
+        var date = month + "/" + day + "/" + year;
+        var deckTitle = args[3];
+        var deckLink = args[4];
+        var opponentDeck = args[5];
+        var result = args[6];
+        var turn = args[7];
+        var justification = args[8];
+        var changes = args[9];
+        var insight = args[10];
+        var videoLink = args[11];
         //Check for valid craft
         var craftList = new Array("Havencraft", "Runecraft", "Shadowcraft", "Forestcraft", "Swordcraft", "Dragoncraft", "Bloodcraft", "Portalcraft");
         if (craftList.indexOf(craft) === -1) {
@@ -539,14 +560,14 @@ client.on("message", async message => {
                     var changeRow = titleRow + 6;
                     var irRow = titleRow + 7;
                     var videoRow = titleRow + 8;
-                    var deckName = "Deck";
-                    if (deckLink.indexOf("^") === -1) {
+                    var deckName = deckTitle;
+                    /*if (deckLink.indexOf("^") === -1) {
                         deckName = "Deck";
                     }
                     else {
                         deckName = deckLink.substring(deckLink.indexOf("^") + 1);
                         deckLink = deckLink.substring(0, deckLink.indexOf("^"));
-                    }
+                    }*/
                     var hyperlink = "=HYPERLINK(\"" + deckLink + "\", \"" + deckName + "\")";
                     spreadsheet.add({ [formatRow]: { [col]: format } });
                     spreadsheet.add({ [dateRow]: { [col]: date } });
