@@ -416,7 +416,7 @@ client.on("message", async message => {
     else if (command === "format") {
         var sayMessage = "+log|<class>|<role>|<format>|<deck title>|<link to decklist>|<opponent deck>|<Win/Loss>|<First/Second>|<Justification>|<Changes made from previous decks>|<Insight/Reflection>|<Link to video (if any)>\nexample: +log|Portalcraft|Paragon|Rotation|Artifact|sv.bagoum/idontknow|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
         //const example = "example: +log|Portalcraft|Paragon|Rotation|10/5/15|Artifact|sv.bagoum/idontknow|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
-        var shortVer = "+log|Rune|S|R|Miracle Rune|http://sv.bagoum.com/db/7ho|Ramp Dragon|W|2|I don't know how I won| | |";
+        var shortVer = "+log|Rune|S|R|Miracle Rune|http://sv.bagoum/db/7ho|Ramp Dragon|W|2|I don't know how I won| | |";
         sayMessage += "\n Short version: " + shortVer;
         message.channel.send(sayMessage);
         //message.channel.send(example);
