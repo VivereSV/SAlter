@@ -172,7 +172,7 @@ client.on("message", async message => {
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
     // command = say
     // args = ["Is", "this", "the", "real", "life?"]
-    const args = message.content.slice(process.env.prefix.length).trim().split(/\//g);
+    const args = message.content.slice(process.env.prefix.length).trim().split(/\;/g);
     const command = args.shift().toLowerCase();
     console.log(command);
     console.log(args);
@@ -316,9 +316,9 @@ client.on("message", async message => {
             +search/<deck>/<opponent deck>/<result>: result can be win or loss, will only show justification and insight/reflection for that result
             */
         const argsMessage = "ERROR! Expected 1-3 args, got: " + args.length;
-        const usageMessage = "Usage\n" + "+search/<deck>: lists all the matchups of that deck\n"
-            + "+search/<deck>/<opponent deck>: lists W/L ratio going first and second, justification, insight/reflection\n"
-            + "+search/<deck>/<opponent deck>/<result>: result can be win or loss, will only show justification and insight/reflection for that result";
+        const usageMessage = "Usage\n" + "+search;<deck>: lists all the matchups of that deck\n"
+            + "+search;<deck>;<opponent deck>: lists W;L ratio going first and second, justification, insight;reflection\n"
+            + "+search;<deck>;<opponent deck>;<result>: result can be win or loss, will only show justification and insight;reflection for that result";
         if (args.length < 1) {
             message.channel.send(usageMessage);
             return;
@@ -422,9 +422,9 @@ client.on("message", async message => {
     }
 
     else if (command === "format") {
-        var sayMessage = "Format: +log/<class>/<role>/<format>/<deck title>/<link to decklist>/<opponent deck>/<Win/Loss>/<First/Second>/<Justification>/<Changes made from previous decks>/<Insight/Reflection>/<Link to video (if any)>\nExample: +log/Portalcraft/Paragon/Rotation/Artifact/sv.bagoum/idontknow/Shitty Ginger Rune/Win/Second/Ginger Rune sucks lmao/None/Skillverse/N/A";
+        var sayMessage = "Format: +log;<class>;<role>;<format>;<deck title>;<link to decklist>;<opponent deck>;<Win/Loss>;<First/Second>;<Justification>;<Changes made from previous decks>;<Insight/Reflection>;<Link to video (if any)>\nExample: +log;Portalcraft;Paragon;Rotation;Artifact;sv.bagoum/idontknow;Shitty Ginger Rune;Win;Second;Ginger Rune sucks lmao;None;Skillverse;N/A";
         //const example = "example: +log/Portalcraft/Paragon/Rotation/10/5/15/Artifact/sv.bagoum/idontknow/Shitty Ginger Rune/Win/Second/Ginger Rune sucks lmao/None/Skillverse/N/A";
-        var shortVer = "+log/Rune/S/R/Miracle Rune/sv.bagoum.com/db/7ho/Ramp Dragon/W/2/I don't know how I won/ / /";
+        var shortVer = "+log;Rune;S;R;Miracle Rune;sv.bagoum.com/db/7ho;Ramp Dragon;W;2;I don't know how I won; ; ;";
         sayMessage += "\nShort version: " + shortVer;
         message.channel.send(sayMessage);
         //message.channel.send(example);
