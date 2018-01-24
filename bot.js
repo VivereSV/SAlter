@@ -172,7 +172,7 @@ client.on("message", async message => {
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
     // command = say
     // args = ["Is", "this", "the", "real", "life?"]
-    const args = message.content.slice(process.env.prefix.length).trim().split(/\|/g);
+    const args = message.content.slice(process.env.prefix.length).trim().split(/\//g);
     const command = args.shift().toLowerCase();
     console.log(command);
     console.log(args);
@@ -183,8 +183,8 @@ client.on("message", async message => {
         const helpful = "+format: get the required format for a log\n" +
             "+log: log a match in the database. Please provide proper parameters\n" +
             "+search: search the database for a deck matchup. Type +search for more info\n" +
-            "+map|mapFrom|mapTo: map mapFrom to mapTo. SAlter will treat them as the same deck\n" +
-            "+unmap|mapFrom|mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck.\n" +
+            "+map/mapFrom/mapTo: map mapFrom to mapTo. SAlter will treat them as the same deck\n" +
+            "+unmap/mapFrom/mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck.\n" +
             "+hi: greet SAlter";
         message.channel.send(helpful);
         return;
@@ -311,14 +311,14 @@ client.on("message", async message => {
     else if (command === "search") {
         //message.channel.send("I said it was under construction...");
         /*Format
-            +search|<deck>: lists all the matchups of that deck
-            +search|<deck>|<opponent deck>: lists W/L ratio going first and second, justification, insight/reflection
-            +search|<deck>|<opponent deck>|<result>: result can be win or loss, will only show justification and insight/reflection for that result
+            +search/<deck>: lists all the matchups of that deck
+            +search/<deck>/<opponent deck>: lists W/L ratio going first and second, justification, insight/reflection
+            +search/<deck>/<opponent deck>/<result>: result can be win or loss, will only show justification and insight/reflection for that result
             */
         const argsMessage = "ERROR! Expected 1-3 args, got: " + args.length;
-        const usageMessage = "Usage\n" + "+search|<deck>: lists all the matchups of that deck\n"
-            + "+search|<deck>|<opponent deck>: lists W/L ratio going first and second, justification, insight/reflection\n"
-            + "+search|<deck>|<opponent deck>|<result>: result can be win or loss, will only show justification and insight/reflection for that result";
+        const usageMessage = "Usage\n" + "+search/<deck>: lists all the matchups of that deck\n"
+            + "+search/<deck>/<opponent deck>: lists W/L ratio going first and second, justification, insight/reflection\n"
+            + "+search/<deck>/<opponent deck>/<result>: result can be win or loss, will only show justification and insight/reflection for that result";
         if (args.length < 1) {
             message.channel.send(usageMessage);
             return;
@@ -328,6 +328,10 @@ client.on("message", async message => {
             return;
         }
         var userDeck = checkMap(args[0]);
+        var oppDeck;
+        if(args.length >= 2) {
+            oppDeck = checkMap(args[1]);
+        }
         var craftSheet = findCraft(userDeck);
         if (craftSheet === "ERROR") {
             message.channel.send("IT'S NOT WORKING BITCH");
@@ -396,13 +400,17 @@ client.on("message", async message => {
                         message.channel.send(dMessage);
                     }
                     else if (args.length === 2) {
+                        var comments = "";
                         var winFirst = 0;
                         var lossFirst = 0;
                         var winSecond = 0;
                         var lossSecond = 0;
                         for (var c = 2; c < paragonLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Paragon + 2][[c]]);
-
+                            if (checkMap(paragonDecks[[c]]) === userDeck && checkMap(rows[titleRows.Paragon + 2][c]) === oppDeck) {
+                                //Check which category the match is under
+                                
+                            }
                         }
                     }
                     else if (args.length === 3) {
@@ -414,9 +422,9 @@ client.on("message", async message => {
     }
 
     else if (command === "format") {
-        var sayMessage = "Format: +log|<class>|<role>|<format>|<deck title>|<link to decklist>|<opponent deck>|<Win/Loss>|<First/Second>|<Justification>|<Changes made from previous decks>|<Insight/Reflection>|<Link to video (if any)>\nExample: +log|Portalcraft|Paragon|Rotation|Artifact|sv.bagoum/idontknow|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
-        //const example = "example: +log|Portalcraft|Paragon|Rotation|10/5/15|Artifact|sv.bagoum/idontknow|Shitty Ginger Rune|Win|Second|Ginger Rune sucks lmao|None|Skillverse|N/A";
-        var shortVer = "+log|Rune|S|R|Miracle Rune|http://sv.bagoum/db/7ho|Ramp Dragon|W|2|I don't know how I won| | |";
+        var sayMessage = "Formet: +log/<class>/<role>/<format>/<deck title>/<link to decklist>/<opponent deck>/<Win/Loss>/<First/Second>/<Justification>/<Changes made from previous decks>/<Insight/Reflection>/<Link to video (if any)>\nExample: +log/Portalcraft/Paragon/Rotation/Artifact/sv.bagoum/idontknow/Shitty Ginger Rune/Win/Second/Ginger Rune sucks lmao/None/Skillverse/N/A";
+        //const example = "example: +log/Portalcraft/Paragon/Rotation/10/5/15/Artifact/sv.bagoum/idontknow/Shitty Ginger Rune/Win/Second/Ginger Rune sucks lmao/None/Skillverse/N/A";
+        var shortVer = "+log/Rune/S/R/Miracle Rune/http://sv.bagoum/db/7ho/Ramp Dragon/W/2/I don't know how I won/ / /";
         sayMessage += "\nShort version: " + shortVer;
         message.channel.send(sayMessage);
         //message.channel.send(example);
