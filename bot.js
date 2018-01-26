@@ -329,7 +329,7 @@ client.on("message", async message => {
         }
         var userDeck = checkMap(args[0]);
         var oppDeck;
-        if(args.length >= 2) {
+        if (args.length >= 2) {
             oppDeck = checkMap(args[1]);
         }
         var craftSheet = findCraft(userDeck);
@@ -407,11 +407,110 @@ client.on("message", async message => {
                         var lossSecond = 0;
                         for (var c = 2; c < paragonLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Paragon + 2][[c]]);
-                            if (checkMap(paragonDecks[[c]]) === userDeck && checkMap(rows[titleRows.Paragon + 2][c]) === oppDeck) {
+                            if (checkMap(paragonDecks[[c]]) === userDeck && currDeck === oppDeck) {
                                 //Check which category the match is under
-                                
+                                if (rows[titleRows.Paragon + 3][c] === "Win") {
+                                    if (rows[titleRows.Paragon + 4][c] === "First") {
+                                        winFirst++;
+                                    }
+                                    else {
+                                        winSecond++;
+                                    }
+                                }
+                                else {
+                                    if (rows[titleRows.Paragon + 4][c] === "First") {
+                                        lossFirst++;
+                                    }
+                                    else {
+                                        lossSecond++;
+                                    }
+                                }
                             }
                         }
+                        for (var c = 2; c < secondaryLength; c++) {
+                            var currDeck = checkMap(rows[titleRows.Secondary + 2][[c]]);
+                            if (checkMap(secondaryDecks[[c]]) === userDeck && currDeck === oppDeck) {
+                                //Check which category the match is under
+                                if (rows[titleRows.Secondary + 3][c] === "Win") {
+                                    if (rows[titleRows.Secondary + 4][c] === "First") {
+                                        winFirst++;
+                                    }
+                                    else {
+                                        winSecond++;
+                                    }
+                                }
+                                else {
+                                    if (rows[titleRows.Secondary + 4][c] === "First") {
+                                        lossFirst++;
+                                    }
+                                    else {
+                                        lossSecond++;
+                                    }
+                                }
+                            }
+                        }
+                        for (var c = 2; c < guestLength; c++) {
+                            var currDeck = checkMap(rows[titleRows.Guest + 2][[c]]);
+                            if (checkMap(guestDecks[[c]]) === userDeck && currDeck === oppDeck) {
+                                //Check which category the match is under
+                                if (rows[titleRows.Guest + 3][c] === "Win") {
+                                    if (rows[titleRows.Guest + 4][c] === "First") {
+                                        winFirst++;
+                                    }
+                                    else {
+                                        winSecond++;
+                                    }
+                                }
+                                else {
+                                    if (rows[titleRows.Guest + 4][c] === "First") {
+                                        lossFirst++;
+                                    }
+                                    else {
+                                        lossSecond++;
+                                    }
+                                }
+                            }
+                        }
+                        for (var c = 2; c < tournamentLength; c++) {
+                            var currDeck = checkMap(rows[titleRows.Tournament + 2][[c]]);
+                            if (checkMap(tournamentDecks[[c]]) === userDeck && currDeck === oppDeck) {
+                                //Check which category the match is under
+                                if (rows[titleRows.Tournament + 3][c] === "Win") {
+                                    if (rows[titleRows.Tournament + 4][c] === "First") {
+                                        winFirst++;
+                                    }
+                                    else {
+                                        winSecond++;
+                                    }
+                                }
+                                else {
+                                    if (rows[titleRows.Tournament + 4][c] === "First") {
+                                        lossFirst++;
+                                    }
+                                    else {
+                                        lossSecond++;
+                                    }
+                                }
+                            }
+                        }
+                        var wlFirst;
+                        var wlSecond;
+                        if(winFirst + lossFirst === 0) {
+                            wlFirst = "N/A";
+                        }
+                        else {
+                            wlFirst = winFirst/(winFirst + lossFirst);
+                        }
+                        if(winSecond + lossSecond === 0) {
+                            wlSecond = "N/A";
+                        }
+                        else {
+                            wlSecond = winSecond/(winSecond + lossSecond);
+                        }
+                        var ret = "W/L Ratio going first: " + wlFirst + "\nW/L Ratio going second: " + wlSecond;
+                        message.channel.send(ret);
+                        return;
+
                     }
                     else if (args.length === 3) {
                         message.channel.send("Under construction");
