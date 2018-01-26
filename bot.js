@@ -499,13 +499,13 @@ client.on("message", async message => {
                             wlFirst = "N/A";
                         }
                         else {
-                            wlFirst = 100 * winFirst/(winFirst + lossFirst) + "%";
+                            wlFirst = (100 * winFirst/(winFirst + lossFirst)).toFixed(2) + "%";
                         }
                         if(winSecond + lossSecond === 0) {
                             wlSecond = "N/A";
                         }
                         else {
-                            wlSecond = 100 * winSecond/(winSecond + lossSecond) + "%";
+                            wlSecond = (100 * winSecond/(winSecond + lossSecond)).toFixed(2) + "%";
                         }
                         var ret = "W/L Ratio going first: " + wlFirst + "\nW/L Ratio going second: " + wlSecond;
                         message.channel.send(ret);
