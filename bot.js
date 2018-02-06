@@ -471,7 +471,7 @@ client.on("message", async message => {
                                 }
                             }
                         }
-                        for (var c = 2; c < tournamentLength; c++) {
+                        for (var c = 2; c <= tournamentLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Tournament + 2][[c]]);
                             if (checkMap(tournamentDecks[[c]]) === userDeck && currDeck === oppDeck) {
                                 //Check which category the match is under
