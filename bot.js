@@ -405,7 +405,7 @@ client.on("message", async message => {
                         var lossFirst = 0;
                         var winSecond = 0;
                         var lossSecond = 0;
-                        for (var c = 2; c < paragonLength; c++) {
+                        for (var c = 2; c <= paragonLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Paragon + 2][[c]]);
                             if (checkMap(paragonDecks[[c]]) === userDeck && currDeck === oppDeck) {
                                 //Check which category the match is under
@@ -427,7 +427,7 @@ client.on("message", async message => {
                                 }
                             }
                         }
-                        for (var c = 2; c < secondaryLength; c++) {
+                        for (var c = 2; c <= secondaryLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Secondary + 2][[c]]);
                             if (checkMap(secondaryDecks[[c]]) === userDeck && currDeck === oppDeck) {
                                 //Check which category the match is under
@@ -449,7 +449,7 @@ client.on("message", async message => {
                                 }
                             }
                         }
-                        for (var c = 2; c < guestLength; c++) {
+                        for (var c = 2; c <= guestLength; c++) {
                             var currDeck = checkMap(rows[titleRows.Guest + 2][[c]]);
                             if (checkMap(guestDecks[[c]]) === userDeck && currDeck === oppDeck) {
                                 //Check which category the match is under
