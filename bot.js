@@ -179,6 +179,15 @@ client.on("message", async message => {
 
     // Let's go with a few common example commands! Feel free to delete or change those.
 
+    //What do you mean "make useful commands"?
+    /*if (command === "app") {
+        var expac = ["DE", "RoB", "TotG", "WLD", "SFL", "CG"];
+        var comp = ["Crusader", "Competitive"];
+        var app = "1. " + message.author.username + "\n2. \n3. " + ;
+
+
+    }*/
+
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
             "+log: log a match in the database. Please provide proper parameters\n" +
@@ -308,6 +317,22 @@ client.on("message", async message => {
         })
     }
 
+    else if (command === "add") {
+        let r = message.guild.roles.find("name", "Aspirant");
+        let member = message.mentions.members.first();
+        let cMessage = message.mentions.members.first().nickname + " has been assigned the Aspirant role!";
+        message.channel.send(cMessage);
+        member.addRole(r).catch(console.error);
+    }
+
+    else if (command === "remove") {
+        let r = message.guild.roles.find("name", "Aspirant");
+        let member = message.mentions.members.first();
+        let cMessage = "The Aspirant role has been removed from " + message.mentions.members.first().nickname;
+        message.channel.send(cMessage);
+        member.removeRole(r).catch(console.error);
+    }
+
     else if (command === "search") {
         //message.channel.send("I said it was under construction...");
         /*Format
@@ -315,6 +340,7 @@ client.on("message", async message => {
             +search/<deck>/<opponent deck>: lists W/L ratio going first and second, justification, insight/reflection
             +search/<deck>/<opponent deck>/<result>: result can be win or loss, will only show justification and insight/reflection for that result
             */
+        
         const argsMessage = "ERROR! Expected 1-3 args, got: " + args.length;
         const usageMessage = "Usage\n" + "+search;<deck>: lists all the matchups of that deck\n"
             + "+search;<deck>;<opponent deck>: lists W;L ratio going first and second, justification, insight;reflection\n"
