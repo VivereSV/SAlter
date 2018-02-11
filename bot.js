@@ -198,6 +198,11 @@ client.on("message", async message => {
         message.channel.send(helpful);
         return;
     }
+    
+    else if (command === "pat") {
+        message.channel.send("T-thanks... it's not like I wanted a head pat...", {files: ["https://i.imgur.com/5I4rndN.png"]});
+        return;
+    }
 
     else if (command === "fuck") {
         message.channel.send("<:scared:404029291370774528>");
