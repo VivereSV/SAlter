@@ -349,7 +349,7 @@ client.on("message", async message => {
         for(var i = 0; i < am.length; i++) {
             am[i].addRole(r).catch(console.error);
         }*/
-        let am = guild.members.array();
+        let am = message.guild.members.array();
         for(var i = 0; i < am.length; i++) {
             if(args.indexOf(am[i].nickname) >= 0) {
                 am[i].addRole(r).catch(console.error);
