@@ -337,6 +337,15 @@ client.on("message", async message => {
         message.channel.send(cMessage);
         member.removeRole(r).catch(console.error);
     }
+    
+    else if (command === "lolis") {
+        let r = message.guild.roles.find("name", "Aspirant");
+        let am = message.mentions.members.array();
+        for(var i = 0; i < am.length; i++) {
+            am[i].addRole(r).catch(console.error);
+        }
+        message.channel.send("Ravioli ravioli don't lewd the tourney lolis");
+    }
 
     else if (command === "search") {
         //message.channel.send("I said it was under construction...");
