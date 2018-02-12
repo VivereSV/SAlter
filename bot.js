@@ -140,7 +140,7 @@ function findCraft(lower) {
         deckCraft = "Forestcraft";
     }
     else if (lower.indexOf("sword") !== -1) {
-        deckCraft = "swordcraft";
+        deckCraft = "Swordcraft";
     }
     else if (lower.indexOf("dragon") !== -1) {
         deckCraft = "Dragoncraft";
