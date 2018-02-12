@@ -354,6 +354,9 @@ client.on("message", async message => {
             if(args.indexOf(am[i].nickname) >= 0) {
                 am[i].addRole(r).catch(console.error);
             }
+            else {
+                console.log(am[i].nickname);
+            }
         }
         message.channel.send("Ravioli ravioli don't lewd the tourney lolis");
     }
