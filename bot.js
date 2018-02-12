@@ -346,14 +346,16 @@ client.on("message", async message => {
     else if (command === "plz") {
         let r = message.guild.roles.find("name", "Aspirant");
         let am = message.guild.members.array();
-        let rm = args.slice();
+        let rm = args.slice(); //still refer to same object tho
         var bMessage = "The following did not receive the role: ";
+        for(var i = 0; i < args.length; i++) {
+            if(args[i].indexOf("#") >= 0) {
+                args[i] = args[i].substring(0, args[i].indexOf("#"));
+            }
+        }
         for(var i = 0; i < am.length; i++) {
             let nick = am[i].nickname;
             let un = am[i].user.username;
-            if(un.indexOf("#") >= 0) {
-                un = un.substring(0, un.indexOf("#"));
-            }
             if(args.indexOf(nick) >= 0 || args.indexOf(un) >= 0) {
                 am[i].addRole(r).catch(console.error);
                 var ind = rm.indexOf(nick);
