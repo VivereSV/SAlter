@@ -352,7 +352,7 @@ client.on("message", async message => {
                 am[i].addRole(r).catch(console.error);
             }
             else {
-                bMessage += "am[i].nickname "
+                bMessage += am[i].nickname + " ";
             }
         }
         message.channel.send(bMessage);
