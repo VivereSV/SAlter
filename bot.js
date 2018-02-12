@@ -343,15 +343,19 @@ client.on("message", async message => {
         member.removeRole(r).catch(console.error);
     }
     
-    else if (command === "lolis") {
+    else if (command === "plz") {
         let r = message.guild.roles.find("name", "Aspirant");
         let am = message.guild.members.array();
+        var bMessage = "The following did not receive the role: ";
         for(var i = 0; i < am.length; i++) {
             if(args.indexOf(am[i].nickname) >= 0 || args.indexOf(am[i].user.username) >= 0) {
                 am[i].addRole(r).catch(console.error);
             }
+            else {
+                bMessage += "am[i].nickname "
+            }
         }
-        message.channel.send("Ravioli ravioli don't lewd the tourney lolis");
+        message.channel.send(bMessage);
     }
     
     else if (command === "legal") {
