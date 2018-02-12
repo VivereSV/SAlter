@@ -351,6 +351,15 @@ client.on("message", async message => {
         }
         message.channel.send("Ravioli ravioli don't lewd the tourney lolis");
     }
+    
+    else if (command === "legal") {
+        let r = message.guild.roles.find("name", "Aspirant");
+        let am = message.mentions.members.array();
+        for(var i = 0; i < am.length; i++) {
+            am[i].removeRole(r).catch(console.error);
+        }
+        message.channel.send(":oncoming_police_car: WEE WOO WEE WOO :oncoming_police_car:");
+    }
 
     else if (command === "search") {
         //message.channel.send("I said it was under construction...");
