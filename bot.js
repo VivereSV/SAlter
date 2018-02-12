@@ -199,6 +199,11 @@ client.on("message", async message => {
         return;
     }
     
+    else if (command === "monika") {
+        message.edit("test");
+        return;
+    }
+    
     else if (command === "pat") {
         message.channel.send("T-thanks... it's not like I wanted a head pat...", {files: ["https://i.imgur.com/5I4rndN.png"]});
         return;
