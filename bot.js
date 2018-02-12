@@ -345,9 +345,15 @@ client.on("message", async message => {
     
     else if (command === "lolis") {
         let r = message.guild.roles.find("name", "Aspirant");
-        let am = message.mentions.members.array();
+        /*let am = message.mentions.members.array();
         for(var i = 0; i < am.length; i++) {
             am[i].addRole(r).catch(console.error);
+        }*/
+        let am = guild.members.array();
+        for(var i = 0; i < am.length; i++) {
+            if(args.indexOf(am[i].nickname) >= 0) {
+                am[i].addRole(r).catch(console.error);
+            }
         }
         message.channel.send("Ravioli ravioli don't lewd the tourney lolis");
     }
