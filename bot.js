@@ -200,7 +200,7 @@ client.on("message", async message => {
     }
     
     else if (command === "monika") {
-        message.channel.send(message.editable());
+        message.edit("test").catch(console.error);
         return;
     }
     
