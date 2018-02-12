@@ -345,17 +345,10 @@ client.on("message", async message => {
     
     else if (command === "lolis") {
         let r = message.guild.roles.find("name", "Aspirant");
-        /*let am = message.mentions.members.array();
-        for(var i = 0; i < am.length; i++) {
-            am[i].addRole(r).catch(console.error);
-        }*/
         let am = message.guild.members.array();
         for(var i = 0; i < am.length; i++) {
-            if(args.indexOf(am[i].nickname) >= 0) {
+            if(args.indexOf(am[i].nickname) >= 0 || args.indexOf(am[i].user.username) >= 0) {
                 am[i].addRole(r).catch(console.error);
-            }
-            else {
-                console.log(am[i].nickname);
             }
         }
         message.channel.send("Ravioli ravioli don't lewd the tourney lolis");
