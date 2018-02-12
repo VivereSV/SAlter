@@ -346,14 +346,20 @@ client.on("message", async message => {
     else if (command === "plz") {
         let r = message.guild.roles.find("name", "Aspirant");
         let am = message.guild.members.array();
+        let rm = args.slice();
         var bMessage = "The following did not receive the role: ";
         for(var i = 0; i < am.length; i++) {
             if(args.indexOf(am[i].nickname) >= 0 || args.indexOf(am[i].user.username) >= 0) {
                 am[i].addRole(r).catch(console.error);
+                var ind = rm.indexOf(am[i].nickname);
+                if (ind === -1) {
+                    ind = rm.indexOf(am[i].user.username);
+                }
+                rm.splice(ind, 1);
             }
-            else {
-                bMessage += am[i].user.username + " ";
-            }
+        }
+        for(var i = 0; i < rm.length; i++) {
+            bMessage += rm[i] + ";";
         }
         message.channel.send(bMessage);
     }
