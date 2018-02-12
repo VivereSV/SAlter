@@ -326,6 +326,12 @@ client.on("message", async message => {
             message.channel.send(succMessage);
         })
     }
+    
+    else if (command === "check") {
+        let member = message.mentions.members.first();
+        let rs = member.roles.array();
+        message.channel.send(rs);
+    }
 
     else if (command === "add") {
         let r = message.guild.roles.find("name", "Aspirant");
