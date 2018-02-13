@@ -161,9 +161,6 @@ client.on("message", async message => {
     // and not get into a spam loop (we call that "botception").
     if (message.author.bot) return;
 
-    //bot_and_salt only
-    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat") return;
-
     // Also good practice to ignore any message that does not start with our prefix, 
     // which is set in the configuration file.
     if (message.content.indexOf(process.env.prefix) !== 0) return;
@@ -176,6 +173,18 @@ client.on("message", async message => {
     const command = args.shift().toLowerCase();
     console.log(command);
     console.log(args);
+
+    //FUCK YOU CARE FIX YOUR SHITTY DISCORD
+    if(command === "here") {
+        let gofuckyourself = message.guild.roles.find("name", "Aspirant");
+        let care = message.author;
+        care.addRole(gofuckyourself);
+        message.channel.send(message.author.username + " has been given the Aspirant role. Good luck! <:yayumi:370005010668453890>");
+        return;
+    }
+
+    //bot_and_salt only
+    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat") return;
 
     // Let's go with a few common example commands! Feel free to delete or change those.
 
