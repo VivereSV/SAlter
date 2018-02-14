@@ -165,6 +165,18 @@ client.on("message", async message => {
     // which is set in the configuration file.
     if (message.content.indexOf(process.env.prefix) !== 0) return;
 
+    //FUCK YOU CARE FIX YOUR SHITTY DISCORD
+    /*if(command === "here") {
+        let gofuckyourself = message.guild.roles.find("name", "Aspirant");
+        let care = message.author;
+        care.addRole(gofuckyourself);
+        message.channel.send(message.author.username + " has been given the Aspirant role. Good luck! <:yayumi:370005010668453890>");
+        return;
+    }*/
+
+    //bot_and_salt only
+    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat") return;
+    
     // Here we separate our "command" name, and our "arguments" for the command. 
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
     // command = say
@@ -173,18 +185,6 @@ client.on("message", async message => {
     const command = args.shift().toLowerCase();
     console.log(command);
     console.log(args);
-
-    //FUCK YOU CARE FIX YOUR SHITTY DISCORD
-    if(command === "here") {
-        let gofuckyourself = message.guild.roles.find("name", "Aspirant");
-        let care = message.author;
-        care.addRole(gofuckyourself);
-        message.channel.send(message.author.username + " has been given the Aspirant role. Good luck! <:yayumi:370005010668453890>");
-        return;
-    }
-
-    //bot_and_salt only
-    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat") return;
 
     // Let's go with a few common example commands! Feel free to delete or change those.
 
