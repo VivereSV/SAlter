@@ -219,7 +219,7 @@ client.on("message", async message => {
     }
 
     else if (command === "fuck") {
-        message.channel.send("<:scared:404029291370774528>");
+        message.channel.send("<:pepos:369998914755100672>");
         return;
     }
 
