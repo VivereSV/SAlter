@@ -222,6 +222,16 @@ client.on("message", async message => {
         message.channel.send("B-baka, it's not like I wanted to kiss you", {files: ["https://i.imgur.com/Gd1dCmj.jpg"]});
         return;
     }
+    
+    else if (command === "lewd") {
+        var lm = "P-p-pervert!";
+        var ll = "http://i.imgur.com/8mdLKaH.gif";
+        if(message.author.id === 232040363957813248) {
+            lm = "Sorry, this command is restricted to users above the age of 18";
+            ll = "https://www.theexpositor.tv/wp-content/uploads/Rated-R-for-18-and-over.png";
+        }
+        message.channel.send(lm, {files: [ll]});
+    }
 
     else if (command === "fuck") {
         message.channel.send("<:pepos:369998914755100672>");
