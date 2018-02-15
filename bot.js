@@ -217,6 +217,11 @@ client.on("message", async message => {
         message.channel.send("T-thanks... it's not like I wanted a head pat...", {files: ["https://i.imgur.com/5I4rndN.png"]});
         return;
     }
+    
+    else if (command === "kiss") {
+        message.channel.send("B-baka, it's not like I wanted to kiss you", {files: ["https://i.imgur.com/Gd1dCmj.jpg"]});
+        return;
+    }
 
     else if (command === "fuck") {
         message.channel.send("<:pepos:369998914755100672>");
