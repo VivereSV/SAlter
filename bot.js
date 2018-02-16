@@ -418,6 +418,10 @@ client.on("message", async message => {
             message.channel.send("Please provide the craft name. Example usage: +advice;Runecraft");
             return;
         }
+        if(args[0].toLowerCase() === "relationships") {
+            message.channel.send("https://www.gotinder.com/");
+            return;
+        }
         args[0] = checkMap(args[0]);
         var craftList = new Array("Havencraft", "Runecraft", "Shadowcraft", "Forestcraft", "Swordcraft", "Dragoncraft", "Bloodcraft", "Portalcraft");
         if (craftList.indexOf(args[0]) === -1) {
@@ -446,23 +450,40 @@ client.on("message", async message => {
                     var tjust = rows[titleRows.Tournament + 5];
                     for (var c = 2; c <= Object.keys(pjust).length; c++) {
                         var tempj = pjust[c];
-                        bigchunker += tempj + " ";
+                        var append = " ";
+                        if(!tempj.endsWith(".")) {
+                            append = ". ";
+                        }
+                        bigchunker += tempj + append;
                     }
                     for (var c = 2; c <= Object.keys(sjust).length; c++) {
                         var tempj = sjust[c];
-                        bigchunker += tempj + " ";
+                        var append = " ";
+                        if(!tempj.endsWith(".")) {
+                            append = ". ";
+                        }
+                        bigchunker += tempj + append;
                     }
                     for (var c = 2; c <= Object.keys(gjust).length; c++) {
                         var tempj = gjust[c];
-                        bigchunker += tempj + " ";
+                        var append = " ";
+                        if(!tempj.endsWith(".")) {
+                            append = ". ";
+                        }
+                        bigchunker += tempj + append;
                     }
                     for (var c = 2; c <= Object.keys(tjust).length; c++) {
                         var tempj = tjust[c];
-                        bigchunker += tempj + " ";
+                        var append = " ";
+                        if(!tempj.endsWith(".")) {
+                            append = ". ";
+                        }
+                        bigchunker += tempj + append;
                     }
                     chain.generateChain(bigchunker);
                     var test = chain.generateString();
                     message.channel.send(test);
+                    return;
                 });
             });
     }
