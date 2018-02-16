@@ -409,6 +409,60 @@ client.on("message", async message => {
         }
         message.channel.send("Nuked all weebs.");
     }
+    
+    else if (command === "advice") {
+        if (args.length !== 1) {
+            message.channel.send("Please provide the craft name. Example usage: +advice;Runecraft");
+            return;
+        }
+        args[0] = checkMap(args[0]);
+        var craftList = new Array("Havencraft", "Runecraft", "Shadowcraft", "Forestcraft", "Swordcraft", "Dragoncraft", "Bloodcraft", "Portalcraft");
+        if (craftList.indexOf(args[0]) === -1) {
+            message.channel.send("Please provide a valid craft. " + args[0] + " is not a valid craft.");
+            return;
+        }
+        Spreadsheet.load({
+            debug: true,
+            spreadsheetName: 'Dawnbreakers Deck Data Log',
+            worksheetName: args[0],
+            oauth2: {
+                cclient_id: process.env.client_id,
+                client_secret: process.env.client_secret,
+                refresh_token: process.env.refresh_token
+            }
+        },
+            function sheetReady(err, spreadsheet) {
+                if (err) throw err;
+                spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                    if (err) throw err;
+                    var chain = new MarkovChain();
+                    var bigchunker = "";
+                    var pjust = rows[titleRows.Paragon + 5];
+                    var sjust = rows[titleRows.Secondary + 5];
+                    var gjust = rows[titleRows.Guest + 5];
+                    var tjust = rows[titleRows.Tournament + 5];
+                    for (var c = 2; c <= Object.keys(pjust).length; c++) {
+                        var tempj = pjust[c];
+                        bigchunker += tempj + " ";
+                    }
+                    for (var c = 2; c <= Object.keys(sjust).length; c++) {
+                        var tempj = sjust[c];
+                        bigchunker += tempj + " ";
+                    }
+                    for (var c = 2; c <= Object.keys(gjust).length; c++) {
+                        var tempj = gjust[c];
+                        bigchunker += tempj + " ";
+                    }
+                    for (var c = 2; c <= Object.keys(tjust).length; c++) {
+                        var tempj = tjust[c];
+                        bigchunker += tempj + " ";
+                    }
+                    chain.generateChain(bigchunker);
+                    var test = chain.generateString();
+                    message.channel.send(test);
+                });
+            });
+    }
 
     else if (command === "search") {
         //message.channel.send("I said it was under construction...");
