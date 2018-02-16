@@ -450,35 +450,39 @@ client.on("message", async message => {
                     var tjust = rows[titleRows.Tournament + 5];
                     for (var c = 2; c <= Object.keys(pjust).length; c++) {
                         var tempj = pjust[c];
-                        var append = " ";
+                        /*var append = " ";
                         if(!tempj.endsWith("\.")) {
                             append = "\. ";
                         }
-                        bigchunker += tempj + append;
+                        bigchunker += tempj + append;*/
+                        bigchunker += tempj + " ";
                     }
                     for (var c = 2; c <= Object.keys(sjust).length; c++) {
                         var tempj = sjust[c];
-                        var append = " ";
+                        /*var append = " ";
                         if(!tempj.endsWith("\.")) {
                             append = "\. ";
                         }
-                        bigchunker += tempj + append;
+                        bigchunker += tempj + append;*/
+                        bigchunker += tempj + " ";
                     }
                     for (var c = 2; c <= Object.keys(gjust).length; c++) {
                         var tempj = gjust[c];
-                        var append = " ";
+                        /*var append = " ";
                         if(!tempj.endsWith("\.")) {
                             append = "\. ";
                         }
-                        bigchunker += tempj + append;
+                        bigchunker += tempj + append;*/
+                        bigchunker += tempj + " ";
                     }
                     for (var c = 2; c <= Object.keys(tjust).length; c++) {
                         var tempj = tjust[c];
-                        var append = " ";
+                        /*var append = " ";
                         if(!tempj.endsWith("\.")) {
                             append = "\. ";
                         }
-                        bigchunker += tempj + append;
+                        bigchunker += tempj + append;*/
+                        bigchunker += tempj + " ";
                     }
                     chain.generateChain(bigchunker);
                     var test = chain.generateString();
