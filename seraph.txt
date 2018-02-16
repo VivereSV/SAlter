@@ -1,28 +1,3 @@
-It’s that time again, and I’m back even stronger. Since my last post, I have climbed from AA2 to Masters, primarily on the back of Seraph and Aggro Forest (it should be mentioned Aggro Forest was only played at the beginning of the expansion, and on the current patch I have only played Seraph). As this will be my final post for Seraph before rotation hits, this will be rather extensive. I should note that I will only be going discussing in the context of the current (post Sibyl nerf) patch.
-
-First, I'd like to shamelessly plug give a shout out to Dawnbreakers, the Shadowverse team that I joined! The team is pretty nice and has helped me fine tune my list as well as suggested cards to put on the tech list. Here’s a link to the team’s discord: https://discord.gg/BjeFkVS
-
-Here is the decklist in a screenshot, in Bagoum, and in Shadowverse Portal.
-
-Here is an excel sheet where I track my winrates and keep an updated list of my deck: https://docs.google.com/spreadsheets/d/1w4KSExMljJnySwPvdPyRfoyefknI-BvXs-14H6bfXoY/edit?usp=sharing
-
-Winrates
-Overall – 62-38, 62% winrate
-Forest – 7-3, 70% winrate
-Dragon – 13-7, 65% winrate
-Shadow – 6-4, 60% winrate
-Haven – 11-5, 69% winrate
-Sword – 5-2, 71% winrate
-Rune – 14-6, 70% winrate
-Blood – 6-11, 35% winrate
-As an outline, I will:
-
-Discuss every card in my decklist
-Go through a number of notable tech cards
-Discuss the strengths of this deck
-Discuss a general idea of how to play this deck
-Discuss specific matchups that you may find in the current meta
-Compare with Control Seraph, including a recent Masters’ control list
 Decklist:
 3x Sacred Plea – See Globe of Stairways.
 3x Globe of Stairways – This is a card that is probably designed with Sacred Plea rotating out, but for a brief moment I can most definitely say that the combination of the two is absolutely absurd for Seraph. First of all, Plea and Globe are amazing 1pp plays that is played on a mostly inconsequential turn 1, and it can be weaved into plays to fill out pp. Plea was already considered incredible for carddraw, and now they have even more. Second, Globe acts like a soft tutor for Aria for turn2, and for Seraph in general. These two cards are THE draw engine for this deck and is what gives this deck life. It is the backbone, and with 3 of each, getting at least 1 early on is very likely.
@@ -87,15 +62,6 @@ By turn 6-7, you should know how much reach you have. And if it’s not enough, 
 
 It’s important to remember that you don’t have to proc Seraph on 9. Getting her down is the hard part. Controlling the board afterwards is usually pretty easy. Make sure that if your answer to the board leaves you with left over pp, then try to fish for countdown reducers first. For instance, if you plan to use Themis to clear the board, then first use Hallowed Dogma as it may get you the 3rd countdown reducer that you need!
 
-Specific Matchups and Mulligans
-I will be ranking the matchups in the following ways:
-
-Heavily Favored/Unfavored - 65%+ winrate
-Favored/Unfavored - 60% winrate
-Slightly Favored/Unfavored - 55% winrate
-Even - Just about 50% winrate
-Note – Use Globe if you do not have a turn 2 play to fish for Aria, and use Plea if you do have a 2pp play. In general, when you have both Mainyu and Aria, but no Dogma, I choose to drop Mainyu instead for the chip damage unless you are fighting Haven in which case I drop Aria instead.
-
 Forest – Keep any Temple Defenders or Star Torrents, then mulligan for at least a 1pp and/or 2pp play.
 
 Aggro Forest (Slightly Unfavored) – Focus on clearing the board once you figured out he is aggro. Efficient clearing can easily win you the game. Star Torrent, Temple Defenders, and 2-for-1 trades make the life of Aggro Forest pretty hell. If you can’t deal with their wide boards early on, then no amount of slow 2-for-1 turns will save you from the fairy onslaught. Even if you stabilize, Forest has plenty of reach with Fairy Driver and Roaches.
@@ -144,38 +110,3 @@ Haven – In order of importance, keep Aria + Dogma, then Mainyu. Then, mulligan
 Aegis Haven (Heavily Favored) – Aegis is one of the easiest matchups for Seraph. Start aggressively, but once you have I dentified that it isn’t Storm, make sure to keep combo pieces and search for Seraph by opting to play your 1pp amulets over playing followers. Aegis Haven has very little reach, often takes removal and heals, which means that even leaving up a minion can be fine. Don’t bother smorcing, just focus on carddraw and defensive evos. The fact of the matter is that Seraph wins one turn earlier than they can even attack with Aegis.
 Elana Haven (Heavily Favored) – Elana Haven and Aegis overlap a lot, but the current versions of Elana are probably significantly more threatening. Do everything in your power to draw answers and evo defensively. The only way you win is with Seraph, and the only way you survive is off the back of defensive evos and Themis. That said, it’s not very hard to get a board big enough to deal with what Elana’s Tenko turns. The deck is inconsistent which puts the matchup significantly in your favor.
 Storm Haven (Slightly Unfavored) – Fighting against Storm Haven is pretty tricky as your early plays are pretty similar, except they can spawn more chip damage. I believe that whoever goes first has the significant advantage. I play this matchup by playing chicken and constantly going for face. Storm Haven will often include cards like Heavenly Hound and Snow White, which slow them down a good bit in this matchup, and your Temple Defender can stop early pushes from Pinions. That said, there’s no reason for me to rate this matchup theoretically favorable. I believe my significantly positive winrates against Storm is due to many Storm decks being piloted poorly or being unoptimized.
-Comparisons between Control and Tempo Seraph
-While this post is primarily advocating Tempo Seraph, I call Seraph is the queen of adaptation for a very good reason. You can play Control Seraph to some success, but it is important to understand fundamental differences in matchups when you choose to do so. I will use a recently posted Masters’ list by /u/TimelyPuns in order to serve as an example of a control list and ways I think it can be improved. His post can be found here
-
-This list is similar to most Control Seraph lists with some very interesting additions. The Idea behind Control Seraph is to proactively wall off aggressive plays, trade defensively, and have efficient removals. The problem with this style right now is that many of the meta decks win with combos (Ramp/Storm Dragon, OTK Forest), out of hand chip damage (Burn Rune, Aggro Blood), and wide boards (Midrange Shadow, Aggro Forest). Control Seraph lists have the potential to deal with aggressive decks, which can be warded and healed against, and midrange decks which can be cleared by Haven’s premium removal like Tribunal and Themis.
-
-That said, right now, I feel like there is a healthy balance of deck types on ladder, and teching towards one end of the spectrum will leave you open on the other end too much. This is one of the cases where opting to have an overall stable deck is better than target focusing a matchup. The fact that Control Seraph has almost always skewed towards trying to ‘attack’ some part of the meta, thus dropping its overall effectiveness across other parts of the meta is why I believe Control Seraph is weaker and has always been considered notoriously unreliable.
-
-If you didn’t click his post, here is an image of his decklist.
-
-Like I said, there are reasons to play Control Seraph, like maybe you are bringing it to a tournament or you have a read on the ranked meta. But, if you’re going to play Control Seraph, you gotta do it right man!
-
-First, the elephants in the room, Monk of Purification and Star Priestess. Monk is TOO slow. Not only does he do nothing when you drop him turn 6, but in order to access his benefits, you have to ‘pay’ 2pp for each monastic holy water. It is a 10pp investment that you cannot utilize on the same turn until turn 10. If you are trying to heal, you’ll want it immediately. And if you are trying to draw, there are more efficient options. Radiance Angel and Judge of Retribution serve similar roles to Monk of Purification except they do it significantly better and they do what they need to immediately. Star Priestess sounds pretty cool until you realize she only has a measly 2/3 body at 6pp, AND using her potentially locks your board. Resummoning Globe is not going to help you for instance. Popping Aria fills up 4 slots of you board from this play alone, in a deck that will only use the Pinion to defensively clear anyways. Maybe you use Star Priestess to pop Tribunal, but the overall net gain is a 2/3 body and removal, which is hardly notable. I do not think either of these cards has a place in Control Seraph.
-
-Second, I discussed this earlier, but Prism Priestess is extremely slow. Plea is better at drawing cards and is 1pp, Temple Defender is a better body at 3pp. Prism Priestess is the compromise that does not help in any matchup. Combining the idea of carddraw for fuel, and a body to deal with aggro is not worth it.
-
-Third, this deck is carrying 9 combo cards and 3 Seraphs. This can probably cut down to at least 7 or 8 combo cards, and the number of Seraphs should be reduced to 2. Remember that Globe is a very cheap pseudo-tutor, and that you have 8 turns to draw Seraph. There is more than enough time to draw Seraph. Your resources are better allocated to having proper answers to actually last until then.
-
-Lastly, for a deck that is carrying Unica, Healing Prayer, Cleric Lancer, and Monk of Purification, there is a strange lack of early game wards where stopping the enemy is most relevant. The addition of Temple Defender/Grimnir, Healing Angel, and Radiance Angel would have been welcome additions.
-
-I think the best part of this list is the Cleric Lancer. If you survive long enough to plop one down, aggro basically MUST have hard removal to deal with it. In addition, OTK Forest which was supposed to be a hard matchup is very smartly countered by Cleric Lancer. Even with hard removal, OTK Forest can crumble to multiple Cleric Lancers since this deck is able to more reliably draw them.
-
-Using his deck as a base, I would run something like this.
-
-This deck has enough heals and carddraw fuel to kill off most aggro pushes. Seraph already inherently wins many slower control matchups like Control Blood and Aegis/Elana by simply existing. The addition of Cleric Lancer helps with both aggro and some combo matchups like OTK Roach. The single Aether acts like a 4th Cleric lancer. I have thought about adding other cards like White Swan as well, but I have not put in sufficient time to grind the Control list to fully refine the list.
-
-Closing Remarks
-This Seraph represents a very significant shift in how Seraph is traditionally played. It’s a revolution just as Rotation is on the horizon! Regardless, I am glad that I have come up with this deck because it is by far, the best, and most stable variant of Seraph that I have created, and I have played Seraph since she was created. The addition of an alternative win condition does away with so much of Seraph’s old problems of being entirely reactive. Even playing defensively, this deck looks like it playing offensively!
-
-It is likely I will still play Seraph in Unlimited, but this may be my last extensive post on Seraph. I think that Rotation is healthy for the game, and I'd like to try it. If I can find something I enjoy playing as much as Seraph, then I would like to keep playing in Standard as well, but if not, then you may see me back again with posts for Unlimited Seraph.
-
-Questions and comments are welcome as always.
-
-Until next time. May your prayers be heard! Let Seraph bring you victory!
-
-EDIT: Apparently the post is too long, so I can't add significant paragraphs on Dark Jeanne and Pinions, but they are okay.
