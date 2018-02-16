@@ -178,8 +178,8 @@ client.on("message", async message => {
     }*/
 
     //bot_and_salt only
-    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat") return;
-    
+    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general") return;
+
     // Here we separate our "command" name, and our "arguments" for the command. 
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
     // command = say
@@ -191,14 +191,86 @@ client.on("message", async message => {
 
     // Let's go with a few common example commands! Feel free to delete or change those.
 
-    //What do you mean "make useful commands"?
-    /*if (command === "app") {
-        var expac = ["DE", "RoB", "TotG", "WLD", "SFL", "CG"];
-        var comp = ["Crusader", "Competitive"];
-        var app = "1. " + message.author.username + "\n2. \n3. " + ;
+    if (command === "advice") {
+        if (args.length !== 1) {
+            message.channel.send("Please provide the craft name. Example usage: +advice;Runecraft");
+            return;
+        }
+        if(args[0].toLowerCase() === "relationships") {
+            message.channel.send("https://www.gotinder.com/");
+            return;
+        }
+        args[0] = checkMap(args[0]);
+        var craftList = new Array("Havencraft", "Runecraft", "Shadowcraft", "Forestcraft", "Swordcraft", "Dragoncraft", "Bloodcraft", "Portalcraft");
+        if (craftList.indexOf(args[0]) === -1) {
+            message.channel.send("Please provide a valid craft. " + args[0] + " is not a valid craft.");
+            return;
+        }
+        Spreadsheet.load({
+            debug: true,
+            spreadsheetName: 'Dawnbreakers Deck Data Log',
+            worksheetName: args[0],
+            oauth2: {
+                client_id: process.env.client_id,
+                client_secret: process.env.client_secret,
+                refresh_token: process.env.refresh_token
+            }
+        },
+            function sheetReady(err, spreadsheet) {
+                if (err) throw err;
+                spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                    if (err) throw err;
+                    var chain = new MarkovChain();
+                    var bigchunker = "";
+                    var pjust = rows[titleRows.Paragon + 5];
+                    var sjust = rows[titleRows.Secondary + 5];
+                    var gjust = rows[titleRows.Guest + 5];
+                    var tjust = rows[titleRows.Tournament + 5];
+                    for (var c = 2; c <= Object.keys(pjust).length; c++) {
+                        var tempj = pjust[c];
+                        /*var append = " ";
+                        if(!tempj.endsWith("\.")) {
+                            append = "\. ";
+                        }
+                        bigchunker += tempj + append;*/
+                        bigchunker += tempj + " ";
+                    }
+                    for (var c = 2; c <= Object.keys(sjust).length; c++) {
+                        var tempj = sjust[c];
+                        /*var append = " ";
+                        if(!tempj.endsWith("\.")) {
+                            append = "\. ";
+                        }
+                        bigchunker += tempj + append;*/
+                        bigchunker += tempj + " ";
+                    }
+                    for (var c = 2; c <= Object.keys(gjust).length; c++) {
+                        var tempj = gjust[c];
+                        /*var append = " ";
+                        if(!tempj.endsWith("\.")) {
+                            append = "\. ";
+                        }
+                        bigchunker += tempj + append;*/
+                        bigchunker += tempj + " ";
+                    }
+                    for (var c = 2; c <= Object.keys(tjust).length; c++) {
+                        var tempj = tjust[c];
+                        /*var append = " ";
+                        if(!tempj.endsWith("\.")) {
+                            append = "\. ";
+                        }
+                        bigchunker += tempj + append;*/
+                        bigchunker += tempj + " ";
+                    }
+                    chain.generateChain(bigchunker);
+                    var test = chain.generateString();
+                    message.channel.send(test);
+                    return;
+                });
+            });
+    }
 
-
-    }*/
+    if (message.channel.name === "general") return;
 
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
@@ -210,30 +282,30 @@ client.on("message", async message => {
         message.channel.send(helpful);
         return;
     }
-    
+
     else if (command === "monika") {
         message.edit("test").catch(console.error);
         return;
     }
-    
+
     else if (command === "pat") {
-        message.channel.send("T-thanks... it's not like I wanted a head pat...", {files: ["https://i.imgur.com/5I4rndN.png"]});
+        message.channel.send("T-thanks... it's not like I wanted a head pat...", { files: ["https://i.imgur.com/5I4rndN.png"] });
         return;
     }
-    
+
     else if (command === "kiss") {
-        message.channel.send("B-baka, it's not like I wanted to kiss you", {files: ["https://i.imgur.com/Gd1dCmj.jpg"]});
+        message.channel.send("B-baka, it's not like I wanted to kiss you", { files: ["https://i.imgur.com/Gd1dCmj.jpg"] });
         return;
     }
-    
+
     else if (command === "lewd") {
         var lm = "P-p-pervert!";
         var ll = "http://i.imgur.com/8mdLKaH.gif";
-        if(message.author.id === 232040363957813248) {
+        if (message.author.id === 232040363957813248) {
             lm = "Sorry, this command is restricted to users above the age of 18";
             ll = "https://www.theexpositor.tv/wp-content/uploads/Rated-R-for-18-and-over.png";
         }
-        message.channel.send(lm, {files: [ll]});
+        message.channel.send(lm, { files: [ll] });
     }
 
     else if (command === "fuck") {
@@ -353,12 +425,6 @@ client.on("message", async message => {
             message.channel.send(succMessage);
         })
     }
-    
-    else if (command === "check") {
-        let member = message.mentions.members.first();
-        let rs = member.roles.array();
-        message.channel.send(rs);
-    }
 
     else if (command === "add") {
         let r = message.guild.roles.find("name", "Aspirant");
@@ -368,28 +434,27 @@ client.on("message", async message => {
         member.addRole(r).catch(console.error);
     }
 
-    else if (command === "remove") {
-        let r = message.guild.roles.find("name", "Aspirant");
+    else if (command === "check") {
         let member = message.mentions.members.first();
-        let cMessage = "The Aspirant role has been removed from " + message.mentions.members.first().nickname;
-        message.channel.send(cMessage);
-        member.removeRole(r).catch(console.error);
+        let rs = member.roles.array();
+        message.channel.send(rs);
     }
-    
+
     else if (command === "plz") {
+
         let r = message.guild.roles.find("name", "Aspirant");
         let am = message.guild.members.array();
         var bMessage = "The following did not receive the role: ";
-        for(var i = 0; i < args.length; i++) {
-            if(args[i].indexOf("#") >= 0) {
+        for (var i = 0; i < args.length; i++) {
+            if (args[i].indexOf("#") >= 0) {
                 args[i] = args[i].substring(0, args[i].indexOf("#"));
             }
         }
         let rm = args.slice(); //still refer to same object tho
-        for(var i = 0; i < am.length; i++) {
+        for (var i = 0; i < am.length; i++) {
             let nick = am[i].nickname;
             let un = am[i].user.username;
-            if(args.indexOf(nick) >= 0 || args.indexOf(un) >= 0) {
+            if (args.indexOf(nick) >= 0 || args.indexOf(un) >= 0) {
                 am[i].addRole(r).catch(console.error);
                 var ind = rm.indexOf(nick);
                 if (ind === -1) {
@@ -398,98 +463,27 @@ client.on("message", async message => {
                 rm.splice(ind, 1);
             }
         }
-        for(var i = 0; i < rm.length; i++) {
+        for (var i = 0; i < rm.length; i++) {
             bMessage += rm[i] + ";";
         }
         message.channel.send(bMessage);
     }
-    
+
+    else if (command === "remove") {
+        let r = message.guild.roles.find("name", "Aspirant");
+        let member = message.mentions.members.first();
+        let cMessage = "The Aspirant role has been removed from " + message.mentions.members.first().nickname;
+        message.channel.send(cMessage);
+        member.removeRole(r).catch(console.error);
+    }
+
     else if (command === "nuke") {
         let r = message.guild.roles.find("name", "Aspirant");
         let am = message.guild.members.array();
-        for(var i = 0; i < am.length; i++) {
+        for (var i = 0; i < am.length; i++) {
             am[i].removeRole(r).catch(console.error);
         }
         message.channel.send("Nuked all weebs.");
-    }
-    
-    else if (command === "advice") {
-        if (args.length !== 1) {
-            message.channel.send("Please provide the craft name. Example usage: +advice;Runecraft");
-            return;
-        }
-        if(args[0].toLowerCase() === "relationships") {
-            message.channel.send("https://www.gotinder.com/");
-            return;
-        }
-        args[0] = checkMap(args[0]);
-        var craftList = new Array("Havencraft", "Runecraft", "Shadowcraft", "Forestcraft", "Swordcraft", "Dragoncraft", "Bloodcraft", "Portalcraft");
-        if (craftList.indexOf(args[0]) === -1) {
-            message.channel.send("Please provide a valid craft. " + args[0] + " is not a valid craft.");
-            return;
-        }
-        Spreadsheet.load({
-            debug: true,
-            spreadsheetName: 'Dawnbreakers Deck Data Log',
-            worksheetName: args[0],
-            oauth2: {
-                client_id: process.env.client_id,
-                client_secret: process.env.client_secret,
-                refresh_token: process.env.refresh_token
-            }
-        },
-            function sheetReady(err, spreadsheet) {
-                if (err) throw err;
-                spreadsheet.receive({ getValues: true }, function (err, rows, info) {
-                    if (err) throw err;
-                    var chain = new MarkovChain();
-                    var bigchunker = "";
-                    var pjust = rows[titleRows.Paragon + 5];
-                    var sjust = rows[titleRows.Secondary + 5];
-                    var gjust = rows[titleRows.Guest + 5];
-                    var tjust = rows[titleRows.Tournament + 5];
-                    for (var c = 2; c <= Object.keys(pjust).length; c++) {
-                        var tempj = pjust[c];
-                        /*var append = " ";
-                        if(!tempj.endsWith("\.")) {
-                            append = "\. ";
-                        }
-                        bigchunker += tempj + append;*/
-                        bigchunker += tempj + " ";
-                    }
-                    for (var c = 2; c <= Object.keys(sjust).length; c++) {
-                        var tempj = sjust[c];
-                        /*var append = " ";
-                        if(!tempj.endsWith("\.")) {
-                            append = "\. ";
-                        }
-                        bigchunker += tempj + append;*/
-                        bigchunker += tempj + " ";
-                    }
-                    for (var c = 2; c <= Object.keys(gjust).length; c++) {
-                        var tempj = gjust[c];
-                        /*var append = " ";
-                        if(!tempj.endsWith("\.")) {
-                            append = "\. ";
-                        }
-                        bigchunker += tempj + append;*/
-                        bigchunker += tempj + " ";
-                    }
-                    for (var c = 2; c <= Object.keys(tjust).length; c++) {
-                        var tempj = tjust[c];
-                        /*var append = " ";
-                        if(!tempj.endsWith("\.")) {
-                            append = "\. ";
-                        }
-                        bigchunker += tempj + append;*/
-                        bigchunker += tempj + " ";
-                    }
-                    chain.generateChain(bigchunker);
-                    var test = chain.generateString();
-                    message.channel.send(test);
-                    return;
-                });
-            });
     }
 
     else if (command === "search") {
@@ -499,7 +493,7 @@ client.on("message", async message => {
             +search/<deck>/<opponent deck>: lists W/L ratio going first and second, justification, insight/reflection
             +search/<deck>/<opponent deck>/<result>: result can be win or loss, will only show justification and insight/reflection for that result
             */
-        
+
         const argsMessage = "ERROR! Expected 1-3 args, got: " + args.length;
         const usageMessage = "Usage\n" + "+search;<deck>: lists all the matchups of that deck\n"
             + "+search;<deck>;<opponent deck>: lists W;L ratio going first and second, justification, insight;reflection\n"
@@ -680,17 +674,17 @@ client.on("message", async message => {
                         }
                         var wlFirst;
                         var wlSecond;
-                        if(winFirst + lossFirst === 0) {
+                        if (winFirst + lossFirst === 0) {
                             wlFirst = "N/A";
                         }
                         else {
-                            wlFirst = (100 * winFirst/(winFirst + lossFirst)).toFixed(2) + "%";
+                            wlFirst = (100 * winFirst / (winFirst + lossFirst)).toFixed(2) + "%";
                         }
-                        if(winSecond + lossSecond === 0) {
+                        if (winSecond + lossSecond === 0) {
                             wlSecond = "N/A";
                         }
                         else {
-                            wlSecond = (100 * winSecond/(winSecond + lossSecond)).toFixed(2) + "%";
+                            wlSecond = (100 * winSecond / (winSecond + lossSecond)).toFixed(2) + "%";
                         }
                         var ret = "W/L Ratio going first: " + wlFirst + "\nW/L Ratio going second: " + wlSecond;
                         message.channel.send(ret);
