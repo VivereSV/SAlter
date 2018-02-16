@@ -451,32 +451,32 @@ client.on("message", async message => {
                     for (var c = 2; c <= Object.keys(pjust).length; c++) {
                         var tempj = pjust[c];
                         var append = " ";
-                        if(!tempj.endsWith(".")) {
-                            append = ". ";
+                        if(!tempj.endsWith("\.")) {
+                            append = "\. ";
                         }
                         bigchunker += tempj + append;
                     }
                     for (var c = 2; c <= Object.keys(sjust).length; c++) {
                         var tempj = sjust[c];
                         var append = " ";
-                        if(!tempj.endsWith(".")) {
-                            append = ". ";
+                        if(!tempj.endsWith("\.")) {
+                            append = "\. ";
                         }
                         bigchunker += tempj + append;
                     }
                     for (var c = 2; c <= Object.keys(gjust).length; c++) {
                         var tempj = gjust[c];
                         var append = " ";
-                        if(!tempj.endsWith(".")) {
-                            append = ". ";
+                        if(!tempj.endsWith("\.")) {
+                            append = "\. ";
                         }
                         bigchunker += tempj + append;
                     }
                     for (var c = 2; c <= Object.keys(tjust).length; c++) {
                         var tempj = tjust[c];
                         var append = " ";
-                        if(!tempj.endsWith(".")) {
-                            append = ". ";
+                        if(!tempj.endsWith("\.")) {
+                            append = "\. ";
                         }
                         bigchunker += tempj + append;
                     }
