@@ -4,6 +4,9 @@ const Discord = require("discord.js");
 //Google spreadsheet stuff
 var Spreadsheet = require('edit-google-spreadsheet');
 
+//Too lazy to implement my own, this seems kind of sketchy but looks like it works lmao
+var MarkovChain = require('markovchain-generate');
+
 //Workaround for VLV's stupidity
 var craftMap = {
     Havencraft: 0,
