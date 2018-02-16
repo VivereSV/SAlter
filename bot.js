@@ -426,7 +426,7 @@ client.on("message", async message => {
             spreadsheetName: 'Dawnbreakers Deck Data Log',
             worksheetName: args[0],
             oauth2: {
-                cclient_id: process.env.client_id,
+                client_id: process.env.client_id,
                 client_secret: process.env.client_secret,
                 refresh_token: process.env.refresh_token
             }
