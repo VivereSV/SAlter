@@ -7,6 +7,10 @@ var Spreadsheet = require('edit-google-spreadsheet');
 //Too lazy to implement my own, this seems kind of sketchy but looks like it works lmao
 var MarkovChain = require('markovchain-generate');
 
+//My job would be so much easier if it wasn't a Google Spreadsheet 
+var fs = require("fs");
+var seraphThesis = fs.readFileSync("./seraph.txt", {"encoding": "utf-8"});
+
 //Workaround for VLV's stupidity
 var craftMap = {
     Havencraft: 0,
@@ -268,6 +272,13 @@ client.on("message", async message => {
                     
                 });
             });
+        return;
+    }
+    
+    if (command === "seraph") {
+        var seraphChain = new MarkovChain();
+        var seraphOutput = seraphChain.generateString();
+        message.channel.send(seraphOutput);
         return;
     }
 
