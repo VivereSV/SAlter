@@ -265,9 +265,10 @@ client.on("message", async message => {
                     chain.generateChain(bigchunker);
                     var test = chain.generateString();
                     message.channel.send(test);
-                    return;
+                    
                 });
             });
+        return;
     }
 
     if (message.channel.name === "general") return;
