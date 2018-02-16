@@ -9,7 +9,7 @@ var MarkovChain = require('markovchain-generate');
 
 //My job would be so much easier if it wasn't a Google Spreadsheet 
 var fs = require("fs");
-var seraphThesis = fs.readFileSync("./seraph.txt", {"encoding": "utf-8"});
+//var seraphThesis = fs.readFileSync("./seraph.txt", {"encoding": "utf-8"});
 
 //Workaround for VLV's stupidity
 var craftMap = {
@@ -276,9 +276,9 @@ client.on("message", async message => {
     }
     
     if (command === "seraph") {
-        var seraphChain = new MarkovChain();
-        var seraphOutput = seraphChain.generateString();
-        message.channel.send(seraphOutput);
+        /*var seraphChain = new MarkovChain();
+        var seraphOutput = seraphChain.generateString();*/
+        message.channel.send("xnine broke it");
         return;
     }
 
