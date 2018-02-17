@@ -309,6 +309,11 @@ client.on("message", async message => {
         message.channel.send("B-baka, it's not like I wanted to kiss you", { files: ["https://i.imgur.com/Gd1dCmj.jpg"] });
         return;
     }
+    
+    else if (command === "comfort") {
+        message.channel.send("I hope you're feeling better <:cute:398343907710205972>", {files: ["https://i1.wp.com/operationrainfall.com/wp-content/uploads/2016/08/fate-stay-night-saber-featured.jpg?fit=640%2C360"]});
+        return;
+    }
 
     else if (command === "lewd") {
         var lm = "P-p-pervert!";
