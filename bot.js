@@ -239,6 +239,7 @@ client.on("message", async message => {
                         bigchunker += tempj + append;*/
                         if(tempj !== "undefined") {
                             bigchunker += tempj + " ";
+                            console.log("Added: " + tempj);
                         }
                     }
                     for (var c = 2; c <= Object.keys(sjust).length; c++) {
@@ -250,6 +251,7 @@ client.on("message", async message => {
                         bigchunker += tempj + append;*/
                         if(tempj !== "undefined") {
                             bigchunker += tempj + " ";
+                            console.log("Added: " + tempj);
                         }
                     }
                     for (var c = 2; c <= Object.keys(gjust).length; c++) {
@@ -261,6 +263,7 @@ client.on("message", async message => {
                         bigchunker += tempj + append;*/
                         if(tempj !== "undefined") {
                             bigchunker += tempj + " ";
+                            console.log("Added: " + tempj);
                         }
                     }
                     for (var c = 2; c <= Object.keys(tjust).length; c++) {
@@ -272,6 +275,7 @@ client.on("message", async message => {
                         bigchunker += tempj + append;*/
                         if(tempj !== "undefined") {
                             bigchunker += tempj + " ";
+                            console.log("Added: " + tempj);
                         }
                     }
                     chain.generateChain(bigchunker);
