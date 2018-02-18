@@ -237,7 +237,9 @@ client.on("message", async message => {
                             append = "\. ";
                         }
                         bigchunker += tempj + append;*/
-                        bigchunker += tempj + " ";
+                        if(tempj !== "undefined") {
+                            bigchunker += tempj + " ";
+                        }
                     }
                     for (var c = 2; c <= Object.keys(sjust).length; c++) {
                         var tempj = sjust[c];
@@ -246,7 +248,9 @@ client.on("message", async message => {
                             append = "\. ";
                         }
                         bigchunker += tempj + append;*/
-                        bigchunker += tempj + " ";
+                        if(tempj !== "undefined") {
+                            bigchunker += tempj + " ";
+                        }
                     }
                     for (var c = 2; c <= Object.keys(gjust).length; c++) {
                         var tempj = gjust[c];
@@ -255,7 +259,9 @@ client.on("message", async message => {
                             append = "\. ";
                         }
                         bigchunker += tempj + append;*/
-                        bigchunker += tempj + " ";
+                        if(tempj !== "undefined") {
+                            bigchunker += tempj + " ";
+                        }
                     }
                     for (var c = 2; c <= Object.keys(tjust).length; c++) {
                         var tempj = tjust[c];
@@ -264,7 +270,9 @@ client.on("message", async message => {
                             append = "\. ";
                         }
                         bigchunker += tempj + append;*/
-                        bigchunker += tempj + " ";
+                        if(tempj !== "undefined") {
+                            bigchunker += tempj + " ";
+                        }
                     }
                     chain.generateChain(bigchunker);
                     var test = chain.generateString();
