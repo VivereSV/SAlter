@@ -735,9 +735,9 @@ client.on("message", async message => {
     }
 
     else if (command === "log") {
-        //Make sure they gave 13 arguments cause they can't count
-        if (args.length != 12) {
-            message.channel.send("ERROR! Expected 12 arguments, got: " + args.length);
+        //Make sure they gave enough arguments cause they can't count
+        if (args.length != 12 && args.length != 11) {
+            message.channel.send("ERROR! Expected 11-12 arguments, got: " + args.length);
             return;
         }
         for (var i = 0; i < args.length; i++) {
@@ -759,33 +759,36 @@ client.on("message", async message => {
         var justification = args[8];
         var changes = args[9];
         var insight = args[10];
-        var videoLink = args[11];
+        var videoLink = "";
+        if(args.length === 12) {
+            videoLink = args[11];
+        }
         //Check for valid craft
-        var craftList = new Array("Havencraft", "Runecraft", "Shadowcraft", "Forestcraft", "Swordcraft", "Dragoncraft", "Bloodcraft", "Portalcraft");
-        if (craftList.indexOf(craft) === -1) {
+        var craftList = new Array("havencraft", "runecraft", "shadowcraft", "forestcraft", "swordcraft", "dragoncraft", "bloodcraft", "portalcraft");
+        if (craftList.indexOf(craft.toLowerCase()) === -1) {
             message.channel.send("ERROR! Allowed crafts are Havencraft, Runecraft, Shadowcraft, Forestcraft, Swordcraft, Dragoncraft, Bloodcraft, and Portalcraft. You entered: " + craft);
             return;
         }
         //Check for valid role
-        var roleList = new Array("Paragon", "Secondary", "Guest", "Tournament");
-        if (roleList.indexOf(role) === -1) {
+        var roleList = new Array("paragon", "secondary", "guest", "tournament");
+        if (roleList.indexOf(role.toLowerCase()) === -1) {
             message.channel.send("ERROR! Allowed roles are Paragon, Secondary, Guest, and Tournament. You entered: " + role);
             return;
         }
         //Check for valid format
-        var formatList = new Array("Rotation", "Unlimited");
-        if (formatList.indexOf(format) === -1) {
+        var formatList = new Array("rotation", "unlimited");
+        if (formatList.indexOf(format.toLowerCase()) === -1) {
             message.channel.send("ERROR! Allowed formats are Rotation and Unlimited. You entered: " + format);
             return;
         }
         //Check for valid result
-        var resultList = new Array("Win", "Loss");
-        if (resultList.indexOf(result) === -1) {
+        var resultList = new Array("win", "loss");
+        if (resultList.indexOf(result.toLowerCase()) === -1) {
             message.channel.send("ERROR! Allowed results are Win and Loss. You entered: " + result);
             return;
         }
-        var turnList = new Array("First", "Second");
-        if (turnList.indexOf(turn) === -1) {
+        var turnList = new Array("first", "second");
+        if (turnList.indexOf(turn.toLowerCase()) === -1) {
             message.channel.send("ERROR! Allowed turns are First and Second. You entered: " + turn);
             return;
         }
