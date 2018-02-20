@@ -292,8 +292,12 @@ client.on("message", async message => {
     
     if (command === "avatar") {
         let am = message.mentions.members.first().user;
-        var ava = "Avatar: " + am.avatar + "\nURL: " + am.avatarURL;
-        message.channel.send(ava);
+        var ava = am.avatarURL;
+        if(am.id === "261610099699744769") {
+            message.channel.send("", {files: ["https://www.theexpositor.tv/wp-content/uploads/Rated-R-for-18-and-over.png"]});
+            return;
+        }
+        message.channel.send("", {files: [ava]});
         return;
     }
 
