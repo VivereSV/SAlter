@@ -896,6 +896,9 @@ client.on("message", async message => {
                     spreadsheet.add({ [changeRow]: { [col]: changes } });
                     spreadsheet.add({ [irRow]: { [col]: insight } });
                     spreadsheet.add({ [videoRow]: { [col]: videoLink } });
+                    if(role.toLowerCase() === "guest") {
+                        spreadsheet.add({ [titleRow - 3]: { [col]: message.author.username}});
+                    }
 
                     if (err) throw err;
 
