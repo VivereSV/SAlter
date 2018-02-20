@@ -297,7 +297,7 @@ client.on("message", async message => {
             message.channel.send("", {files: ["https://www.theexpositor.tv/wp-content/uploads/Rated-R-for-18-and-over.png"]});
             return;
         }
-        message.channel.send("", {files: [ava]});
+        message.channel.send("", {files: [ava.substring(0, ava.indexOf("?"))]});
         return;
     }
 
