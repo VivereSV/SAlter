@@ -289,6 +289,13 @@ client.on("message", async message => {
         message.channel.send("xnine broke it");
         return;
     }
+    
+    if (command === "avatar") {
+        let am = message.mentions.members.first().user;
+        var ava = "Avatar: " + am.avatar + "\nURL: " + am.avatarURL;
+        message.channel.send(ava);
+        return;
+    }
 
     if (message.channel.name === "general") return;
 
