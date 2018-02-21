@@ -307,8 +307,8 @@ client.on("message", async message => {
         const helpful = "+format: get the required format for a log\n" +
             "+log: log a match in the database. Please provide proper parameters\n" +
             "+search: search the database for a deck matchup. Type +search for more info\n" +
-            "+map/mapFrom/mapTo: map mapFrom to mapTo. SAlter will treat them as the same deck\n" +
-            "+unmap/mapFrom/mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck.\n" +
+            "+map;mapFrom;mapTo: map mapFrom to mapTo. SAlter will treat them as the same deck\n" +
+            "+unmap;mapFrom;mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck.\n" +
             "+hi: greet SAlter";
         message.channel.send(helpful);
         return;
