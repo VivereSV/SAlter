@@ -11,18 +11,6 @@ var MarkovChain = require('markovchain-generate');
 var fs = require("fs");
 //var seraphThesis = fs.readFileSync("./seraph.txt", {"encoding": "utf-8"});
 
-//Workaround for VLV's stupidity
-var craftMap = {
-    Havencraft: 0,
-    Runecraft: 1,
-    Shadowcraft: 2,
-    Forestcraft: 3,
-    Swordcraft: 4,
-    Dragoncraft: 5,
-    Bloodcraft: 6,
-    Portalcraft: 7
-};
-
 var mappedItems = {
 
 }
