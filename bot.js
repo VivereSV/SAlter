@@ -11,6 +11,13 @@ var MarkovChain = require('markovchain-generate');
 var fs = require("fs");
 //var seraphThesis = fs.readFileSync("./seraph.txt", {"encoding": "utf-8"});
 
+//Maybe this will make em log?
+const Enmap = require("enmap");
+const EnmapLevel = require("enmap-level");
+
+const pointProvider = new EnmapLevel({name: "points"});
+this.points = new Enmap({provider: pointProvider});
+
 //Workaround for VLV's stupidity
 var craftMap = {
     Havencraft: 0,
@@ -161,6 +168,15 @@ function findCraft(lower) {
     return deckCraft;
 }
 
+//What is organization
+client.pointsMonitor = (client, message) => {
+    if (message.channel.type !=='text') return;
+    const settings = client.settings.get(message.guild.id);
+    const score = client.points.get(message.author.id) || { points: 0, level: 0 };
+    score.points++;
+    client.points.set(message.author.id, score);
+};
+
 client.on("message", async message => {
     // This event will run on every single message received, from any channel or DM.
 
@@ -171,15 +187,6 @@ client.on("message", async message => {
     // Also good practice to ignore any message that does not start with our prefix, 
     // which is set in the configuration file.
     if (message.content.indexOf(process.env.prefix) !== 0) return;
-
-    //FUCK YOU CARE FIX YOUR SHITTY DISCORD
-    /*if(command === "here") {
-        let gofuckyourself = message.guild.roles.find("name", "Aspirant");
-        let care = message.author;
-        care.addRole(gofuckyourself);
-        message.channel.send(message.author.username + " has been given the Aspirant role. Good luck! <:yayumi:370005010668453890>");
-        return;
-    }*/
 
     //bot_and_salt only
     if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general") return;
@@ -280,16 +287,16 @@ client.on("message", async message => {
                     
                 });
             });
-        return;
+            return;
     }
-    
+
     if (command === "seraph") {
-        /*var seraphChain = new MarkovChain();
-        var seraphOutput = seraphChain.generateString();*/
-        message.channel.send("xnine broke it");
+        var seraphChain = new MarkovChain();
+        var seraphOutput = seraphChain.generateString();
+        message.channel.send(seraphOutput);
         return;
     }
-    
+
     if (command === "avatar") {
         let am = message.mentions.members.first().user;
         var ava = am.avatarURL;
@@ -319,22 +326,57 @@ client.on("message", async message => {
         return;
     }
 
+    else if (command === "$") {
+        const scorePoints = client.points.get(message.author.id).points;
+        !scorePoints ? message.channel.send('You have no Saltcoins yet.') : message.channel.send(`You have ${scorePoints} Saltcoins!`);
+    }
+
     else if (command === "pat") {
+        const score = client.points.get(message.author.id) || { points: 0, level: 0 };
+        const scorePoints = client.points.get(message.author.id).points;
+        if(!scorePoints) {
+            message.channel.send("Not enough Saltcoin. Get more by logging!");
+            return;
+        }
         message.channel.send("T-thanks... it's not like I wanted a head pat...", { files: ["https://i.imgur.com/5I4rndN.png"] });
+        score.points--;
+        client.points.set(message.author.id, score);
         return;
     }
 
     else if (command === "kiss") {
+        const score = client.points.get(message.author.id) || { points: 0, level: 0 };
+        const scorePoints = client.points.get(message.author.id).points;
+        if(!scorePoints) {
+            message.channel.send("Not enough Saltcoin. Get more by logging!");
+            return;
+        }
         message.channel.send("B-baka, it's not like I wanted to kiss you", { files: ["https://i.imgur.com/Gd1dCmj.jpg"] });
+        score.points--;
+        client.points.set(message.author.id, score);
         return;
     }
-    
+
     else if (command === "comfort") {
+        const score = client.points.get(message.author.id) || { points: 0, level: 0 };
+        const scorePoints = client.points.get(message.author.id).points;
+        if(!scorePoints) {
+            message.channel.send("Not enough Saltcoin. Get more by logging!");
+            return;
+        }
         message.channel.send("I hope you're feeling better <:cute:398343907710205972>", {files: ["https://i.imgur.com/7bUGOqe.jpg"]});
+        score.points--;
+        client.points.set(message.author.id, score);
         return;
     }
 
     else if (command === "lewd") {
+        const score = client.points.get(message.author.id) || { points: 0, level: 0 };
+        const scorePoints = client.points.get(message.author.id).points;
+        if(!scorePoints) {
+            message.channel.send("Not enough Saltcoin. Get more by logging!");
+            return;
+        }
         var lm = "P-p-pervert!";
         var ll = "http://i.imgur.com/8mdLKaH.gif";
         if (message.author.id === 232040363957813248) {
@@ -342,20 +384,47 @@ client.on("message", async message => {
             ll = "https://www.theexpositor.tv/wp-content/uploads/Rated-R-for-18-and-over.png";
         }
         message.channel.send(lm, { files: [ll] });
+        score.points--;
+        client.points.set(message.author.id, score);
+        return;
     }
 
     else if (command === "fuck") {
+        const score = client.points.get(message.author.id) || { points: 0, level: 0 };
+        const scorePoints = client.points.get(message.author.id).points;
+        if(!scorePoints) {
+            message.channel.send("Not enough Saltcoin. Get more by logging!");
+            return;
+        }
         message.channel.send("<:pepos:369998914755100672>");
+        score.points--;
+        client.points.set(message.author.id, score);
         return;
     }
 
     else if (command === "kick") {
+        const score = client.points.get(message.author.id) || { points: 0, level: 0 };
+        const scorePoints = client.points.get(message.author.id).points;
+        if(!scorePoints) {
+            message.channel.send("Not enough Saltcoin. Get more by logging!");
+            return;
+        }
         message.channel.send("I don't know, I kind of like that guy...");
+        score.points--;
+        client.points.set(message.author.id, score);
         return;
     }
 
     else if (command === "hi") {
+        const score = client.points.get(message.author.id) || { points: 0, level: 0 };
+        const scorePoints = client.points.get(message.author.id).points;
+        if(!scorePoints) {
+            message.channel.send("Not enough Saltcoin. Get more by logging!");
+            return;
+        }
         message.channel.send("<:yayumi:370005010668453890>");
+        score.points--;
+        client.points.set(message.author.id, score);
         return;
     }
 
@@ -917,6 +986,7 @@ client.on("message", async message => {
                     spreadsheet.send({ autoSize: true }, function (err) {
                         if (err) throw err;
                         message.channel.send("Logged!");
+                        client.pointsMonitor(client, message);
                     });
                 });
             });
