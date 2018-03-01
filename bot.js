@@ -331,6 +331,15 @@ client.on("message", async message => {
         }
         message.channel.send(lm, { files: [ll] });
     }
+    
+    else if (command === "dance") {
+        if(message.author.id === 178598393822576642) {
+            message.channel.send("", {files: ["https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half/public/blogs/44242/2012/10/106847-105978.png"]});
+            return;
+        }
+        message.channel.send("", {files: ["http://i.imgur.com/XHefT4t.gif"]});
+        return;
+    }
 
     else if (command === "fuck") {
         message.channel.send("<:pepos:369998914755100672>");
