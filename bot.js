@@ -918,6 +918,16 @@ client.on("message", async message => {
                 });
             });
     }
+    
+    else if (command === "gbf") {
+        var wikiLink = "https://gbf.wiki/";
+        if(args.length !== 1) {
+            message.channel.send("Waifu not found!");
+            return;
+        }
+        message.channel.send(wikiLink + args[0]);
+        return;
+    }
 
     else {
         message.channel.send("I'm not a chat bot");
