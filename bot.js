@@ -925,7 +925,7 @@ client.on("message", async message => {
             message.channel.send("Waifu not found!");
             return;
         }
-        message.channel.send(wikiLink + args[0]);
+        message.channel.send(wikiLink + args[0].replace(/ /g, "_"));
         return;
     }
 
