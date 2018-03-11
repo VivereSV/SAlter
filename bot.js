@@ -170,7 +170,7 @@ client.on("message", async message => {
     }*/
 
     //bot_and_salt only
-    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general") return;
+    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general" && message.channel.name != "granblue_discussion") return;
 
     // Here we separate our "command" name, and our "arguments" for the command. 
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
@@ -288,8 +288,17 @@ client.on("message", async message => {
         message.channel.send("", {files: [ava.substring(0, ava.indexOf("?"))]});
         return;
     }
+    if (command === "gbf") {
+        var wikiLink = "https://gbf.wiki/";
+        if(args.length !== 1) {
+            message.channel.send("Waifu not found!");
+            return;
+        }
+        message.channel.send(wikiLink + args[0].replace(/ /g, "_"));
+        return;
+    }
 
-    if (message.channel.name === "general") return;
+    if (message.channel.name === "general" || message.channel.name === "granblue_discussion") return;
 
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
@@ -331,7 +340,7 @@ client.on("message", async message => {
         }
         message.channel.send(lm, { files: [ll] });
     }
-    
+
     else if (command === "dance") {
         if(message.author.id === 178598393822576642) {
             message.channel.send("", {files: ["https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half/public/blogs/44242/2012/10/106847-105978.png"]});
@@ -917,16 +926,6 @@ client.on("message", async message => {
                     });
                 });
             });
-    }
-    
-    else if (command === "gbf") {
-        var wikiLink = "https://gbf.wiki/";
-        if(args.length !== 1) {
-            message.channel.send("Waifu not found!");
-            return;
-        }
-        message.channel.send(wikiLink + args[0].replace(/ /g, "_"));
-        return;
     }
 
     else {
