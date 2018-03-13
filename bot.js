@@ -356,8 +356,12 @@ client.on("message", async message => {
     }
 
     else if (command === "kick") {
-        message.channel.send("I don't know, I kind of like that guy...");
-        return;
+        let r = message.guild.roles.find("name", "Citizen");
+        let member = message.mentions.members.first();
+        let cMessage = "The Citizen role has been removed from " + message.mentions.members.first().nickname;
+        message.channel.send(cMessage);
+        member.removeRole(r).catch(console.error);
+        return
     }
 
     else if (command === "hi") {
