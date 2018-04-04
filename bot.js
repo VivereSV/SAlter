@@ -338,12 +338,12 @@ client.on("message", async message => {
         var r = 0;
         var c = 0;
         if(result.toLowerCase() === "win") {
-            r = deckNames.indexOf(your) + 29;
-            c = deckNames.indexOf(oppo) + 2;
+            r = deckNames.indexOf(your.toLowerCase()) + 29;
+            c = deckNames.indexOf(oppo.toLowerCase()) + 2;
         }
         else {
-            r = deckNames.indexOf(oppo) + 29;
-            c = deckNames.indexOf(your) + 2;
+            r = deckNames.indexOf(oppo.toLowerCase()) + 29;
+            c = deckNames.indexOf(your.toLowerCase()) + 2;
         }
         Spreadsheet.load({
             debug: true,
@@ -361,8 +361,12 @@ client.on("message", async message => {
                     if (err) throw err;
                     var val = 0;
                     if(rows[r][c] !== "") {
+                        console.log("Value: " + rows[r][c]);
                         val = rows[r][c];
                     }
+                    console.log("Row: " + r);
+                    console.log("Col: " + c);
+                    console.log("Logged: " + val);
                     val++;
                     spreadsheet.add({ [r]: { [c]: val } });
                     
