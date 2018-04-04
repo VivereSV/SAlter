@@ -310,6 +310,74 @@ client.on("message", async message => {
         message.channel.send(helpful);
         return;
     }
+    
+    if (command === "m") {
+        if(args.length !== 3) {
+            message.channel.send("Error! Format is +m;Win/Loss;Your deck;Opponent deck");
+            return;
+        }
+        var result = checkMap(args[0]);
+        var your = checkMap(args[1]);
+        var oppo = checkMap(args[2]);
+        var deckNames = new Array("mid sword", "temple haven", "aegis haven", "holy lion haven", "spellboost rune", "ginger rune",
+                                    "burn rune", "artifact portal", "puppet portal", "ramp dragon", "lindworm", "pdk", "reanimate", 
+                                "mid shadow", "hybrid shadow", "neutral forest", "aggro forest", "control forest", "otk forest",
+                            "vengeance", "bat aggro", "neutral blood", "jormungand");
+        if(deckNames.indexOf(your.toLowerCase()) === -1) {
+            message.channel.send("Error! " + your + " is not a valid deck name!");
+            return;
+        }
+        else if(deckNames.indexOf(oppo.toLowerCase()) === -1) {
+            message.channel.send("Error! " + oppo + " is not a valid deck name!");
+            return;
+        }
+        else if(result.toLowerCase() !== "win" && result.toLowerCase() !== "loss") {
+            message.channel.send("Error! Result must be win or loss!");
+            return;
+        }
+        var r = 0;
+        var c = 0;
+        if(result.toLowerCase() === "win") {
+            r = deckNames.indexOf(your) + 29;
+            c = deckNames.indexOf(oppo) + 2;
+        }
+        else {
+            r = deckNames.indexOf(oppo) + 29;
+            c = deckNames.indexOf(your) + 2;
+        }
+        Spreadsheet.load({
+            debug: true,
+            spreadsheetName: 'DBNE Match Tracker',
+            worksheetName: 'Log',
+            oauth2: {
+                client_id: process.env.client_id,
+                client_secret: process.env.client_secret,
+                refresh_token: process.env.refresh_token
+            }
+        },
+            function sheetReady(err, spreadsheet) {
+                if (err) throw err;
+                spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                    if (err) throw err;
+                    var val = 0;
+                    if(rows[r][c] !== "") {
+                        val = rows[r][c];
+                    }
+                    val++;
+                    spreadsheet.add({ [r]: { [c]: val } });
+                    
+
+                    if (err) throw err;
+
+
+                    spreadsheet.send({ autoSize: true }, function (err) {
+                        if (err) throw err;
+                        message.channel.send("Logged!");
+                    });
+                });
+            });
+
+    }
 
     else if (command === "monika") {
         message.edit("test").catch(console.error);
