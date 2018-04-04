@@ -360,7 +360,7 @@ client.on("message", async message => {
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
                     var val = 0;
-                    if(rows[r][c] !== "undefined") {
+                    if(rows[r][c] != "undefined") {
                         console.log("Value: " + rows[r][c]);
                         val = rows[r][c];
                     }
