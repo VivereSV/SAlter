@@ -319,19 +319,9 @@ client.on("message", async message => {
         var result = checkMap(args[0]);
         var your = checkMap(args[1]);
         var oppo = checkMap(args[2]);
-        var deckNames = new Array("mid sword", "temple haven", "aegis haven", "holy lion haven", "spellboost rune", "ginger rune",
-                                    "burn rune", "artifact portal", "puppet portal", "ramp dragon", "lindworm", "pdk", "reanimate", 
-                                "mid shadow", "hybrid shadow", "neutral forest", "aggro forest", "control forest", "otk forest",
-                            "vengeance", "bat aggro", "neutral blood", "aggro sword");
-        if(deckNames.indexOf(your.toLowerCase()) === -1) {
-            message.channel.send("Error! " + your + " is not a valid deck name!");
-            return;
-        }
-        else if(deckNames.indexOf(oppo.toLowerCase()) === -1) {
-            message.channel.send("Error! " + oppo + " is not a valid deck name!");
-            return;
-        }
-        else if(result.toLowerCase() !== "win" && result.toLowerCase() !== "loss") {
+        var deckNames = new Array();
+        
+        if(result.toLowerCase() !== "win" && result.toLowerCase() !== "loss") {
             message.channel.send("Error! Result must be win or loss!");
             return;
         }
@@ -359,15 +349,32 @@ client.on("message", async message => {
                 if (err) throw err;
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
+
+                    var numDecks = Object.keys(28).length;
+                    console.log("Number of decks: " + numDecks);
+                    for(var i = 2; i <= numDecks; i++) {
+                        deckNames.push(rows[28][i]);
+                    }
+
+                    if(deckNames.indexOf(your.toLowerCase()) === -1) {
+                        message.channel.send("Error! " + your + " is not a valid deck name!");
+                        return;
+                    }
+                    else if(deckNames.indexOf(oppo.toLowerCase()) === -1) {
+                        message.channel.send("Error! " + oppo + " is not a valid deck name!");
+                        return;
+                    }
+
+
                     var val = 0;
-                    if(rows[r][c] > 0) {
+                    if(rows[r][c].length > 0) {
                         console.log("Value: " + rows[r][c]);
                         val = rows[r][c];
                     }
+                    val++;
                     console.log("Row: " + r);
                     console.log("Col: " + c);
                     console.log("Logged: " + val);
-                    val++;
                     spreadsheet.add({ [r]: { [c]: val } });
                     
 
