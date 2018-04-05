@@ -322,7 +322,7 @@ client.on("message", async message => {
         var deckNames = new Array("mid sword", "temple haven", "aegis haven", "holy lion haven", "spellboost rune", "ginger rune",
                                     "burn rune", "artifact portal", "puppet portal", "ramp dragon", "lindworm", "pdk", "reanimate", 
                                 "mid shadow", "hybrid shadow", "neutral forest", "aggro forest", "control forest", "otk forest",
-                            "vengeance", "bat aggro", "neutral blood", "jormungand");
+                            "vengeance", "bat aggro", "neutral blood", "aggro sword");
         if(deckNames.indexOf(your.toLowerCase()) === -1) {
             message.channel.send("Error! " + your + " is not a valid deck name!");
             return;
