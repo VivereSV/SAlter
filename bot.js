@@ -402,7 +402,7 @@ client.on("message", async message => {
                     console.log("C: " + c);
                     console.log("Rows: " + rows[r][c]);
                     console.log("Type: " + typeof(rows[r][c]));
-                    if(rows[r][c].length > 0) {
+                    if(rows[r][c] > 0) {
                         console.log("Value: " + rows[r][c]);
                         val = rows[r][c];
                     }
