@@ -398,6 +398,9 @@ client.on("message", async message => {
 
 
                     var val = 0;
+                    console.log("R: " + r);
+                    console.log("C: " + c);
+                    console.log("Rows: " + rows[r][c]);
                     if(rows[r][c].length > 0) {
                         console.log("Value: " + rows[r][c]);
                         val = rows[r][c];
