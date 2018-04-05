@@ -118,6 +118,10 @@ function checkHelper(name) {
     return trueName;
 }
 
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 //lmao im drunk
 function findCraft(lower) {
     lower = lower.toLowerCase();
@@ -317,24 +321,40 @@ client.on("message", async message => {
             return;
         }
         var result = checkMap(args[0]);
-        var your = checkMap(args[1]);
-        var oppo = checkMap(args[2]);
+        var y = checkMap(args[1]).toLowerCase();
+        var o = checkMap(args[2]).toLowerCase();
+        var your = "";
+        var oppo = "";
+        /*var deckNames = new Array("mid sword", "temple haven", "aegis haven", "holy lion haven", "spellboost rune", "ginger rune",
+                                    "burn rune", "artifact portal", "puppet portal", "ramp dragon", "lindworm", "pdk", "reanimate", 
+                                "mid shadow", "hybrid shadow", "neutral forest", "aggro forest", "control forest", "otk forest",
+                            "vengeance", "bat aggro", "neutral blood", "aggro sword");*/
         var deckNames = new Array();
+
+        var splitYour = y.split(" ");
+        for(var i = 0; i < splitYour.length; i++) {
+            splitYour[i] = capitalize(splitYour[i]);
+            your += splitYour[i];
+            if(i !== splitYour.length - 1) {
+                your += " ";
+            }
+        }
+
+        var splitOppo = o.split(" ");
+        for(var i = 0; i < splitOppo.length; i++) {
+            splitOppo[i] = capitalize(splitOppo[i]);
+            oppo += splitOppo[i];
+            if(i !== splitOppo.length - 1) {
+                oppo += " ";
+            }
+        }
+
         
         if(result.toLowerCase() !== "win" && result.toLowerCase() !== "loss") {
             message.channel.send("Error! Result must be win or loss!");
             return;
         }
-        var r = 0;
-        var c = 0;
-        if(result.toLowerCase() === "win") {
-            r = deckNames.indexOf(your.toLowerCase()) + 29;
-            c = deckNames.indexOf(oppo.toLowerCase()) + 2;
-        }
-        else {
-            r = deckNames.indexOf(oppo.toLowerCase()) + 29;
-            c = deckNames.indexOf(your.toLowerCase()) + 2;
-        }
+        
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'DBNE Match Tracker',
@@ -352,15 +372,26 @@ client.on("message", async message => {
 
                     var numDecks = Object.keys(rows[28]).length;
                     console.log("Number of decks: " + numDecks);
-                    for(var i = 2; i <= numDecks; i++) {
+                    for(var i = 2; i <= numDecks + 1; i++) {
                         deckNames.push(rows[28][i]);
                     }
 
-                    if(deckNames.indexOf(your.toLowerCase()) === -1) {
+                    var r = 0;
+                    var c = 0;
+                    if(result === "Win") {
+                        r = deckNames.indexOf(your) + 29;
+                        c = deckNames.indexOf(oppo) + 2;
+                    }
+                    else {
+                        r = deckNames.indexOf(oppo) + 29;
+                        c = deckNames.indexOf(your) + 2;
+                    }
+
+                    if(deckNames.indexOf(your) === -1) {
                         message.channel.send("Error! " + your + " is not a valid deck name!");
                         return;
                     }
-                    else if(deckNames.indexOf(oppo.toLowerCase()) === -1) {
+                    else if(deckNames.indexOf(oppo) === -1) {
                         message.channel.send("Error! " + oppo + " is not a valid deck name!");
                         return;
                     }
