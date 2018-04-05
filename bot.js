@@ -350,7 +350,7 @@ client.on("message", async message => {
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
 
-                    var numDecks = Object.keys(28).length;
+                    var numDecks = Object.keys(rows[28]).length;
                     console.log("Number of decks: " + numDecks);
                     for(var i = 2; i <= numDecks; i++) {
                         deckNames.push(rows[28][i]);
