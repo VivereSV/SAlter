@@ -321,33 +321,14 @@ client.on("message", async message => {
             return;
         }
         var result = checkMap(args[0]);
-        var y = checkMap(args[1]).toLowerCase();
-        var o = checkMap(args[2]).toLowerCase();
-        var your = "";
-        var oppo = "";
+        var your = checkMap(args[1]).toLowerCase();
+        var oppo = checkMap(args[2]).toLowerCase();
+
         /*var deckNames = new Array("mid sword", "temple haven", "aegis haven", "holy lion haven", "spellboost rune", "ginger rune",
                                     "burn rune", "artifact portal", "puppet portal", "ramp dragon", "lindworm", "pdk", "reanimate", 
                                 "mid shadow", "hybrid shadow", "neutral forest", "aggro forest", "control forest", "otk forest",
                             "vengeance", "bat aggro", "neutral blood", "aggro sword");*/
         var deckNames = new Array();
-
-        var splitYour = y.split(" ");
-        for(var i = 0; i < splitYour.length; i++) {
-            splitYour[i] = capitalize(splitYour[i]);
-            your += splitYour[i];
-            if(i !== splitYour.length - 1) {
-                your += " ";
-            }
-        }
-
-        var splitOppo = o.split(" ");
-        for(var i = 0; i < splitOppo.length; i++) {
-            splitOppo[i] = capitalize(splitOppo[i]);
-            oppo += splitOppo[i];
-            if(i !== splitOppo.length - 1) {
-                oppo += " ";
-            }
-        }
 
         
         if(result.toLowerCase() !== "win" && result.toLowerCase() !== "loss") {
@@ -373,7 +354,7 @@ client.on("message", async message => {
                     var numDecks = Object.keys(rows[28]).length;
                     console.log("Number of decks: " + numDecks);
                     for(var i = 2; i <= numDecks + 1; i++) {
-                        deckNames.push(rows[28][i]);
+                        deckNames.push(rows[28][i]).toLowerCase();
                     }
 
                     var r = 0;
