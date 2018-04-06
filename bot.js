@@ -354,7 +354,7 @@ client.on("message", async message => {
                     var numDecks = Object.keys(rows[28]).length;
                     console.log("Number of decks: " + numDecks);
                     for(var i = 2; i <= numDecks + 1; i++) {
-                        deckNames.push(rows[28][i]).toLowerCase();
+                        deckNames.push(rows[28][i].toLowerCase());
                     }
 
                     var r = 0;
