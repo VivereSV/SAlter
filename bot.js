@@ -180,6 +180,9 @@ client.on("message", async message => {
                     var col = 2;
                     var found = false;
                     var numRows = Object.keys(rows).length;
+                    var HLStart = "=HYPERLINK(\"";
+                    var HLMid = "\", \"Deck ";
+                    var HLEnd = "\")";
                     for(var i = 2; i <= numRows; i++) {
                         console.log(rows[i][1]);
                         if(rows[i][1] == person) {
@@ -189,13 +192,15 @@ client.on("message", async message => {
                                 message.channel.send("You have already submitted 3 decks. If an error occurred or you would like to edit one, please message a moderator.");
                             }
                             else {
-                                spreadsheet.add({ [i]: { [col]: message.content } });
+                                var dList = HLStart + message.content + HLMid + (col - 1) + HLEnd;
+                                spreadsheet.add({ [i]: { [col]: dList } });
                             }
                         }
                     }
                     if(!found) {
                         spreadsheet.add({ [numRows + 1]: { [1]: person } });
-                        spreadsheet.add({ [numRows + 1]: { [2]: message.content } });
+                        var dList = HLStart + message.content + HLMid + (col - 1) + HLEnd;
+                        spreadsheet.add({ [numRows + 1]: { [2]: dList } });
                     }
                     
                     
