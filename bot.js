@@ -61,7 +61,7 @@ client.on("ready", () => {
     console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
     // Example of changing the bot's playing game to something useful. `client.user` is what the
     // docs refer to as the "ClientUser".
-    client.user.setGame(`Saltverse`);
+    client.user.setActivity(`Saltverse`);
     Spreadsheet.load({
         debug: true,
         spreadsheetName: 'Dawnbreakers Deck Data Log',
@@ -160,7 +160,7 @@ client.on("message", async message => {
     // and not get into a spam loop (we call that "botception").
     if (message.author.bot) return;
     
-    if(message.channel === "DMChannel") {
+    if(message.channel.type == "dm") {
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'Clash of the Crusaders Deck Database',
