@@ -175,7 +175,12 @@ client.on("message", async message => {
                 if (err) throw err;
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
-
+                    
+                    if(message.content.indexOf(".com") === -1) {
+                        message.channel.send("That doesn't look like a deck link to me. If it is, please message a moderator to submit your decks.");
+                        return;
+                    }
+                    
                     var person = message.author.username;
                     var col = 2;
                     var found = false;
