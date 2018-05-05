@@ -159,19 +159,64 @@ client.on("message", async message => {
     // It's good practice to ignore other bots. This also makes your bot ignore itself
     // and not get into a spam loop (we call that "botception").
     if (message.author.bot) return;
+    
+    if(message.channel === "DMChannel") {
+        Spreadsheet.load({
+            debug: true,
+            spreadsheetName: 'Clash of the Crusaders Deck Database',
+            worksheetName: 'S2W1',
+            oauth2: {
+                client_id: process.env.client_id,
+                client_secret: process.env.client_secret,
+                refresh_token: process.env.refresh_token
+            }
+        },
+            function sheetReady(err, spreadsheet) {
+                if (err) throw err;
+                spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                    if (err) throw err;
+
+                    var person = message.author.username;
+                    var col = 2;
+                    var found = false;
+                    var numRows = Object.keys(rows).length;
+                    for(var i = 2; i < numRows; i++) {
+                        if(rows[i][1] === person) {
+                            found = true;
+                            col = Object.keys(rows[i]).length + 1;
+                            if(col > 4) {
+                                message.channel.send("You have already submitted 3 decks. If an error occurred or you would like to edit one, please message a moderator.");
+                            }
+                            else {
+                                spreadsheet.add({ [i]: { [col]: message.content } });
+                            }
+                        }
+                    }
+                    if(!found) {
+                        spreadsheet.add({ [numRows + 1]: { [1]: person } });
+                        spreadsheet.add({ [numRows + 1]: { [2]: message.content } });
+                    }
+                    
+                    
+
+                    if (err) throw err;
+
+
+                    spreadsheet.send({ autoSize: true }, function (err) {
+                        if (err) throw err;
+                        if(col <= 4) {
+                            message.channel.send("Deck " + (col - 1) + " has been submitted!");
+                        }
+                        if(col === 4) {
+                            message.channel.send("All 3 decks have been submitted! If you would like to make any changes or an error occurred, please message a moderator.");
+                        }
+                });
+            });
+    }
 
     // Also good practice to ignore any message that does not start with our prefix, 
     // which is set in the configuration file.
     if (message.content.indexOf(process.env.prefix) !== 0) return;
-
-    //FUCK YOU CARE FIX YOUR SHITTY DISCORD
-    /*if(command === "here") {
-        let gofuckyourself = message.guild.roles.find("name", "Aspirant");
-        let care = message.author;
-        care.addRole(gofuckyourself);
-        message.channel.send(message.author.username + " has been given the Aspirant role. Good luck! <:yayumi:370005010668453890>");
-        return;
-    }*/
 
     //bot_and_salt only
     if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general" && message.channel.name != "granblue_discussion") return;
