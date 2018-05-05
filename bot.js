@@ -180,7 +180,7 @@ client.on("message", async message => {
                     var col = 2;
                     var found = false;
                     var numRows = Object.keys(rows).length;
-                    for(var i = 2; i < numRows; i++) {
+                    for(var i = 2; i <= numRows; i++) {
                         console.log(rows[i][1]);
                         if(rows[i][1] == person) {
                             found = true;
