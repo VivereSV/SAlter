@@ -210,6 +210,7 @@ client.on("message", async message => {
                         if(col === 4) {
                             message.channel.send("All 3 decks have been submitted! If you would like to make any changes or an error occurred, please message a moderator.");
                         }
+                    });
                 });
             });
     }
