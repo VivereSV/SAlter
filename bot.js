@@ -181,7 +181,8 @@ client.on("message", async message => {
                     var found = false;
                     var numRows = Object.keys(rows).length;
                     for(var i = 2; i < numRows; i++) {
-                        if(rows[i][1] === person) {
+                        console.log(rows[i][1]);
+                        if(rows[i][1] == person) {
                             found = true;
                             col = Object.keys(rows[i]).length + 1;
                             if(col > 4) {
