@@ -482,7 +482,7 @@ client.on("message", async message => {
                     
                     var numRows = Object.keys(rows).length;
                     var usernames = new Array();
-                    for(var i = 2; i < numRows; i++) {
+                    for(var i = 2; i <= numRows; i++) {
                         usernames.push(rows[i][1]);
                     }
 
