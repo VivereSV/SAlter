@@ -462,6 +462,49 @@ client.on("message", async message => {
             });
 
     }
+    
+    else if (command === "assign") {
+        //Read the google spreadsheet and assign every player there a role.
+        Spreadsheet.load({
+            debug: true,
+            spreadsheetName: 'Clash of the Crusaders Deck Database',
+            worksheetName: 'S2W1',
+            oauth2: {
+                client_id: process.env.client_id,
+                client_secret: process.env.client_secret,
+                refresh_token: process.env.refresh_token
+            }
+        },
+            function sheetReady(err, spreadsheet) {
+                if (err) throw err;
+                spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                    if (err) throw err;
+                    
+                    var numRows = Object.keys(rows).length;
+                    var usernames = new Array();
+                    for(var i = 2; i < numRows; i++) {
+                        usernames.push(rows[i][1]);
+                    }
+
+                    let a = message.guild.roles.find("name", "Aspirant");
+                    let allMembers = message.guild.members.array();
+
+                    for(var j = 0; j < allMembers.length; j++) {
+                        if(usernames.indexOf(j.username) != -1) {
+                            allMembers[j].addRole(a);
+                        }
+                    }
+
+                    if (err) throw err;
+
+
+                    spreadsheet.send({ autoSize: true }, function (err) {
+                        if (err) throw err;
+                        message.channel.send("All participants have been assigned the Aspirant role!");
+                    });
+                });
+            });
+    }
 
     else if (command === "monika") {
         message.edit("test").catch(console.error);
