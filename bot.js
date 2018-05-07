@@ -490,7 +490,7 @@ client.on("message", async message => {
                     let allMembers = message.guild.members.array();
 
                     for(var j = 0; j < allMembers.length; j++) {
-                        if(usernames.indexOf(j.username) != -1) {
+                        if(usernames.indexOf(allMembers[j].username) != -1) {
                             allMembers[j].addRole(a);
                         }
                     }
