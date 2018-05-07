@@ -493,9 +493,6 @@ client.on("message", async message => {
                         if(usernames.indexOf(allMembers[j].user.username) != -1) {
                             allMembers[j].addRole(a);
                         }
-                        else {
-                            console.log(allMembers[j].user.username);
-                        }
                     }
 
                     if (err) throw err;
