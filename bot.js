@@ -493,15 +493,15 @@ client.on("message", async message => {
                         if(usernames.indexOf(allMembers[j].username) != -1) {
                             allMembers[j].addRole(a);
                         }
+                        else {
+                            console.log(allMembers[j].username);
+                        }
                     }
 
                     if (err) throw err;
-
-
-                    spreadsheet.send({ autoSize: true }, function (err) {
-                        if (err) throw err;
-                        message.channel.send("All participants have been assigned the Aspirant role!");
-                    });
+                    
+                    message.channel.send("All participants have been assigned the Aspirant role!");
+                   
                 });
             });
     }
