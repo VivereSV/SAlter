@@ -164,7 +164,7 @@ client.on("message", async message => {
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'Clash of the Crusaders Deck Database',
-            worksheetName: 'S2W1',
+            worksheetName: 'S2W2',
             oauth2: {
                 client_id: process.env.client_id,
                 client_secret: process.env.client_secret,
@@ -468,7 +468,7 @@ client.on("message", async message => {
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'Clash of the Crusaders Deck Database',
-            worksheetName: 'S2W1',
+            worksheetName: 'S2W2',
             oauth2: {
                 client_id: process.env.client_id,
                 client_secret: process.env.client_secret,
