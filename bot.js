@@ -11,6 +11,13 @@ var MarkovChain = require('markovchain-generate');
 var fs = require("fs");
 //var seraphThesis = fs.readFileSync("./seraph.txt", {"encoding": "utf-8"});
 
+//Jesus Christ why did I choose javascript
+const Twitch = require("twitch.tv-api");
+const twitch = new Twitch({
+  id: process.env.twitch_id,
+  secret: process.env.twitch_secret
+});
+
 var mappedItems = {
 
 }
@@ -370,6 +377,21 @@ client.on("message", async message => {
             "+hi: greet SAlter";
         message.channel.send(helpful);
         return;
+    }
+    
+    if (command === "stream") {
+        twitch.getUser("teamdawnbreakers")
+            .then(data => {
+                if(data.stream === null) {
+                    message.channel.send("DB Stream down");
+                }
+                else {
+                    message.channel.send("DB Stream up");
+                }
+            })
+             .catch(error => {
+                console.error(error);
+            });
     }
     
     if (command === "m") {
