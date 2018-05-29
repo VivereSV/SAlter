@@ -392,6 +392,7 @@ client.on("message", async message => {
              .catch(error => {
                 console.error(error);
             });
+      return;
     }
     
     if (command === "m") {
