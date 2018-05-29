@@ -380,6 +380,21 @@ client.on("message", async message => {
     }
     
     if (command === "stream") {
+      if(args.length === 1) {
+        twitch.getUser(args[0])
+            .then(data => {
+                if(data.stream === null) {
+                    message.channel.send(args[0] + " Stream down");
+                }
+                else {
+                    message.channel.send(args[0] + " Stream up");
+                }
+            })
+             .catch(error => {
+                console.error(error);
+            });
+        return;
+      }
         twitch.getUser("teamdawnbreakers")
             .then(data => {
                 if(data.stream === null) {
