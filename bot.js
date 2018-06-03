@@ -190,6 +190,7 @@ client.on("message", async message => {
     var d = new Date();
     var t = d.getTime();
     if(t >= lastChecked + 30000) {
+        console.log(message.channel.name);
         twitch.getUser("teamdawnbreakers")
             .then(data => {
                 if(data.stream === null) {
@@ -206,6 +207,7 @@ client.on("message", async message => {
             //make announcement
             wasUp = true;
             var sTitle = data.stream.channel.status;
+            message.channel.sendMessage("strim up bich");
             message.guild.channels.find("name", "#salt_and_salter").sendMessage("Come check out Team Dawnbreakers streaming " + sTitle + " at twitch.tv/teamdawnbreakers! <:cute:398343907710205972>");
         }
         else if(wasUp && !isUp) {
