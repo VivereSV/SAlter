@@ -210,7 +210,7 @@ client.on("message", async message => {
             //make announcement
             wasUp = true;
             //message.channel.sendMessage("strim up bich");
-            message.guild.channels.find("name", "streams_and_articles").send("Come check out Team Dawnbreakers streaming " + sTitle + " at " + sUrl + " <:cute:398343907710205972>");
+            message.guild.channels.find("name", "streams_and_articles").send("@here Come check out Team Dawnbreakers streaming " + sTitle + " at " + sUrl + " <:cute:398343907710205972>");
         }
         else if(wasUp && !isUp) {
             wasUp = false;
