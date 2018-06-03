@@ -18,6 +18,10 @@ const twitch = new Twitch({
   secret: process.env.twitch_secret
 });
 
+var lastChecked;
+var wasUp;
+var isUp;
+
 var mappedItems = {
 
 }
@@ -69,6 +73,20 @@ client.on("ready", () => {
     // Example of changing the bot's playing game to something useful. `client.user` is what the
     // docs refer to as the "ClientUser".
     client.user.setActivity(`Saltverse`);
+    twitch.getUser("teamdawnbreakers")
+    .then(data => {
+        if(data.stream === null) {
+          wasUp = false;
+        }
+        else {
+          wasUp = true;
+        }
+        var d = new Date();
+        lastChecked = d.getTime();
+    })
+    .catch(error => {
+        console.error(error);
+    });
     Spreadsheet.load({
         debug: true,
         spreadsheetName: 'Dawnbreakers Deck Data Log',
@@ -166,6 +184,32 @@ client.on("message", async message => {
     // It's good practice to ignore other bots. This also makes your bot ignore itself
     // and not get into a spam loop (we call that "botception").
     if (message.author.bot) return;
+  
+    var d = new Date();
+    var t = d.getTime();
+    if(t >= lastChecked + 30000) {
+        twitch.getUser("teamdawnbreakers")
+            .then(data => {
+                if(data.stream === null) {
+                    isUp = false;
+                }
+                else {
+                    isUp = true;
+                }
+            })
+        .catch(error => {
+            console.error(error);
+        });
+        if(!wasUp && isUp) {
+            //make announcement
+            wasUp = true;
+            var sTitle = data.stream.channel.status;
+            message.guild.channels.find("name", "#announcements").sendMessage("Come check out Team Dawnbreakers streaming " + sTitle + " at twitch.tv/teamdawnbreakers! <:cute:398343907710205972>");
+        }
+        else if(wasUp && !isUp) {
+            wasUp = false;
+        }
+    }
     
     if(message.channel.type == "dm") {
         Spreadsheet.load({
