@@ -206,7 +206,7 @@ client.on("message", async message => {
             //make announcement
             wasUp = true;
             var sTitle = data.stream.channel.status;
-            message.guild.channels.find("name", "#streams_and_articles").sendMessage("Come check out Team Dawnbreakers streaming " + sTitle + " at twitch.tv/teamdawnbreakers! <:cute:398343907710205972>");
+            message.guild.channels.find("name", "#salt_and_salter").sendMessage("Come check out Team Dawnbreakers streaming " + sTitle + " at twitch.tv/teamdawnbreakers! <:cute:398343907710205972>");
         }
         else if(wasUp && !isUp) {
             wasUp = false;
