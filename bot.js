@@ -191,6 +191,7 @@ client.on("message", async message => {
     var t = d.getTime();
     if(t >= lastChecked + 30000) {
         var sTitle = "";
+        var sUrl = "";
         twitch.getUser("teamdawnbreakers")
             .then(data => {
                 if(data.stream === null) {
@@ -199,6 +200,7 @@ client.on("message", async message => {
                 else {
                     isUp = true;
                     sTitle = data.stream.channel.status;
+                    sUrl = data.stream.channel.url;
                 }
             })
         .catch(error => {
@@ -207,8 +209,8 @@ client.on("message", async message => {
         if(!wasUp && isUp) {
             //make announcement
             wasUp = true;
-            message.channel.sendMessage("strim up bich");
-            message.guild.channels.find("name", "salt_and_salter").sendMessage("Come check out Team Dawnbreakers streaming " + sTitle + " at twitch.tv/teamdawnbreakers! <:cute:398343907710205972>");
+            //message.channel.sendMessage("strim up bich");
+            message.guild.channels.find("name", "streams_and_articles").send("Come check out Team Dawnbreakers streaming " + sTitle + " at " + sUrl + " <:cute:398343907710205972>");
         }
         else if(wasUp && !isUp) {
             wasUp = false;
