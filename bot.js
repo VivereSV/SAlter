@@ -202,7 +202,7 @@ client.on("message", async message => {
         
                     if(!wasUp) {
                       wasUp = true;
-                      message.channel.send("I-it's not like I w-want you to go watch " + sTitle + " at https://www.twitch.tv/teamdawnbreakers anyways you b-baka";
+                      message.channel.send("I-it's not like I w-want you to go watch " + sTitle + " at https://www.twitch.tv/teamdawnbreakers anyways you b-baka <:GWagnwNatsukiBlush:407618674707660811>";
                     }
                 }
             })
