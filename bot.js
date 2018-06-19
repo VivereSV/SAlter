@@ -20,7 +20,6 @@ const twitch = new Twitch({
 
 var lastChecked;
 var wasUp;
-var isUp;
 
 var mappedItems = {
 
@@ -191,30 +190,25 @@ client.on("message", async message => {
     var t = d.getTime();
     if(t >= lastChecked + 30000) {
         var sTitle = "";
-        var sUrl = "";
         twitch.getUser("teamdawnbreakers")
             .then(data => {
                 if(data.stream === null) {
-                    isUp = false;
+                    if(wasUp) {
+                      wasUp = false;
+                    }
                 }
                 else {
-                    isUp = true;
                     sTitle = data.stream.channel.status;
-                    sUrl = data.stream.channel.url;
+        
+                    if(!wasUp) {
+                      wasUp = true;
+                      message.channel.send("I-it's not like I w-want you to go watch " + sTitle + " at https://www.twitch.tv/teamdawnbreakers anyways you b-baka";
+                    }
                 }
             })
         .catch(error => {
             console.error(error);
         });
-        if(!wasUp && isUp) {
-            //make announcement
-            wasUp = true;
-            //message.channel.sendMessage("strim up bich");
-            message.guild.channels.find("name", "streams_and_articles").send("@here Come check out Team Dawnbreakers streaming " + sTitle + " at https://www.twitch.tv/teamdawnbreakers <:cute:398343907710205972>");
-        }
-        else if(wasUp && !isUp) {
-            wasUp = false;
-        }
     }
     
     if(message.channel.type == "dm") {
