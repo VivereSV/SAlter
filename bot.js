@@ -174,17 +174,19 @@ client.on("message", async message => {
     var d = new Date();
     var t = d.getTime();
     if(t >= lastChecked + 30000) {
+        console.log("wasUp Start: " + wasUp);
         var sTitle = "";
         twitch.getUser("teamdawnbreakers")
             .then(data => {
                 if(data.stream === null) {
+                  console.log("NULL");
                     if(wasUp) {
                       wasUp = false;
                     }
                 }
                 else {
                     sTitle = data.stream.channel.status;
-        
+                    console.log("UP");
                     if(!wasUp) {
                       wasUp = true;
                       message.guild.channels.find("name", "streams_and_articles").send("@here I-it's not like I w-want you to go watch " + sTitle + " at https://www.twitch.tv/teamdawnbreakers anyways you b-baka <:feelslizaman:396859362410364942>");
