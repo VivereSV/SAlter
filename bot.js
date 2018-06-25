@@ -72,6 +72,8 @@ client.on("ready", () => {
     // Example of changing the bot's playing game to something useful. `client.user` is what the
     // docs refer to as the "ClientUser".
     client.user.setActivity(`Saltverse`);
+    var da = new Date();
+    var lastChecked = da.getTime();
     wasUp = false;
     Spreadsheet.load({
         debug: true,
@@ -173,6 +175,8 @@ client.on("message", async message => {
   
     var d = new Date();
     var t = d.getTime();
+    console.log("Last checked: " + lastChecked);
+    console.log("Now: " + t);
     if(t >= lastChecked + 30000) {
         console.log("wasUp Start: " + wasUp);
         var sTitle = "";
