@@ -73,7 +73,7 @@ client.on("ready", () => {
     // docs refer to as the "ClientUser".
     client.user.setActivity(`Saltverse`);
     var da = new Date();
-    var lastChecked = da.getTime();
+    lastChecked = da.getTime();
     wasUp = false;
     Spreadsheet.load({
         debug: true,
