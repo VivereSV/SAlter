@@ -72,22 +72,7 @@ client.on("ready", () => {
     // Example of changing the bot's playing game to something useful. `client.user` is what the
     // docs refer to as the "ClientUser".
     client.user.setActivity(`Saltverse`);
-    twitch.getUser("teamdawnbreakers")
-    .then(data => {
-        if(data.stream === null) {
-          wasUp = false;
-        }
-        else {
-          wasUp = true;
-        }
-        var d = new Date();
-        lastChecked = d.getTime();
-        console.log(lastChecked);
-        console.log(wasUp);
-    })
-    .catch(error => {
-        console.error(error);
-    });
+    wasUp = false;
     Spreadsheet.load({
         debug: true,
         spreadsheetName: 'Dawnbreakers Deck Data Log',
