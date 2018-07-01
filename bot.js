@@ -274,7 +274,7 @@ client.on("message", async message => {
     if (message.content.indexOf(process.env.prefix) !== 0) return;
 
     //bot_and_salt only
-    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general" && message.channel.name != "granblue_discussion") return;
+    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general" && message.channel.name != "granblue_discussion" && message.channel.name != "public_scrim") return;
 
     // Here we separate our "command" name, and our "arguments" for the command. 
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
@@ -286,6 +286,11 @@ client.on("message", async message => {
     console.log(args);
 
     // Let's go with a few common example commands! Feel free to delete or change those.
+  
+    if (command === "helpme") {
+      const hm = "+fiteme: add yourself to the list of people looking for scrims\n +lfs: check which people are currently looking for a scrim\n +run: take yourself off the scrim list";
+      message.channel.send(hm);
+    }
 
     if (command === "fiteme") {
       if(scrims.indexOf(message.author) !== -1) {
@@ -443,7 +448,7 @@ client.on("message", async message => {
         return;
     }
 
-    if (message.channel.name === "general" || message.channel.name === "granblue_discussion") return;
+    if (message.channel.name === "general" || message.channel.name === "granblue_discussion" || message.channel.name === "public_scrim") return;
 
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
