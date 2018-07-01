@@ -293,7 +293,7 @@ client.on("message", async message => {
         return;
       }
       scrims.push(message.author);
-      message.channel.send("${message.author.username} is currently looking for a scrim!");
+      message.channel.send(message.author.username + " is currently looking for a scrim!");
     }
   
     if (command === "lfs") {
@@ -312,7 +312,7 @@ client.on("message", async message => {
           sm += scrims[i].username + ", "; 
         }
         sm += scrims[scrims.length - 1].username + ".";
-        message.channel.send(sm + " Try not to lose too badly.");
+        message.channel.send(sm + " Go bother one of them.");
       }
     }
   
@@ -1240,7 +1240,6 @@ client.on("message", async message => {
     }
 
     else {
-        message.channel.send("I'm not a chat bot");
         return;
     }
 });
