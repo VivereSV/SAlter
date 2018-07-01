@@ -20,6 +20,7 @@ const twitch = new Twitch({
 
 var lastChecked;
 var wasUp;
+var scrims = new Array();
 
 var mappedItems = {
 
@@ -286,6 +287,47 @@ client.on("message", async message => {
 
     // Let's go with a few common example commands! Feel free to delete or change those.
 
+    if (command === "fiteme") {
+      if(scrims.indexOf(message.author) !== -1) {
+        message.channel.send("Ugh, stop bothering me. You're already on the list.");
+        return;
+      }
+      scrims.push(message.author);
+      message.channel.send("${message.author.username} is currently looking for a scrim!");
+    }
+  
+    if (command === "lfs") {
+      for(var i = scrims.length - 1; i >= 0; i--) {
+        if(scrims[i].presence.status === "offline") {
+          scrims.splice(i, 1); 
+        }
+      }
+      var sm = "These people are currently looking for a scrim: ";
+      if(scrims.length === 0) {
+        message.channel.send("Sorry, nobody is looking for a scrim right now... I'd fight you but I wouldn't want to destroy your ego.");
+        return;
+      }
+      else {
+        for(var i = 0; i < scrims.length - 1; i++) {
+          sm += scrims[i].username + ", "; 
+        }
+        sm += scrims[scrims.length - 1].username + ".";
+        message.channel.send(sm + " Try not to lose too badly.");
+      }
+    }
+  
+    if (command === "run") {
+      if(scrims.indexOf(message.author) === -1) {
+        message.channel.send("It's not like you were even looking for a scrim...");
+        return;
+      }
+      else {
+        scrims.splice(scrims.indexOf(message.author), 1);
+        message.channel.send("Let me know when you're ready to scrim again.");
+        return;
+      }
+    }
+  
     if (command === "advice") {
         if (args.length !== 1) {
             message.channel.send("Please provide the craft name. Example usage: +advice;Runecraft");
