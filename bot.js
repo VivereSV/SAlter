@@ -516,7 +516,7 @@ client.on("message", async message => {
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'DBNE Match Tracker',
-            worksheetName: 'Log',
+            worksheetName: 'Log GBF',
             oauth2: {
                 client_id: process.env.client_id,
                 client_secret: process.env.client_secret,
