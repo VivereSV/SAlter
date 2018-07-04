@@ -176,15 +176,15 @@ client.on("message", async message => {
   
     var d = new Date();
     var t = d.getTime();
-    console.log("Last checked: " + lastChecked);
-    console.log("Now: " + t);
+    //console.log("Last checked: " + lastChecked);
+    //console.log("Now: " + t);
     if(t >= lastChecked + 30000) {
         console.log("wasUp Start: " + wasUp);
         var sTitle = "";
         twitch.getUser("teamdawnbreakers")
             .then(data => {
                 if(data.stream === null) {
-                  console.log("NULL");
+                  //console.log("NULL");
                     if(wasUp) {
                       wasUp = false;
                     }
@@ -478,10 +478,14 @@ client.on("message", async message => {
             message.channel.send("Are you so pathetic that you have to play with yourself?");
             return;
         }
+        console.log("Before user sets");
         var firstUser = message.guild.members.get(firstID).user;
         var secondUser = message.guild.members.get(secondID).user;
+        console.log("Before first send");
         message.channel.send("Awaiting ban from " + firstUser.username);
+        console.log("After first send");
         firstUser.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+        console.log("After DM");
         const ban1 = await firstUser.dmChannel.awaitMessages(msg => {
             return msg.content === "1" || msg.content === "2" || msg.content === "3";
         }, {maxMatches: 1});
