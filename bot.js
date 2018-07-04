@@ -469,7 +469,7 @@ client.on("message", async message => {
         var lastClose = cont.lastIndexOf(">");
         console.log(cont);
         if(firstAt === lastAt) {
-            message.channel.send("The correct format is +scrim @A @B. Don't waste my time with your mistakes.");
+            message.channel.send("The correct format is +scrim; @A @B. Don't waste my time with your mistakes.");
             return;
         }
         var firstID = cont.substring(firstAt + 1, firstClose);
@@ -486,13 +486,13 @@ client.on("message", async message => {
         console.log("After first send");
         firstUser.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
         console.log("After DM");
-        const ban1 = await firstUser.dmChannel.awaitMessages(msg => {
-            return msg.content === "1" || msg.content === "2" || msg.content === "3";
+        const ban1 = await firstUser.dmChannel.awaitMessages(message => {
+            return message.content === "1" || message.content === "2" || message.content === "3";
         }, {maxMatches: 1});
         message.channel.send(firstUser.username + " has sent in their band! Now awaiting ban from " + secondUser.username);
         secondUser.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
-        const ban2 = await secondUser.dmChannel.awaitMessages(msg => {
-            return msg.content === "1" || msg.content === "2" || msg.content === "3";
+        const ban2 = await secondUser.dmChannel.awaitMessages(message => {
+            return message.content === "1" || message.content === "2" || message.content === "3";
         }, {maxMatches: 1});
         message.channel.send(firstUser + " chickened out and banned deck " + ban1 + "\n" + secondUser + " is a wuss and banned deck " + ban2);
         return;
