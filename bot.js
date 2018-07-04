@@ -502,7 +502,7 @@ client.on("message", async message => {
         }, {maxMatches: 1});
         message.channel.send(firstUser.username + " has sent in their band! Now awaiting ban from " + secondUser.username);
         secondUser.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
-        console.log(
+      
         const ban2 = await dm2.awaitMessages(msg => {
             return msg.content === "1" || msg.content === "2" || msg.content === "3";
         }, {maxMatches: 1});
