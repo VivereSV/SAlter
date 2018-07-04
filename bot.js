@@ -179,7 +179,7 @@ client.on("message", async message => {
     //console.log("Last checked: " + lastChecked);
     //console.log("Now: " + t);
     if(t >= lastChecked + 30000) {
-        console.log("wasUp Start: " + wasUp);
+        //console.log("wasUp Start: " + wasUp);
         var sTitle = "";
         twitch.getUser("teamdawnbreakers")
             .then(data => {
@@ -204,6 +204,10 @@ client.on("message", async message => {
     }
     
     if(message.channel.type == "dm") {
+        console.log("This channel: " + message.channel);
+        console.log("DM channel: " + message.author.dmChannel);
+        console.log("This ID: " + message.channel.id);
+        console.log("DM ID: " + message.author.dmChannel.id);
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'Clash of the Crusaders Deck Database',
