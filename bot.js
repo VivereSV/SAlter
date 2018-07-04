@@ -491,30 +491,28 @@ client.on("message", async message => {
         message.channel.send("Awaiting ban from " + firstUser.username);
 
         firstUser.createDM().then((dm1) => {
-            console.log(dm1);
+            console.log("FIRST\n" + dm1);
             async(dm1) => {
-              console.log(dm1);
+              console.log("SECOND\n" + dm1);
               dm1.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
               ban1 = await dm1.awaitMessages(msg => {
                   return msg.content === "1" || msg.content === "2" || msg.content === "3";
               }, {maxMatches: 1});
-            }
+              message.channel.send(firstUser.username + " has sent in their band! Now awaiting ban from " + secondUser.username);
+              secondUser.createDM().then((dm2) => {
+                console.log("THIRD\n" + dm2);
+                async(dm2) => {
+                  console.log("FOURTH\n" + dm2);
+                  dm2.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+                  ban2 = await dm2.awaitMessages(msg => {
+                      return msg.content === "1" || msg.content === "2" || msg.content === "3";
+                  }, {maxMatches: 1});
+                  message.channel.send(firstUser + " chickened out and banned deck " + ban1 + "\n" + secondUser + " is a wuss and banned deck " + ban2);
+                }
+              })
+           }
         })
         
-        message.channel.send(firstUser.username + " has sent in their band! Now awaiting ban from " + secondUser.username);
-        
-        secondUser.createDM().then((dm2) => {
-            console.log(dm2);
-            async(dm2) => {
-              console.log(dm2);
-              dm2.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
-              ban2 = await dm2.awaitMessages(msg => {
-                  return msg.content === "1" || msg.content === "2" || msg.content === "3";
-              }, {maxMatches: 1});
-            }
-        })
-        
-        message.channel.send(firstUser + " chickened out and banned deck " + ban1 + "\n" + secondUser + " is a wuss and banned deck " + ban2);
         return;
     }
     
