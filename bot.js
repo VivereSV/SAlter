@@ -481,6 +481,14 @@ client.on("message", async message => {
         
         var firstUser = message.guild.members.get(firstID).user;
         var secondUser = message.guild.members.get(secondID).user;
+      
+        if(firstUser.dmChannel === null) {
+          firstUser.createDM(); 
+        }
+      
+        if(secondUser.dmChannel === null) {
+          secondUser.createDM(); 
+        }
         
         message.channel.send("Awaiting ban from " + firstUser.username);
         
