@@ -495,13 +495,15 @@ client.on("message", async message => {
             dm1.awaitMessages(msg => {
                 return msg.content === "1" || msg.content === "2" || msg.content === "3";
             }, {maxMatches: 1}).then((ban1) => {
+                var b1 = ban1.map(msg => msg.content);
                 message.channel.send(firstUser.username + " has sent in their ban! Now awaiting ban from " + secondUser.username);
                 secondUser.createDM().then((dm2) => {
                     dm2.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
                     dm2.awaitMessages(msg => {
                         return msg.content === "1" || msg.content === "2" || msg.content === "3";
                     }, {maxMatches: 1}).then((ban2) => {
-                        message.channel.send(firstUser + " chickened out and banned deck " + ban1 + "\n" + secondUser + " is a wuss and banned deck " + ban2);
+                        var b2 = ban2.map(msg => msg.content);
+                        message.channel.send(firstUser + " chickened out and banned deck " + b1 + "\n" + secondUser + " is a wuss and banned deck " + b2);
                     })
                 })
             })
