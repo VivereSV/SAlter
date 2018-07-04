@@ -492,7 +492,7 @@ client.on("message", async message => {
 
         firstUser.createDM().then((dm1) => {
             dm1.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
-            ban1 = await dm1.awaitMessages(msg => {
+            ban1 = dm1.awaitMessages(msg => {
                 return msg.content === "1" || msg.content === "2" || msg.content === "3";
             }, {maxMatches: 1});
         })
@@ -501,7 +501,7 @@ client.on("message", async message => {
         
         secondUser.createDM().then((dm2) => {
             dm2.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
-            ban2 = await dm2.awaitMessages(msg => {
+            ban2 = dm2.awaitMessages(msg => {
                 return msg.content === "1" || msg.content === "2" || msg.content === "3";
             }, {maxMatches: 1});
         })
