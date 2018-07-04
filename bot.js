@@ -487,8 +487,6 @@ client.on("message", async message => {
         var secondUser = message.guild.members.get(secondID).user;
         var ban1 = "";
         var ban2 = "";
-        var no1 = true;
-        var no2 = true;
 
         message.channel.send("Awaiting ban from " + firstUser.username);
 
@@ -496,14 +494,8 @@ client.on("message", async message => {
             dm1.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
             ban1 = dm1.awaitMessages(msg => {
                 return msg.content === "1" || msg.content === "2" || msg.content === "3";
-            }, {maxMatches: 1}).then((a) => {no1 = false});
+            }, {maxMatches: 1});
         })
-      
-        console.log("before loop");
-        while(no1) {
-          
-        }
-        console.log("after loop");
         
         message.channel.send(firstUser.username + " has sent in their band! Now awaiting ban from " + secondUser.username);
         
