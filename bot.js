@@ -274,7 +274,7 @@ client.on("message", async message => {
     if (message.content.indexOf(process.env.prefix) !== 0) return;
 
     //bot_and_salt only
-    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general" && message.channel.name != "granblue_discussion" && message.channel.name != "public_scrim") return;
+    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general" && message.channel.name != "granblue_discussion" && message.channel.name != "public_scrim" && message.channel.name != "internal_scrim") return;
 
     // Here we separate our "command" name, and our "arguments" for the command. 
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
@@ -458,6 +458,39 @@ client.on("message", async message => {
             "+unmap;mapFrom;mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck.\n" +
             "+hi: greet SAlter";
         message.channel.send(helpful);
+        return;
+    }
+  
+    if (command === "scrim") {
+        var cont = message.content.replace(/@!/g, "@");
+        var firstAt = cont.indexOf("@");
+        var firstClose = cont.indexOf(">");
+        var lastAt = cont.lastIndexOf("@");
+        var lastClose = cont.lastIndexOf(">");
+        console.log(cont);
+        if(firstAt === lastAt) {
+            message.channel.send("The correct format is +scrim @A @B. Don't waste my time with your mistakes.");
+            return;
+        }
+        var firstID = cont.substring(firstAt + 1, firstClose);
+        var secondID = cont.substring(lastAt + 1, lastClose);
+        if(firstID === secondID) {
+            message.channel.send("Are you so pathetic that you have to play with yourself?");
+            return;
+        }
+        var firstUser = message.guild.members.get(firstID).user;
+        var secondUser = message.guild.members.get(secondID).user;
+        message.channel.send("Awaiting ban from " + firstUser.username);
+        firstUser.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+        const ban1 = await firstUser.dmChannel.awaitMessages(msg => {
+            return msg.content === "1" || msg.content === "2" || msg.content === "3";
+        }, {maxMatches: 1});
+        message.channel.send(firstUser.username + " has sent in their band! Now awaiting ban from " + secondUser.username);
+        secondUser.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+        const ban2 = await secondUser.dmChannel.awaitMessages(msg => {
+            return msg.content === "1" || msg.content === "2" || msg.content === "3";
+        }, {maxMatches: 1});
+        message.channel.send(firstUser + " chickened out and banned deck " + ban1 + "\n" + secondUser + " is a wuss and banned deck " + ban2);
         return;
     }
     
