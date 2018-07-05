@@ -220,7 +220,7 @@ client.on("message", async message => {
             }
             Spreadsheet.load({
                 debug: true,
-                spreadSheetName: 'SAlter',
+                spreadsheetName: 'SAlter',
                 worksheetName: 'Lineup',
                 oauth2: {
                     client_id: process.env.client_id,
