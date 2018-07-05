@@ -292,21 +292,25 @@ client.on("message", async message => {
     // Let's go with a few common example commands! Feel free to delete or change those.
   
     if (command === "helpme") {
-      const hm = "+fiteme: add yourself to the list of people looking for scrims\n +lfs: check which people are currently looking for a scrim\n +run: take yourself off the scrim list";
+      const hm = "Please type /help for further instructions on how to use the multiserver scrim bot. Thanks!";
       message.channel.send(hm);
     }
 
     if (command === "fiteme") {
-      if(scrims.indexOf(message.author) !== -1) {
+      const hm = "Please type /help for further instructions on how to use the multiserver scrim bot. Thanks!";
+      message.channel.send(hm);
+      /*if(scrims.indexOf(message.author) !== -1) {
         message.channel.send("Ugh, stop bothering me. You're already on the list.");
         return;
       }
       scrims.push(message.author);
-      message.channel.send(message.author.username + " is currently looking for a scrim!");
+      message.channel.send(message.author.username + " is currently looking for a scrim!");*/
     }
   
     if (command === "lfs") {
-      for(var i = scrims.length - 1; i >= 0; i--) {
+      const hm = "Please type /help for further instructions on how to use the multiserver scrim bot. Thanks!";
+      message.channel.send(hm);
+      /*for(var i = scrims.length - 1; i >= 0; i--) {
         if(scrims[i].presence.status === "offline") {
           scrims.splice(i, 1); 
         }
@@ -322,11 +326,13 @@ client.on("message", async message => {
         }
         sm += scrims[scrims.length - 1].username + ".";
         message.channel.send(sm + " Go bother one of them.");
-      }
+      }*/
     }
   
     if (command === "run") {
-      if(scrims.indexOf(message.author) === -1) {
+      const hm = "Please type /help for further instructions on how to use the multiserver scrim bot. Thanks!";
+      message.channel.send(hm);
+      /*if(scrims.indexOf(message.author) === -1) {
         message.channel.send("It's not like you were even looking for a scrim...");
         return;
       }
@@ -334,7 +340,7 @@ client.on("message", async message => {
         scrims.splice(scrims.indexOf(message.author), 1);
         message.channel.send("Let me know when you're ready to scrim again.");
         return;
-      }
+      }*/
     }
   
     if (command === "advice") {
