@@ -204,10 +204,57 @@ client.on("message", async message => {
     }
     
     if(message.channel.type == "dm") {
-        console.log("This channel: " + message.channel);
-        console.log("DM channel: " + message.author.dmChannel);
-        console.log("This ID: " + message.channel.id);
-        console.log("DM ID: " + message.author.dmChannel.id);
+        if(message.content.startsWith("set")) {
+            const cmd = message.content.split(/ /g);
+            console.log(cmd);
+            var opt = ["1", "2", "3"];
+            if(opt.indexOf(cmd[1]) === -1) {
+                message.author.send("Is it really that hard to send something in the correct format of: set [1/2/3] [decklink]?");
+                return;
+            }
+            var col = Number(cmd[1]);
+            var link = cmd[2];
+            if(link.indexOf(".com") === -1) {
+                message.author.send("That doesn't look like a deck link to me. If it is, message VLV with a screenshot of this unpleasant interaction.");
+                return;
+            }
+            Spreadsheet.load({
+                debug: true,
+                spreadSheetName: 'SAlter',
+                worksheetName: 'Lineup',
+                oauth2: {
+                    client_id: process.env.client_id,
+                    client_secret: process.env.client_secret,
+                    refresh_token: process.env.refresh_token
+                }
+            },
+                function sheetReady(err, spreadsheet) {
+                    if (err) throw err;
+                    spreadsheet.receive({getValues: true}, function (err, rows, info) {
+                        if (err) throw err;
+                        var loc = -1;
+                        numRows = Object.keys(rows).length;
+                        for(var i = 1; i <= numRows; i++) {
+                            if(rows[i][1] == message.author.id) {
+                                loc = i;
+                            }
+                        }
+                        if(loc === -1) {
+                            spreadsheet.add({ [numRows + 1]: { 1: message.author.id } });
+                            loc = numRows + 1;
+                        }
+                        spreadsheet.add({ [loc]: { [col + 1]: link } });
+                        if (err) throw err;
+
+
+                        spreadsheet.send({ autoSize: true }, function (err) {
+                            if (err) throw err;
+                            message.channel.send("Deck " + col + " has been updated to " + link + ". Now can you stop bothering me?");
+                        });
+                    });
+            });
+            return;
+        }
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'Clash of the Crusaders Deck Database',
