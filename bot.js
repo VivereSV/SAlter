@@ -204,7 +204,7 @@ client.on("message", async message => {
     }
     
     if(message.channel.type == "dm") {
-        if(message.content.startsWith("set")) {
+        if(message.content.toLowerCase().startsWith("set")) {
             const cmd = message.content.split(/ /g);
             console.log(cmd);
             var opt = ["1", "2", "3"];
@@ -515,6 +515,102 @@ client.on("message", async message => {
             "+unmap;mapFrom;mapTo: unmap mapFrom and mapTo. SAlter will no longer treat them as the same deck.\n" +
             "+hi: greet SAlter";
         message.channel.send(helpful);
+        return;
+    }
+  
+    if (command === "svo") {
+        var cont = message.content.replace(/@!/g, "@");
+        var firstAt = cont.indexOf("@");
+        var firstClose = cont.indexOf(">");
+        var lastAt = cont.lastIndexOf("@");
+        var lastClose = cont.lastIndexOf(">");
+        console.log(cont);
+        if(firstAt === lastAt) {
+            message.channel.send("The correct format is +svo; @A @B. Don't waste my time with your mistakes.");
+            return;
+        }
+        var firstID = cont.substring(firstAt + 1, firstClose);
+        var secondID = cont.substring(lastAt + 1, lastClose);
+        if(firstID === secondID) {
+            message.channel.send("Are you so pathetic that you have to play with yourself?");
+            return;
+        }
+        
+        var firstUser = message.guild.members.get(firstID).user;
+        var secondUser = message.guild.members.get(secondID).user;
+
+        var firstLine = false;
+        var secondLine = false;
+
+        var firstDecks = new Array();
+        var secondDecks = new Array();
+
+        Spreadsheet.load({
+            debug: true,
+            spreadsheetName: 'SAlter',
+            worksheetName: 'Lineup',
+            oauth2: {
+                client_id: process.env.client_id,
+                client_secret: process.env.client_secret,
+                refresh_token: process.env.refresh_token
+            }
+        },
+            function sheetReady(err, spreadsheet) {
+                if (err) throw err;
+                spreadsheet.receive({getValues: true}, function (err, rows, info) {
+                    if (err) throw err;
+                    var numRows = Object.keys(rows).length;
+                    for(var i = 1; i <= numRows; i++) {
+                        if(rows[i][1] === firstUser.id) {
+                            firstLine = true;
+                            firstDecks.push(rows[i][2]);
+                            firstDecks.push(rows[i][3]);
+                            firstDecks.push(rows[i][4]);
+                        }
+                        if(rows[i][2] === secondUser.id) {
+                            secondLine = true;
+                            secondDecks.push(rows[i][2]);
+                            secondDecks.push(rows[i][3]);
+                            secondDecks.push(rows[i][4]);
+                        }
+                    }
+                });
+        });
+        var eMessage = "";
+        if(!firstLine) {
+            eMessage += "Not sure why " + firstUser + " doesn't have a lineup.\n";
+        }
+        if(!secondLine) {
+            eMessage += "Not sure why " + secondUser + " doesn't have a lineup.";
+        }
+        if(!firstLine || !secondLine) {
+            message.channel.send(eMessage);
+            return;
+        }
+        message.channel.send("Awaiting ban from " + firstUser);
+
+        firstUser.createDM().then((dm1) => {
+            dm1.send("Deck 1: " + secondDecks[0] + "\nDeck 2: " + secondDecks[1] + "\nDeck 3: " + secondDecks[2]);
+            dm1.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+            dm1.awaitMessages(msg => {
+                return msg.content === "1" || msg.content === "2" || msg.content === "3";
+            }, {maxMatches: 1}).then((ban1) => {
+                var b1 = ban1.map(msg => msg.content);
+                message.channel.send(firstUser + " has sent in their ban! Now awaiting ban from " + secondUser);
+                secondUser.createDM().then((dm2) => {
+                    dm2.send("Deck 1: " + firstDecks[0] + "\nDeck 2: " + firstDecks[1] + "\nDeck 3: " + firstDecks[2]);
+                    dm2.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+                    dm2.awaitMessages(msg => {
+                        return msg.content === "1" || msg.content === "2" || msg.content === "3";
+                    }, {maxMatches: 1}).then((ban2) => {
+                        var b2 = ban2.map(msg => msg.content);
+                        var b1t = Number(b1) - 1;
+                        var b2t = Number(b2) - 1;
+                        message.channel.send(firstUser + " chickened out and banned deck " + b1 + ": " + secondDecks[b1t] + "\n" + secondUser + " is a wuss and banned deck " + b2 + ": " + firstDecks[b2t]);
+                    })
+                })
+            })
+        })
         return;
     }
   
