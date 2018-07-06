@@ -579,11 +579,21 @@ client.on("message", async message => {
                         }
                     }
                     var eMessage = "";
+                    if(firstLine) {
+                      if(firstDecks.indexOf(undefined) != -1) {
+                        firstLine = false; 
+                      }
+                    }
+                    if(secondLine) {
+                       if(secondDecks.indexOf(undefined) != -1) {
+                          secondLine = false; 
+                       }
+                    }
                     if(!firstLine) {
-                        eMessage += "Not sure why " + firstUser + " doesn't have a lineup.\n";
+                        eMessage += "Not sure why " + firstUser + " doesn't have a complete lineup.\n";
                     }
                     if(!secondLine) {
-                        eMessage += "Not sure why " + secondUser + " doesn't have a lineup.";
+                        eMessage += "Not sure why " + secondUser + " doesn't have a complete lineup.";
                     }
                     if(!firstLine || !secondLine) {
                         message.channel.send(eMessage);
