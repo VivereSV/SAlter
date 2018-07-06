@@ -255,69 +255,74 @@ client.on("message", async message => {
             });
             return;
         }
-        Spreadsheet.load({
-            debug: true,
-            spreadsheetName: 'Clash of the Crusaders Deck Database',
-            worksheetName: 'Invitational 1',
-            oauth2: {
-                client_id: process.env.client_id,
-                client_secret: process.env.client_secret,
-                refresh_token: process.env.refresh_token
-            }
-        },
-            function sheetReady(err, spreadsheet) {
-                if (err) throw err;
-                spreadsheet.receive({ getValues: true }, function (err, rows, info) {
-                    if (err) throw err;
-                    
-                    if(message.content.indexOf(".com") === -1) {
-                        message.channel.send("That doesn't look like a deck link to me. If it is, please message a moderator to submit your decks.");
-                        return;
-                    }
-                    
-                    var person = message.author.username;
-                    var col = 2;
-                    var found = false;
-                    var numRows = Object.keys(rows).length;
-                    var HLStart = "=HYPERLINK(\"";
-                    var HLMid = "\", \"Deck ";
-                    var HLEnd = "\")";
-                    for(var i = 2; i <= numRows; i++) {
-                        console.log(rows[i][1]);
-                        if(rows[i][1] == person) {
-                            found = true;
-                            col = Object.keys(rows[i]).length + 1;
-                            if(col > 4) {
-                                message.channel.send("You have already submitted 3 decks. If an error occurred or you would like to edit one, please message a moderator.");
-                            }
-                            else {
-                                var dList = HLStart + message.content + HLMid + (col - 1) + HLEnd;
-                                spreadsheet.add({ [i]: { [col]: dList } });
-                            }
-                        }
-                    }
-                    if(!found) {
-                        spreadsheet.add({ [numRows + 1]: { [1]: person } });
-                        var dList = HLStart + message.content + HLMid + (col - 1) + HLEnd;
-                        spreadsheet.add({ [numRows + 1]: { [2]: dList } });
-                    }
-                    
-                    
+        else if (message.content === "1" || message.content === "2" || message.content === "3") {
+          
+        }
+        else {
+          Spreadsheet.load({
+              debug: true,
+              spreadsheetName: 'Clash of the Crusaders Deck Database',
+              worksheetName: 'Invitational 1',
+              oauth2: {
+                  client_id: process.env.client_id,
+                  client_secret: process.env.client_secret,
+                  refresh_token: process.env.refresh_token
+              }
+          },
+              function sheetReady(err, spreadsheet) {
+                  if (err) throw err;
+                  spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                      if (err) throw err;
 
-                    if (err) throw err;
+                      if(message.content.indexOf(".com") === -1) {
+                          message.channel.send("That doesn't look like a deck link to me. If it is, please message a moderator to submit your decks.");
+                          return;
+                      }
+
+                      var person = message.author.username;
+                      var col = 2;
+                      var found = false;
+                      var numRows = Object.keys(rows).length;
+                      var HLStart = "=HYPERLINK(\"";
+                      var HLMid = "\", \"Deck ";
+                      var HLEnd = "\")";
+                      for(var i = 2; i <= numRows; i++) {
+                          console.log(rows[i][1]);
+                          if(rows[i][1] == person) {
+                              found = true;
+                              col = Object.keys(rows[i]).length + 1;
+                              if(col > 4) {
+                                  message.channel.send("You have already submitted 3 decks. If an error occurred or you would like to edit one, please message a moderator.");
+                              }
+                              else {
+                                  var dList = HLStart + message.content + HLMid + (col - 1) + HLEnd;
+                                  spreadsheet.add({ [i]: { [col]: dList } });
+                              }
+                          }
+                      }
+                      if(!found) {
+                          spreadsheet.add({ [numRows + 1]: { [1]: person } });
+                          var dList = HLStart + message.content + HLMid + (col - 1) + HLEnd;
+                          spreadsheet.add({ [numRows + 1]: { [2]: dList } });
+                      }
 
 
-                    spreadsheet.send({ autoSize: true }, function (err) {
-                        if (err) throw err;
-                        if(col <= 4) {
-                            message.channel.send("Deck " + (col - 1) + " has been submitted!");
-                        }
-                        if(col === 4) {
-                            message.channel.send("All 3 decks have been submitted! If you would like to make any changes or an error occurred, please message a moderator.");
-                        }
-                    });
-                });
-            });
+
+                      if (err) throw err;
+
+
+                      spreadsheet.send({ autoSize: true }, function (err) {
+                          if (err) throw err;
+                          if(col <= 4) {
+                              message.channel.send("Deck " + (col - 1) + " has been submitted!");
+                          }
+                          if(col === 4) {
+                              message.channel.send("All 3 decks have been submitted! If you would like to make any changes or an error occurred, please message a moderator.");
+                          }
+                      });
+                  });
+              });
+        }
     }
 
     // Also good practice to ignore any message that does not start with our prefix, 
