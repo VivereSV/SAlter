@@ -539,12 +539,6 @@ client.on("message", async message => {
         var firstUser = message.guild.members.get(firstID).user;
         var secondUser = message.guild.members.get(secondID).user;
 
-        var firstLine = false;
-        var secondLine = false;
-
-        var firstDecks = new Array();
-        var secondDecks = new Array();
-
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'SAlter',
@@ -560,14 +554,19 @@ client.on("message", async message => {
                 spreadsheet.receive({getValues: true}, function (err, rows, info) {
                     if (err) throw err;
                     var numRows = Object.keys(rows).length;
+                    var firstLine = false;
+                    var secondLine = false;
+                    var firstDecks = new Array();
+                    var secondDecks = new Array();
                     for(var i = 1; i <= numRows; i++) {
-                        if(rows[i][1] === firstUser.id) {
+                        console.log(rows[i][1]);
+                        if(rows[i][1] == firstUser.id) {
                             firstLine = true;
                             firstDecks.push(rows[i][2]);
                             firstDecks.push(rows[i][3]);
                             firstDecks.push(rows[i][4]);
                         }
-                        if(rows[i][2] === secondUser.id) {
+                        if(rows[i][1] == secondUser.id) {
                             secondLine = true;
                             secondDecks.push(rows[i][2]);
                             secondDecks.push(rows[i][3]);
