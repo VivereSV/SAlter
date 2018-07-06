@@ -574,44 +574,44 @@ client.on("message", async message => {
                             secondDecks.push(rows[i][4]);
                         }
                     }
+                    var eMessage = "";
+                    if(!firstLine) {
+                        eMessage += "Not sure why " + firstUser + " doesn't have a lineup.\n";
+                    }
+                    if(!secondLine) {
+                        eMessage += "Not sure why " + secondUser + " doesn't have a lineup.";
+                    }
+                    if(!firstLine || !secondLine) {
+                        message.channel.send(eMessage);
+                        return;
+                    }
+                    message.channel.send("Awaiting ban from " + firstUser);
+
+                    firstUser.createDM().then((dm1) => {
+                        dm1.send("Deck 1: " + secondDecks[0] + "\nDeck 2: " + secondDecks[1] + "\nDeck 3: " + secondDecks[2]);
+                        dm1.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+                        dm1.awaitMessages(msg => {
+                            return msg.content === "1" || msg.content === "2" || msg.content === "3";
+                        }, {maxMatches: 1}).then((ban1) => {
+                            var b1 = ban1.map(msg => msg.content);
+                            message.channel.send(firstUser + " has sent in their ban! Now awaiting ban from " + secondUser);
+                            secondUser.createDM().then((dm2) => {
+                                dm2.send("Deck 1: " + firstDecks[0] + "\nDeck 2: " + firstDecks[1] + "\nDeck 3: " + firstDecks[2]);
+                                dm2.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+                                dm2.awaitMessages(msg => {
+                                    return msg.content === "1" || msg.content === "2" || msg.content === "3";
+                                }, {maxMatches: 1}).then((ban2) => {
+                                    var b2 = ban2.map(msg => msg.content);
+                                    var b1t = Number(b1) - 1;
+                                    var b2t = Number(b2) - 1;
+                                    message.channel.send(firstUser + " chickened out and banned deck " + b1 + ": " + secondDecks[b1t] + "\n" + secondUser + " is a wuss and banned deck " + b2 + ": " + firstDecks[b2t]);
+                                })
+                          })
+                        })
+                    })
+                    return;
                 });
         });
-        var eMessage = "";
-        if(!firstLine) {
-            eMessage += "Not sure why " + firstUser + " doesn't have a lineup.\n";
-        }
-        if(!secondLine) {
-            eMessage += "Not sure why " + secondUser + " doesn't have a lineup.";
-        }
-        if(!firstLine || !secondLine) {
-            message.channel.send(eMessage);
-            return;
-        }
-        message.channel.send("Awaiting ban from " + firstUser);
-
-        firstUser.createDM().then((dm1) => {
-            dm1.send("Deck 1: " + secondDecks[0] + "\nDeck 2: " + secondDecks[1] + "\nDeck 3: " + secondDecks[2]);
-            dm1.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
-            dm1.awaitMessages(msg => {
-                return msg.content === "1" || msg.content === "2" || msg.content === "3";
-            }, {maxMatches: 1}).then((ban1) => {
-                var b1 = ban1.map(msg => msg.content);
-                message.channel.send(firstUser + " has sent in their ban! Now awaiting ban from " + secondUser);
-                secondUser.createDM().then((dm2) => {
-                    dm2.send("Deck 1: " + firstDecks[0] + "\nDeck 2: " + firstDecks[1] + "\nDeck 3: " + firstDecks[2]);
-                    dm2.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
-                    dm2.awaitMessages(msg => {
-                        return msg.content === "1" || msg.content === "2" || msg.content === "3";
-                    }, {maxMatches: 1}).then((ban2) => {
-                        var b2 = ban2.map(msg => msg.content);
-                        var b1t = Number(b1) - 1;
-                        var b2t = Number(b2) - 1;
-                        message.channel.send(firstUser + " chickened out and banned deck " + b1 + ": " + secondDecks[b1t] + "\n" + secondUser + " is a wuss and banned deck " + b2 + ": " + firstDecks[b2t]);
-                    })
-                })
-            })
-        })
-        return;
     }
   
     if (command === "scrim") {
