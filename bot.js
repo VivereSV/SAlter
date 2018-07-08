@@ -246,9 +246,9 @@ client.on("message", async message => {
                         spreadsheet.add({ [loc]: { [col + 1]: link } });
                         if (err) throw err;
                         var decks = ["", "", ""]
-                        decks[0] = rows[loc][1]
-                        decks[1] = rows[loc][2]
-                        decks[2] = rows[loc][3]
+                        decks[0] = rows[loc][2]
+                        decks[1] = rows[loc][3]
+                        decks[2] = rows[loc][4]
                         decks[col - 1] = link;
 
                         spreadsheet.send({ autoSize: true }, function (err) {
