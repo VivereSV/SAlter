@@ -239,18 +239,26 @@ client.on("message", async message => {
                                 loc = i;
                             }
                         }
+                        var decks = ["", "", ""]
                         if(loc === -1) {
                             spreadsheet.add({ [numRows + 1]: { 1: message.author.id } });
                             loc = numRows + 1;
+                            spreadsheet.add({ [numRows + 1]: { 2: "N/A" } });
+                            spreadsheet.add({ [numRows + 1]: { 3: "N/A" } });
+                            spreadsheet.add({ [numRows + 1]: { 4: "N/A" } });
+                            decks[0] = "N/A";
+                            decks[1] = "N/A";
+                            decks[2] = "N/A";
                         }
+                        else {
+                            decks[0] = rows[loc][2];
+                            decks[1] = rows[loc][3];
+                            decks[2] = rows[loc][4];
+                        }
+                        decks[col - 1] = link;
                         spreadsheet.add({ [loc]: { [col + 1]: link } });
                         if (err) throw err;
-                        var decks = ["", "", ""]
-                        decks[0] = rows[loc][2]
-                        decks[1] = rows[loc][3]
-                        decks[2] = rows[loc][4]
-                        decks[col - 1] = link;
-
+                     
                         spreadsheet.send({ autoSize: true }, function (err) {
                             if (err) throw err;
                     
