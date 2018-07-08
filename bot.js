@@ -609,13 +609,15 @@ client.on("message", async message => {
                     firstUser.createDM().then((dm1) => {
                         dm1.send("Deck 1: " + secondDecks[0] + "\nDeck 2: " + secondDecks[1] + "\nDeck 3: " + secondDecks[2]);
                         dm1.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
+                        secondUser.send("Deck 1: " + firstDecks[0] + "\nDeck 2: " + firstDecks[1] + "\nDeck 3: " + firstDecks[2]);
+                        secondUser.send("Please be patient, I will inform you when it is your turn to ban");
                         dm1.awaitMessages(msg => {
                             return msg.content === "1" || msg.content === "2" || msg.content === "3";
                         }, {maxMatches: 1}).then((ban1) => {
                             var b1 = ban1.map(msg => msg.content);
                             message.channel.send(firstUser + " has sent in their ban! Now awaiting ban from " + secondUser);
                             secondUser.createDM().then((dm2) => {
-                                dm2.send("Deck 1: " + firstDecks[0] + "\nDeck 2: " + firstDecks[1] + "\nDeck 3: " + firstDecks[2]);
+                                //dm2.send("Deck 1: " + firstDecks[0] + "\nDeck 2: " + firstDecks[1] + "\nDeck 3: " + firstDecks[2]);
                                 dm2.send("Please enter 1, 2, or 3 depending on which deck you wish to ban");
                                 dm2.awaitMessages(msg => {
                                     return msg.content === "1" || msg.content === "2" || msg.content === "3";
