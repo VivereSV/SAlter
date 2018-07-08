@@ -245,11 +245,16 @@ client.on("message", async message => {
                         }
                         spreadsheet.add({ [loc]: { [col + 1]: link } });
                         if (err) throw err;
-
+                        var decks = ["", "", ""]
+                        decks[0] = rows[loc][1]
+                        decks[1] = rows[loc][2]
+                        decks[2] = rows[loc][3]
+                        decks[col - 1] = link;
 
                         spreadsheet.send({ autoSize: true }, function (err) {
                             if (err) throw err;
-                            message.channel.send("Deck " + col + " has been updated to " + link + ". Now can you stop bothering me?");
+                    
+                            message.channel.send("Deck 1 is: " + decks[0] + "\nDeck 2 is: " + decks[1] + "\nDeck 3 is: " + decks[2] + "\nNow can you stop bothering me?");
                         });
                     });
             });
