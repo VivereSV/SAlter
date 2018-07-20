@@ -380,7 +380,7 @@ client.on("message", async message => {
 
                         spreadsheet.send({ autoSize: true }, function (err) {
                             if (err) throw err;
-                            message.channel.reply(" your data has been submitted! Thank you!");
+                            message.reply(" your data has been submitted! Thank you!");
                         });
                     });
             });
