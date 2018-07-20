@@ -21,6 +21,7 @@ const twitch = new Twitch({
 var lastChecked;
 var wasUp;
 var scrims = new Array();
+var datasheet = "Data Week 1"
 
 var mappedItems = {
 
@@ -343,7 +344,7 @@ client.on("message", async message => {
     if (message.content.indexOf(process.env.prefix) !== 0) return;
 
     //bot_and_salt only
-    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general" && message.channel.name != "granblue_discussion" && message.channel.name != "public_scrim" && message.channel.name != "internal_scrim") return;
+    
 
     // Here we separate our "command" name, and our "arguments" for the command. 
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
@@ -353,6 +354,40 @@ client.on("message", async message => {
     const command = args.shift().toLowerCase();
     console.log(command);
     console.log(args);
+  
+    if (message.channel.name === "data_log") {
+        if (command === "data") {
+            Spreadsheet.load({
+                debug: true,
+                spreadsheetName: 'SAlter',
+                worksheetName: datasheet,
+                oauth2: {
+                    client_id: process.env.client_id,
+                    client_secret: process.env.client_secret,
+                    refresh_token: process.env.refresh_token
+                }
+            },
+                function sheetReady(err, spreadsheet) {
+                    if (err) throw err;
+                    spreadsheet.receive({getValues: true}, function (err, rows, info) {
+                        if (err) throw err;
+                        numRows = Object.keys(rows).length;
+                        writeRow = numRows + 1;
+                        spreadsheet.add({ [writeRow]: { [1]: message.author.id } });
+                        spreadsheet.add({ [writeRow]: { [2]: args } });
+                        if (err) throw err;
+
+
+                        spreadsheet.send({ autoSize: true }, function (err) {
+                            if (err) throw err;
+                            message.channel.reply(" your data has been submitted! Thank you!");
+                        });
+                    });
+            });
+        }
+    }
+  
+    if (message.channel.name != "salt_and_salter" && message.channel.name != "team_chat" && message.channel.name != "general" && message.channel.name != "granblue_discussion" && message.channel.name != "public_scrim" && message.channel.name != "internal_scrim") return;
 
     // Let's go with a few common example commands! Feel free to delete or change those.
   
