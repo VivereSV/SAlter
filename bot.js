@@ -206,6 +206,10 @@ client.on("message", async message => {
     
     if(message.channel.type == "dm") {
         if(message.content.toLowerCase().startsWith("set")) {
+            var wsheet = 'Lineup'
+            if(message.content.toLowerCase().startsWith("setu")) {
+                wsheet = 'Unlimited'
+            }
             const cmd = message.content.split(/ /g);
             console.log(cmd);
             var opt = ["1", "2", "3"];
@@ -222,7 +226,7 @@ client.on("message", async message => {
             Spreadsheet.load({
                 debug: true,
                 spreadsheetName: 'SAlter',
-                worksheetName: 'Lineup',
+                worksheetName: wsheet,
                 oauth2: {
                     client_id: process.env.client_id,
                     client_secret: process.env.client_secret,
@@ -571,7 +575,11 @@ client.on("message", async message => {
         return;
     }
   
-    if (command === "svo") {
+    if (command === "svo" || command === "svou") {
+        var wsheet = 'Lineup'
+        if (command === "svou") {
+            wsheet = 'Unlimited'
+        }
         var cont = message.content.replace(/@!/g, "@");
         var firstAt = cont.indexOf("@");
         var firstClose = cont.indexOf(">");
@@ -595,7 +603,7 @@ client.on("message", async message => {
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'SAlter',
-            worksheetName: 'Lineup',
+            worksheetName: wsheet,
             oauth2: {
                 client_id: process.env.client_id,
                 client_secret: process.env.client_secret,
