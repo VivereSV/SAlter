@@ -280,7 +280,7 @@ client.on("message", async message => {
           Spreadsheet.load({
               debug: true,
               spreadsheetName: 'Clash of the Crusaders Deck Database',
-              worksheetName: 'Invitational 1',
+              worksheetName: 'HoH',
               oauth2: {
                   client_id: process.env.client_id,
                   client_secret: process.env.client_secret,
