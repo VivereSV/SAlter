@@ -564,6 +564,35 @@ client.on("message", async message => {
 
     if (message.channel.name === "general" || message.channel.name === "granblue_discussion" || message.channel.name === "public_scrim") return;
 
+    if (command === "ready") {
+        Spreadsheet.load({
+            debug: true,
+            spreadsheetName: 'Clash of the Crusaders Deck Database',
+            worksheetName: args[0],
+            oauth2: {
+                client_id: process.env.client_id,
+                client_secret: process.env.client_secret,
+                refresh_token: process.env.refresh_token
+            }
+        },
+            function sheetReady(err, spreadsheet) {
+                if (err) throw err;
+                spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                    if (err) throw err;
+                    if(rows[0][0] == undefined) {
+                        spreadsheet.add({ 1: { 1: message.author.id}});
+                    }
+                    else {
+                        spreadsheet.add({ 1: { 2: message.author.id}});
+                    }
+                    spreadsheet.send({ autoSize: true }, function (err) {
+                        if (err) throw err;
+                        message.channel.send(message.author.username + " is now a team captain for match " + args[0]);
+                    });
+                });
+            });
+    }
+    
     if (command === "help") {
         const helpful = "+format: get the required format for a log\n" +
             "+log: log a match in the database. Please provide proper parameters\n" +
