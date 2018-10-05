@@ -203,8 +203,88 @@ client.on("message", async message => {
             console.error(error);
         });
     }
+
+    // Also good practice to ignore any message that does not start with our prefix, 
+    // which is set in the configuration file.
+    if (message.content.indexOf(process.env.prefix) !== 0) return;
+
+    //bot_and_salt only
+    
+
+    // Here we separate our "command" name, and our "arguments" for the command. 
+    // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
+    // command = say
+    // args = ["Is", "this", "the", "real", "life?"]
+    const args = message.content.slice(process.env.prefix.length).trim().split(/\;/g);
+    const command = args.shift().toLowerCase();
+    console.log(command);
+    console.log(args);
     
     if(message.channel.type == "dm") {
+        if(message.content.toLowerCase().startsWith("send")) {
+            Spreadsheet.load({
+                debug: true,
+                spreadsheetName: 'SVWL',
+                worksheetName: args[0],
+                oauth2: {
+                    client_id: process.env.client_id,
+                    client_secret: process.env.client_secret,
+                    refresh_token: process.env.refresh_token
+                }
+            },
+                function sheetReady(err, spreadsheet) {
+                    if (err) throw err;
+                    spreadsheet.receive({ getValues: true }, function (err, rows, info) {
+                        if (err) throw err;
+                        var status = rows[1][6];
+                        if(status != "WOKE") {
+                            message.channel.send("The match has not been started yet.");
+                            return;
+                        }
+                        var captain1 = rows[1][1];
+                        var captain2 = rows[1][2];
+                        if(message.author.id != captain1 && message.author.id != captain2) {
+                            message.channel.send("You are not either of the two captains.");
+                            return;
+                        }
+                        var isOne = (message.author.id == captain1);
+                        var members = new Array();
+                        var winners = new Array();
+                        var mCol = 1;
+                        var wCol = 3;
+                        var sCol = 5;
+                        if(!isOne) {
+                            mCol = 2;
+                            wCol = 4;
+                            sCol = 6;
+                        }
+                        for(var i = 2; i <= 9; i++) {
+                            members.push(rows[i][mCol]);
+                        }
+                        for(var i = 1; i <= 8; i++) {
+                            if(rows[i][wCol] != "FILL") {
+                                winners.push(rows[i][wCol]);
+                            }
+                        }
+                        if(winners.indexOf(args[1]) != -1) {
+                            message.channel.send(args[1] + " has already won a game. You may not send them out again.");
+                            return;
+                        }
+                        else if(members.indexOf(args[1]) == -1) {
+                            message.channel.send(args[1] + " is not on your current roster. Your current roster is: " + members.toString());
+                            return;
+                        }
+                        spreadsheet.add({ 2: { [sCol]: args[1] } });
+                        
+                        spreadsheet.send({ autoSize: true }, function (err) {
+                            if (err) throw err;
+                            message.channel.send(args[1] + " is your current representative.");
+                                
+                        });
+                        
+                    });
+                });
+        }
         if(message.content.toLowerCase().startsWith("set")) {
             var wsheet = 'Lineup'
             if(message.content.toLowerCase().startsWith("setu")) {
@@ -343,21 +423,7 @@ client.on("message", async message => {
         }
     }
 
-    // Also good practice to ignore any message that does not start with our prefix, 
-    // which is set in the configuration file.
-    if (message.content.indexOf(process.env.prefix) !== 0) return;
-
-    //bot_and_salt only
     
-
-    // Here we separate our "command" name, and our "arguments" for the command. 
-    // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
-    // command = say
-    // args = ["Is", "this", "the", "real", "life?"]
-    const args = message.content.slice(process.env.prefix.length).trim().split(/\;/g);
-    const command = args.shift().toLowerCase();
-    console.log(command);
-    console.log(args);
   
     if (message.channel.name === "data_log") {
         if (command === "data") {
@@ -587,6 +653,7 @@ client.on("message", async message => {
                     }
                     else if (rows[1][2] == "CAPTAIN"){
                         spreadsheet.add({ 1: { 2: message.author.id}});
+                        spreadsheet.add( { 1: { 6: "WOKE"}});
                         changed = true;
                         g2g = true;
                     }
