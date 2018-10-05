@@ -580,6 +580,7 @@ client.on("message", async message => {
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
                     var changed = false;
+                    var g2g = false;
                     if(rows[1][1] == "CAPTAIN") {
                         spreadsheet.add({ 1: { 1: message.author.id}});
                         changed = true;
@@ -587,14 +588,18 @@ client.on("message", async message => {
                     else if (rows[1][2] == "CAPTAIN"){
                         spreadsheet.add({ 1: { 2: message.author.id}});
                         changed = true;
+                        g2g = true;
                     }
                     else {
-                        message.channel.send("The two captains are: " + rows[1][1] + " and " + rows[1][2] + ".");
+                        message.channel.send("The two captains have already been decided. If this is an error, please contact a staff member");
                     }
                     if(changed) {
                         spreadsheet.send({ autoSize: true }, function (err) {
                             if (err) throw err;
                             message.channel.send(message.author.username + " is now a team captain for match " + args[0]);
+                            if(g2g) {
+                                message.channel.send("@" + rows[1][1] + " @" + rows[1][2] + " the match has now begun!");
+                            }
                         });
                     }
                 });
