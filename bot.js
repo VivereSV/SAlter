@@ -579,16 +579,24 @@ client.on("message", async message => {
                 if (err) throw err;
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
+                    var changed = false;
                     if(rows[1][1] == "CAPTAIN") {
                         spreadsheet.add({ 1: { 1: message.author.id}});
+                        changed = true;
+                    }
+                    else if (rows[1][2] == "CAPTAIN"){
+                        spreadsheet.add({ 1: { 2: message.author.id}});
+                        changed = true;
                     }
                     else {
-                        spreadsheet.add({ 1: { 2: message.author.id}});
+                        message.channel.send("The two captains are: " + rows[1][1] + " and " + rows[1][2] + ".");
                     }
-                    spreadsheet.send({ autoSize: true }, function (err) {
-                        if (err) throw err;
-                        message.channel.send(message.author.username + " is now a team captain for match " + args[0]);
-                    });
+                    if(changed) {
+                        spreadsheet.send({ autoSize: true }, function (err) {
+                            if (err) throw err;
+                            message.channel.send(message.author.username + " is now a team captain for match " + args[0]);
+                        });
+                    }
                 });
             });
     }
