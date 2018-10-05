@@ -565,7 +565,6 @@ client.on("message", async message => {
     if (message.channel.name === "general" || message.channel.name === "granblue_discussion" || message.channel.name === "public_scrim") return;
 
     if (command === "ready") {
-        console.log(args[0])
         Spreadsheet.load({
             debug: true,
             spreadsheetName: 'SVWL',
@@ -580,6 +579,7 @@ client.on("message", async message => {
                 if (err) throw err;
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
+                    console.log(rows);
                     if(rows[0][0] == undefined) {
                         spreadsheet.add({ 1: { 1: message.author.id}});
                     }
