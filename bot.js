@@ -221,7 +221,7 @@ client.on("message", async message => {
     console.log(args);
     
     if(message.channel.type == "dm") {
-        if(message.content.toLowerCase().startsWith("send")) {
+        if(command === "send") {
             Spreadsheet.load({
                 debug: true,
                 spreadsheetName: 'SVWL',
@@ -279,6 +279,7 @@ client.on("message", async message => {
                         spreadsheet.send({ autoSize: true }, function (err) {
                             if (err) throw err;
                             message.channel.send(args[1] + " is your current representative.");
+                            return;
                                 
                         });
                         
