@@ -286,7 +286,7 @@ client.on("message", async message => {
                     });
                 });
         }
-        if(message.content.toLowerCase().startsWith("set")) {
+        else if(message.content.toLowerCase().startsWith("set")) {
             var wsheet = 'Lineup'
             if(message.content.toLowerCase().startsWith("setu")) {
                 wsheet = 'Unlimited'
