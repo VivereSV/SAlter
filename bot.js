@@ -598,7 +598,7 @@ client.on("message", async message => {
                             if (err) throw err;
                             message.channel.send(message.author.username + " is now a team captain for match " + args[0]);
                             if(g2g) {
-                                message.channel.send("@" + rows[1][1] + " @" + rows[1][2] + " the match has now begun!");
+                                message.channel.send("Match " + args[0] + " has now begun!");
                             }
                         });
                     }
