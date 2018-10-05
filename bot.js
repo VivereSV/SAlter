@@ -204,10 +204,6 @@ client.on("message", async message => {
         });
     }
 
-    // Also good practice to ignore any message that does not start with our prefix, 
-    // which is set in the configuration file.
-    if (message.content.indexOf(process.env.prefix) !== 0) return;
-
     //bot_and_salt only
     
 
@@ -425,6 +421,9 @@ client.on("message", async message => {
     }
 
     
+    // Also good practice to ignore any message that does not start with our prefix, 
+    // which is set in the configuration file.
+    if (message.content.indexOf(process.env.prefix) !== 0) return;
   
     if (message.channel.name === "data_log") {
         if (command === "data") {
