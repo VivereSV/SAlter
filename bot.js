@@ -567,7 +567,7 @@ client.on("message", async message => {
     if (command === "ready") {
         Spreadsheet.load({
             debug: true,
-            spreadsheetName: 'Clash of the Crusaders Deck Database',
+            spreadsheetName: 'SVWL',
             worksheetName: args[0],
             oauth2: {
                 client_id: process.env.client_id,
