@@ -579,8 +579,7 @@ client.on("message", async message => {
                 if (err) throw err;
                 spreadsheet.receive({ getValues: true }, function (err, rows, info) {
                     if (err) throw err;
-                    console.log(rows);
-                    if(rows[0][0] == undefined) {
+                    if(rows[1][1] == "CAPTAIN") {
                         spreadsheet.add({ 1: { 1: message.author.id}});
                     }
                     else {
