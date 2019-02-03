@@ -1061,11 +1061,11 @@ client.on("message", async message => {
         return;
     }
   
-    else if (command === "bottime") {
-        var d = new Date();
-        message.channel.send("Bot time is currently: " + d.getHours() + ":" + d.getMinutes());
-        return;
-    }
+    //else if (command === "bottime") {
+        //var d = new Date();
+        //message.channel.send("Bot time is currently: " + d.getHours() + ":" + d.getMinutes());
+        //return;
+    //}
 
     else if (command === "unmap") {
         //If valid unmap
