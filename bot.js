@@ -1060,6 +1060,12 @@ client.on("message", async message => {
         message.channel.send("<:yayumi:370005010668453890>");
         return;
     }
+  
+    else if (command === "bottime") {
+        var d = new Date();
+        message.channel.send("Bot time is currently: " + d.getHours() + ":" + d.getMinutes());
+        return;
+    }
 
     else if (command === "unmap") {
         //If valid unmap
